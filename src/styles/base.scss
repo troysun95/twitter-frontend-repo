@@ -1,0 +1,162 @@
+@use 'sass:math';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap");
+$screen-break-point: 991px;
+
+:root {
+    // 主要色
+    --orange: #FF6600;
+    --primary: #0062FF;
+    --secondary: #6C757D;
+    --success: #3DD598;
+    --warning: #FFC542;
+    --error: #FC5A5A;
+
+    // 輔助色
+    --paleOrange: #FF974A;
+    --blue: #50B5FF;
+    --green: #82C43C;
+    --purple: #A461D8;
+    --pink: #FF9AD5;
+
+    // 灰階色
+    --white: #FFFFFF;
+    --grey-100: #FAFAFB;
+    --grey-200: #F1F1F5;
+    --grey-300: #E2E2EA;
+    --grey-400: #D5D5DC;
+    --grey-500: #B5B5BE;
+    --grey-600: #92929D;
+    --grey-700: #696974;
+    --grey-800: #44444F;
+    --grey-900: #171725;
+
+    // 內文字
+    --main-font-size: 16px;
+    --secondary-font-size: 14px;
+    --minimum-font-size: 12px;
+
+    // 字體
+    --main-font-family: 'Noto Sans TC', sans-serif;
+    --number-font-family: 'Montserrat', sans-serif;
+    // --site-edge-margin: 15px;
+    // --header-height: 60px;
+    // --header-logo-width: 170px;
+}
+
+body {
+    
+    --background-color: #FFFFFF;
+    --overlay-background-color:  #171725; //opacity 0.4 
+    --main-text: #171725;
+
+    --nav-active-icon:#FF6600;
+    --nav-active-text:#FF6600;
+    --nav-icon: #44444F;
+    --nav-text: #44444F;
+
+    background-color: var(--background-color);
+    color: var(--main-text);
+    font-family: var(--main-font-family);
+    font-size: var(--main-font-size);
+
+    // --footer-background-color: #F6F7F8;
+    // --nav-icon: #2A2A2A;
+    // --social-icon: #808080;
+    // --secondary-text: #808080;
+    // --active-color: lightblue;
+
+    // --undone-progress-border: #F0F0F5;
+    // --done-progress-border: #000000;
+    // --progress-current-color: #2A2A2A;
+    // --progress-done-color: #FFFFFF;
+    // --progress-undone-color: #AFB1BD;
+    // --pg-addr-color: #FFFFFF;
+    // --pg-addr-bg-color: #2A2A2A;
+    // --input-label: #808080;
+    // --input-border: #4A4A4A;
+    // --input-text: #999999;
+    // --select-arrow: #2A2A2A;
+    // --select-true: #2A2A2A;
+    // --select-false: #999999;
+    // --product-action-text: #000000;
+    // --product-action-bg: #F0F0F5;
+    // --left-arrow: #000000;
+    // user-select: none; //???
+  
+
+}
+
+ul, ol, li {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+h1 {
+    font-size: 68px;
+    font-weight: 700;
+}
+h2 {
+    font-size: 42px;
+    font-weight: 700;
+}
+h3 {
+    font-size: 28px;
+    font-weight: 500;
+}
+h4 {
+    font-size: 24px;
+    font-weight: 500;
+}
+h5 {
+    font-size: 18px;
+    font-weight: 500;
+}
+// .container {
+//     margin: 0px 15px;
+// }
+
+// .mx-auto {
+//     margin-left: auto;
+//     margin-right: auto;
+// }
+// .mr-auto {
+//     margin-right: auto !important;
+// }
+.cursorPoint {
+    cursor: pointer;
+}
+
+@mixin col-series($serial) {
+    display: flex;
+    flex-wrap: wrap;
+    $width: math.div(100%, 12) * $serial;
+    flex: 0 0 $width;
+    align-content: flex-start;
+    max-width: $width;
+}
+.col {
+    @for $index from 1 to 13 {
+        &.col-#{$index} {
+            @include col-series($index);
+        }
+    }
+}
+@media screen and (min-width: $screen-break-point) {
+    .col {
+        @for $index from 1 to 13 {
+            &.col-lg-#{$index} {
+                @include col-series($index);
+            }
+        }
+    }
+}
+@media screen and (max-width: $screen-break-point) {
+    .col {
+        @for $index from 1 to 13 {
+            &.col-sm-#{$index} {
+                @include col-series($index);
+            }
+        }
+    }
+}
