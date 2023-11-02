@@ -1,7 +1,7 @@
-import styles from '../styles/TweetCollection.module.scss'
+import styles from "styles/TweetItem.module.scss"
 
 
-export  function TweetItem({data, handleClick}){
+export default function TweetItem({data, handleClick}){
     return(
     <div className={styles.tweetContainer}>
         <div className={styles.avatarWrapper}>
@@ -38,21 +38,6 @@ export  function TweetItem({data, handleClick}){
     )
     
 }
-
-
-
-export default function TweetCollection({tweets}) {
-    const tweetCollection =  tweets.map((data) => {
-    return(
-        < TweetItem data={data} key={data.id}/>
-    )
-        
-    });
-    return(
-        <div className={styles.tweetCollection}>{tweetCollection}</div>
-    )
-}
-
 
 
 

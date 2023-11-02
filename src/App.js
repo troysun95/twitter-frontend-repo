@@ -5,11 +5,7 @@ import  PopularList from './components/PopularList'
 
 //新增
 import MainNavbar from 'components/MainNavbar'
-import TweetCollection from 'components/TweetCollection'
-import {tweets}from './components/tweets.js'
 import styles from './App.module.scss'
-//for test 
-import Input from './components/Input'
 
 function App() {
 
@@ -23,9 +19,8 @@ function App() {
         </div>
         <div className={styles.content}>
           置換內容
-        <TweetCollection tweets={tweets}/>
-
-        <Input placeholder="請輸入帳號" label="帳號" alarms="警告" />
+        {/* <TweetItem data={data}/>
+        <Input placeholder="請輸入帳號" label="帳號" alarms="警告" /> */}
           
         </div>
         

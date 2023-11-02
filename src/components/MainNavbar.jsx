@@ -1,5 +1,5 @@
-import styles from '../styles/MainNavbar.module.scss'
-import BrandIcon from '../icons/Icon.png'
+import styles from 'styles/MainNavbar.module.scss'
+import BrandIcon from 'icons/Icon.png'
 
 
 export function NavItem({title}){
