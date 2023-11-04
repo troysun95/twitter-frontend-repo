@@ -1,7 +1,6 @@
 import styles from "styles/AdminUsers.module.scss";
 import { ReactComponent as LikeIcon } from "icons/like.svg";
 import { ReactComponent as PostTweetsIcon } from "icons/postTweets.svg";
-// import { adminUsersData } from "data/adminUserData.js"
 
 const AdminUserCardItem = ({
   account,

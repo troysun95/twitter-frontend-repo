@@ -3,6 +3,7 @@ import styles from "styles/AdminPage.module.scss";
 import { ReactComponent as AdminLogInBtn } from "icons/adminLoginBtn.svg";
 import { ReactComponent as Logo } from "icons/logo.svg";
 import {adminLogin} from '../api/auth'
+import Swal from 'sweetalert2';
 
 const AuthInput = ({ type, label, value, placeholder, onChange }) => {
   return (
@@ -26,25 +27,39 @@ const AdminPage = () => {
   
   //handler
   const handleClick = async () => {
-
     if (account.length === 0) {
       return;
     }
     if (password.length === 0) {
       return;
     }
-    //確認輸入值
-    console.log(`輸入的帳號為 ${account}`);
-    console.log(`輸入的密碼為 ${password}`);
-
-    const  data = await adminLogin({
+    const  {success, authToken} = await adminLogin({
       account,
       password
     });
-    console.log(`回傳資料${data}`)
+    //const  loginok = success
+    console.log(success)
+    if(success === true){
+      localStorage.setItem('authToken', authToken);
+      //console.log('success')
+      Swal.fire({
+        position: 'top',
+        title: '登入成功！',
+        timer: 1000,
+        icon: 'success',
+        showConfirmButton: false,
+      });
+    }else{
+      Swal.fire({
+        position: 'top',
+        title: '登入失敗！',
+        timer: 1000,
+        icon: 'error',
+        showConfirmButton: false,
+      });
+    }
+    
   };
-
-
   return (
     <div className={styles.adminLogInContainer}>
       <div className={styles.brandContainer}>

@@ -1,35 +1,42 @@
 
 import MainNavbar from "components/MainNavbar";
 import NavItem from "components/NavItem";
-//import AdminTweetList from "components/AdminTweetList"
+import AdminTweetList from "components/AdminTweetList"
 import styles from "styles/Layout2.module.scss"
 import{ReactComponent as HomeAcgtiveIcon} from "icons/homeActive.svg"
-import{ReactComponent as UserIcon} from "icons/user.svg"
-// import { useEffect, useState } from "react"
-// import {getTweets} from"api/twitter"
+import{ReactComponent as UserIcon} from "icons/user.svg";
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom";
+import {getTweets} from"api/twitter"
 
 
 
 const AdminMainPage = ()=> {
-  // const [tweets, setTweets] = useState([])
+  const [tweets, setTweets] = useState([])
 
-  // useEffect(() => {
-  //   const getTweetsAsync = async () => {
-  //     try {
-  //       const tweets = await getTweets();
-  //       setTweets(tweets.map((tweet) => ({ ...tweet })));
-  //     } catch (error) {
-  //       console.error (error);
-  //     }
-  //   };
-  //   getTweetsAsync();
-  // }, []);
+  useEffect(() => {
+    const getTweetsAsync = async () => {
+      try {
+        const tweets = await getTweets();
+        setTweets(tweets.map((tweet) => ({ ...tweet })));
+      } catch (error) {
+        console.error (error);
+      }
+    };
+    getTweetsAsync();
+  }, []);
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    localStorage.removeItem('authToken');
+    navigate('/admin');
+  };
 
   return(
 <div className={styles.appContainer}>
     <div className={styles.navbarContainer}>
-      <MainNavbar>
-        
+      <MainNavbar handleClick={handleClick}>
         <NavItem title="推文清單">
           <HomeAcgtiveIcon/>
         </NavItem>
@@ -42,7 +49,7 @@ const AdminMainPage = ()=> {
       <div className={styles.headerContainer}>
           <h4>推文清單</h4>
       </div>
-        {/* <AdminTweetList tweets={tweets} /> */}
+        <AdminTweetList tweets={tweets} />
     </div>
 </div>
     

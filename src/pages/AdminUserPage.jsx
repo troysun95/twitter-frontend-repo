@@ -21,7 +21,7 @@ const AdminUserPage = () => {
     };
     getUsersAsync();
   }, []);
-  console.log(users)
+  //console.log(users)
 
   return (
     <>
