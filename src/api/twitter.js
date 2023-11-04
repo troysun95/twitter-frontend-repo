@@ -1,46 +1,28 @@
 import axios from 'axios';
 
 //
-const baseUrl = 'http://localhost:3001';
-
-
-
-//拿取 authToken
-
-const axiosInstance = axios.create({
-  baseURL: baseUrl,
-});
-
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    console.error(error);
-  },
-);
-
+const baseUrl = ' https://warm-forest-67690-2e44d4cd1684.herokuapp.com';
 
 //AdminPage
 
- export const getAdminTweets = async() => {
-    try{
-        const res = await axiosInstance.get(`${baseUrl}/admin/tweets`)
-        return res.data.data;
-    }catch(error){
-        console.error('[Get Tweets failed]: ', error)
-    }
-} ;
 
-export const getAdminUsers = async() =>{
-    try{
-        const res = await axiosInstance.get(`${baseUrl}/admin/adminUserData`)
-        return res.data.data;
-    }catch(error){
-        console.error('[Get Users failed]: ', error)
-    }
-}
+export const getTweets = async () => {
+  try {
+    const res = await axios.get(`${baseUrl}/api/admin/`);
+    return res.data;
+  } catch (error) {
+    console.error('[Get Users failed]: ', error);
+  }
+};
+
+
+
+
+export const getUsers = async () => {
+  try {
+    const res = await axios.get(`${baseUrl}/api/admin/users`);
+    return res.data;
+  } catch (error) {
+    console.error('[Get Users failed]: ', error);
+  }
+};

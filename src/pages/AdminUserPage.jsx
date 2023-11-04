@@ -4,8 +4,25 @@ import NavItem from "components/NavItem";
 import { ReactComponent as HomeIcon } from "icons/home.svg";
 import { ReactComponent as UserActiveIcon } from "icons/userActive.svg";
 import styles from "styles/Layout2.module.scss"
+import {getUsers} from '../api/twitter.js'
+import { useEffect, useState } from 'react';
 
 const AdminUserPage = () => {
+ const [users, setUsers] = useState([])
+
+  useEffect(() => {
+    const getUsersAsync = async () => {
+      try {
+        const users = await getUsers();
+        setUsers(users.map((user) => ({...user})));
+      } catch (error) {
+        console.error (error);
+      } 
+    };
+    getUsersAsync();
+  }, []);
+  console.log(users)
+
   return (
     <>
     <div className={styles.appContainer}>
@@ -21,7 +38,7 @@ const AdminUserPage = () => {
         </MainNavbar>
         </div>
         <div className={styles.content}>
-        <AdminUsers />
+        <AdminUsers users={users}/>
         </div>
 
       

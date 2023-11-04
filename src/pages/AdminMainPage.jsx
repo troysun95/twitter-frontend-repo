@@ -1,15 +1,30 @@
 
 import MainNavbar from "components/MainNavbar";
 import NavItem from "components/NavItem";
-import AdminTweetList from "components/AdminTweetList"
+//import AdminTweetList from "components/AdminTweetList"
 import styles from "styles/Layout2.module.scss"
 import{ReactComponent as HomeAcgtiveIcon} from "icons/homeActive.svg"
 import{ReactComponent as UserIcon} from "icons/user.svg"
-import {tweets} from "data/tweets"
+// import { useEffect, useState } from "react"
+// import {getTweets} from"api/twitter"
 
 
 
 const AdminMainPage = ()=> {
+  // const [tweets, setTweets] = useState([])
+
+  // useEffect(() => {
+  //   const getTweetsAsync = async () => {
+  //     try {
+  //       const tweets = await getTweets();
+  //       setTweets(tweets.map((tweet) => ({ ...tweet })));
+  //     } catch (error) {
+  //       console.error (error);
+  //     }
+  //   };
+  //   getTweetsAsync();
+  // }, []);
+
   return(
 <div className={styles.appContainer}>
     <div className={styles.navbarContainer}>
@@ -24,7 +39,10 @@ const AdminMainPage = ()=> {
       </MainNavbar>
     </div>
     <div className={styles.content}>
-        <AdminTweetList tweets={tweets} header="推文清單"/>
+      <div className={styles.headerContainer}>
+          <h4>推文清單</h4>
+      </div>
+        {/* <AdminTweetList tweets={tweets} /> */}
     </div>
 </div>
     

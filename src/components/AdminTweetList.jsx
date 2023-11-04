@@ -1,11 +1,17 @@
 import AdminTweetItem from './TweetItems/AdminTweetItem.jsx'
 import styles from "styles/AdminTweetList.module.scss"
 
+
+
+
+
 export default function AdminTweetList({tweets, header}) {
     const tweetsList =  tweets.map((data) => {
     return(
         < AdminTweetItem data={data} key={data.id}/>
     )
+        
+        
         
     });
     return( 
