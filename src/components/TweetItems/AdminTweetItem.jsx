@@ -1,4 +1,5 @@
-import styles from "styles.AdminTweetItem.module.scss"
+import styles from "styles/AdminTweetItem.module.scss"
+import {ReactComponent as DeletIcon} from "icons/delete.svg"
 
 export default function AdminTweetItem({data}) {
     return(
@@ -18,19 +19,8 @@ export default function AdminTweetItem({data}) {
                 <div className={styles.tweetWrapper}>
                     <p className={styles.tweet}>{data.tweet}</p>
                 </div>
-                <div className={styles.iconPanel}>
-                    <div className={styles.iconContainer} id={data.id} >
-                        <i className={styles.replyIcon}>回覆</i>
-                        <div className={styles.NumberWrapper}>
-                            <span>{data.relpyedCounts}</span>
-                        </div>
-                    </div>
-                    <div className={styles.iconContainer} id={data.id} >
-                        <i className={styles.likeIcon}>喜歡</i>
-                        <div className={styles.NumberWrapper}>
-                            <span>{data.likedCounts}</span>
-                        </div>
-                    </div>
+                <div className={styles.iconWrapper}>
+                    <DeletIcon/>
                 </div>
             </div>
         </div>

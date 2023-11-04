@@ -1,0 +1,28 @@
+.appContainer {
+    height: 100vh;
+    max-width: 1199px;
+    min-width: 992px;
+    width: 960px;
+    margin: 0 auto;
+    display: flex;
+}
+
+.navbarContainer {
+    height: 100%;
+    width: 178px;
+    margin-right: 25px;
+}
+.content {
+    height: 100%;
+    width: 639px;
+    margin-right: 25px;
+    background-color: pink;
+    outline: 2px solid red;
+}
+
+@media screen and (min-width: 1200px) {
+    .appContainer {
+        width: 1140px;
+        border: 1px solid #ff0000;
+    }
+}

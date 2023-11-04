@@ -1,0 +1,157 @@
+
+.tweetContainer {
+    flex: 1;
+    border-left: 1px solid var(--color-border);
+  
+    header { 
+      border-bottom: 1px solid var(--color-border);
+      padding: 24px;
+      width: 100%;
+  
+      h4 {
+        font-weight: 700;
+        line-height: 26px;
+      }
+    }
+  
+    .userCardsContainer {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      height: calc(100vh - 75px);
+      overflow-y: scroll;
+  
+      .userCardItem {
+        position: relative;
+        margin: 16px;
+        width: 210px;
+        height: 314px;
+        background-color: #F6F7F8;
+  
+        .userBackground {
+          height: 140px;
+          width: 100%;
+          background-size: cover;
+          img {
+            height: 100%;
+            width: 100%;
+          }
+        }
+  
+        .avatarNameContainer {
+          position: absolute;
+          left: 50%;
+          top: 64px;
+          transform: translateX(-50%);
+          height: 154px;
+  
+          .avatar {
+          border: 4px solid #fff;
+          border-radius: 50%;
+            height: 100px;
+            width: 100px;
+            margin-bottom: 8px;
+            
+            img {
+              width: 100%;
+              height: 100%;
+              border-radius: 50%;
+            }
+          }
+  
+          .accountTitle {
+            display: flex;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            
+            .accountName {
+              height: 26px;
+              font-weight: 700;
+              line-height: 26px;
+            }
+            .subTitle {
+              font-size: var(--secondary-font-size);
+              font-weight: 400;
+              line-height: 22px;
+              color: var(--secondary);
+              text-align: center;
+            }
+          }
+        }
+        
+        .infoContainer {
+          max-width: 80%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          overflow: hidden;
+          flex: 1;
+          position: absolute;
+          bottom: 24px;
+          left: 50%;
+          
+          font-weight: 400;
+          line-height: 22px;
+          transform: translateX(-50%);
+          .greyText {
+              color: var(--secondary)
+            }
+  
+          .tweetsLikeStatus {
+            margin-bottom: 8px;
+            height: 26px;
+            max-width: 160px;
+            font-size: var(--main-font-size);
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            
+            .tweetsNumber {
+              display: flex;
+              align-items: center;
+              margin-right: 16px;
+              height: 26px;
+              max-width: 65px;
+              font-size: var(--main-font-size);
+              font-weight: 500;
+              overflow: hidden;
+            }
+            .like {
+              display: flex;
+              align-items: center;
+              height: 26px;
+              width: 62px;
+              max-width: 65px;
+              font-weight: 500;
+              overflow: hidden;
+            }
+  
+            span {
+              font-family: Montserrat;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              }
+            .icon {
+              height: 24px;
+              width: 24px;
+              flex-shrink: 0;
+              margin-right: 8px;
+            }
+          }
+  
+          .followStatus {
+            height: 22px;
+            font-size: var(--secondary-font-size);
+            display: flex;
+             white-space:nowrap;
+  
+            .followingNum {
+              margin-right: 8px;
+            }
+          }
+        }
+      }
+    }
+  }

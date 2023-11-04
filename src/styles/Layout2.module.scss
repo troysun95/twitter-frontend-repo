@@ -1,0 +1,29 @@
+.appContainer{    
+    height: 100vh;
+    max-width: 1199px;
+    min-width: 992px;
+    width: 960px;
+    margin: 0 auto;
+    display: flex;
+    // navbar
+    .navbarContainer{
+        height: 100%;
+        width: 178px;
+        padding: 8px;
+    }
+
+    //content
+    .content{
+        height: 100%;
+        width: 937px;
+        margin-left: 16px;
+        border: 1px solid var(--grey-500);
+       
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .appContainer {
+        width: 1140px;
+    }
+}
