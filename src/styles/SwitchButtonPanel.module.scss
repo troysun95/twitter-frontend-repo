@@ -1,0 +1,24 @@
+.buttonPanel{
+    display: flex;
+    flex-flow:row wrap;
+    width: 100%;
+    height: 52px;
+    .button{
+        width: 130px;
+        height: 100%;
+        padding: 15px 27px;
+        color: var(--grey-500);
+        font-size: var(--main-font-size);
+        font-weight: 700;
+        cursor: pointer;
+        &:hover{
+            color: var(--orange);
+            border-bottom: 3px solid var(--orange);
+        }
+    }
+    .active{
+        color: var(--orange);
+            border-bottom: 3px solid var(--orange);
+    }
+}
+

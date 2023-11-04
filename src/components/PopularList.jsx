@@ -1,6 +1,6 @@
 // import {useState} from 'react'
 import styles from "styles/PopularList.module.scss";
-import {popularListData} from './popularListData.js'
+import {popularListData} from "data/popularListData"
 
 const PopularAccountItem = ({ id, img, account, tagAccount}) => {
   return (

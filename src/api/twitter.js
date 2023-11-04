@@ -36,7 +36,7 @@ axiosInstance.interceptors.request.use(
     }
 } ;
 
-export const getTweetUsers = async() =>{
+export const getAdminUsers = async() =>{
     try{
         const res = await axiosInstance.get(`${baseUrl}/admin/adminUserData`)
         return res.data.data;
