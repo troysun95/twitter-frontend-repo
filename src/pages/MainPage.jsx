@@ -19,6 +19,7 @@ import { useState } from "react";
 const MainPage = ()=> {
   
   const navigate = useNavigate();
+  //寫法可能要改，若回傳Alltweets ，只需要取第一層
   const [tweetsList, setTweetsList] = useState(tweets)
   const [inputValue, setInputValue] = useState("");
   const [isSubmit, setIsSubmit] = useState(false)

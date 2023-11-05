@@ -1,8 +1,8 @@
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import styles from "styles/AdminPage.module.scss";
 import { ReactComponent as AdminLogInBtn } from "icons/adminLoginBtn.svg";
 import { ReactComponent as Logo } from "icons/logo.svg";
-import {adminLogin, checkTokenIsValid} from '../api/auth'
+import {adminLogin} from '../api/auth'
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom"; 
 
@@ -34,15 +34,16 @@ const AdminPage = () => {
     if (password.length === 0) {
       return;
     }
-    const  {success, authToken} = await adminLogin({
+    const  {success, token, Authorization} = await adminLogin({
       account,
       password
     });
-    //const  loginok = success
-    console.log(success)
-    if(success === true){
-      localStorage.setItem('authToken', authToken);
-      //console.log('success')
+
+
+    if(success){
+      localStorage.setItem('token', token);
+      console.log(token)
+      localStorage.setItem('Authorization', JSON.stringify(Authorization));
       Swal.fire({
         position: 'top',
         title: '登入成功！',
@@ -50,6 +51,7 @@ const AdminPage = () => {
         icon: 'success',
         showConfirmButton: false,
       });
+      navigate('main');
     }else{
       Swal.fire({
         position: 'top',
@@ -60,42 +62,7 @@ const AdminPage = () => {
       });
     }
   };
-//攜帶驗證並跳轉頁面
 
-// useEffect(() => {
-  
-//   const checkTokenIsValid = async () => {
-//     const authToken = localStorage.getItem('authToken');
-//     if (authToken) {
-//       return {
-//         headers: {
-//           Authorization: 'Bearer ' + authToken,
-//         }};
-//         navigate('/admin/main')
-//     }else{return }
-//     // const result = await checkPermission(authToken);
-//     // if (result) {
-//     //   //navigate('/admin/main');
-//     // }
-//   };
-
-//   checkTokenIsValid();
-// }, [navigate]);
-
-useEffect(() => {
-  const checkAndNavigate = async () => {
-    const authToken = localStorage.getItem('authToken');
-    if (authToken) {
-      const AuthKey = await checkTokenIsValid(authToken)
-      if(AuthKey){navigate('/admin/main');}
-    } else {
-      console.log('fail to get Authorize')
-      localStorage.removeItem('authToken');
-    }
-  };
-
-  checkAndNavigate();
-}, [navigate]);
 
 
 

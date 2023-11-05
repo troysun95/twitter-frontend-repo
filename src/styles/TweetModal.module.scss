@@ -1,14 +1,23 @@
 .modalContainer{
-    position: absolute;
-    margin-top: 16px;
-    width: 100%;
+    border: 1px solid #000;
+    margin-top:56px;
+    width: 634px;
     height: 300px;
-    padding: 24px;
+    padding: 0px 24px;
     position: relative;
-    border-bottom:10px solid var(--grey-200);
     border-radius: 14px;
     z-index: 1;
-    top:24px;
+    .header{
+        height: 41px;
+        margin-top: 15px;
+        margin-bottom: 12px;
+        border-bottom: 1px solid var(--grey-500);
+        .iconWrapper{
+            position: absolute;
+            top:20.5px;
+            left:19.5px;
+        }
+    }
     .toTweetWrapper{
         width: 100%;
         height: 50px;
@@ -26,16 +35,26 @@
             }
           }
         input{
-            width: auto;
+            padding-left: 5px;
+            width: 500px;
             height: 26px;
             border: none;
+            word-break:break-all;
         }
     }
     .tweetBtn{
         position: absolute;
-        bottom:14px;
-        top:64px;
+        bottom:15px;
         right: 24px;
         cursor: pointer;
+    }
+    .errorMessage{
+        width:50%;
+        height: 15px;
+        position: absolute;
+        bottom:28px;
+        right:101px;
+        color:var(--error);
+        text-align: right;
     }
 }

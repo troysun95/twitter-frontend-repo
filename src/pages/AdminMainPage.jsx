@@ -15,6 +15,7 @@ const AdminMainPage = ()=> {
   const [tweets, setTweets] = useState([])
 
   useEffect(() => {
+    //const  Authorization = localStorage.getItem('Authorization')
     const getTweetsAsync = async () => {
       try {
         const tweets = await getTweets();
@@ -30,6 +31,7 @@ const AdminMainPage = ()=> {
 
   const handleClick = () => {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('Authorization');
     navigate('/admin');
   };
 

@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react';
 const AdminUserPage = () => {
  const [users, setUsers] = useState([])
 
+
+
   useEffect(() => {
     const getUsersAsync = async () => {
       try {

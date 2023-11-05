@@ -12,6 +12,7 @@ export default function ToTweetPanel({user,handleSubmitTweet,handleInputChange,i
         }
       };
     
+      
     return(
         <div className={styles.toTweetPanel}>
             <div className={styles.toTweetWrapper}>
@@ -19,7 +20,9 @@ export default function ToTweetPanel({user,handleSubmitTweet,handleInputChange,i
                     <img src={user.avatar} alt="avatar"/>
                 </div>
                 <input type="text" placeholder="有什麼新鮮事？" value={inputValue}  onChange={handleChange} />
+
                 <div className={styles.tweetBtn} onClick={handleSubmitTweet}><TweetBtn/></div>
+                <div></div>
             </div>
 
         </div>

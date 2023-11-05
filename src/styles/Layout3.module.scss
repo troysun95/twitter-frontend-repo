@@ -9,6 +9,17 @@ $border-style: 1px solid var(--grey-500);
     display: flex;
 }
 
+
+.appContainerModal{
+    height: 100vh;
+    max-width: 1199px;
+    min-width: 992px;
+    margin: 0 auto;
+    display: flex;
+    //預計加上一層灰底
+    //background-color: rgba($color: #eae5e5, $alpha: 1.0);
+}
+
 .navbarContainer {
     height: 100%;
     width: 178px;
