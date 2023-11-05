@@ -23,16 +23,31 @@ export const adminLogin = async ({ account, password }) => {
 };
 
 //向後端驗證金鑰
-export const checkPermission = async (authToken) => {
+// export const checkPermission = async (authToken) => {
+//   try {
+//     const response = await axios.get(`${authURL}/`, {
+//       headers: {
+//         Authorization: 'Bearer ' + authToken,
+//       },
+//     });
+//     //按照回傳是 success 或是 status
+//     return response.data.data.success;
+//   } catch (error) {
+//     console.error('[Check Permission Failed]:', error);
+//   }
+// };
+
+
+export const checkTokenIsValid = async (authToken) => {
   try {
-    const response = await axios.get(`${authURL}/`, {
+    const response = await axios.post(`${authURL}/api/admin/signin`, {
       headers: {
-        Authorization: 'Bearer ' + authToken,
-      },
+                Authorization: 'Bearer ' + authToken,
+              }
     });
-    //按照回傳是 success 或是 status
-    return response.data.data.success;
+    return response.data.isValid;
   } catch (error) {
-    console.error('[Check Permission Failed]:', error);
+    console.error('[Check Token Failed]:', error);
+    return false;
   }
 };

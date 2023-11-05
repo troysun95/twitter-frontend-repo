@@ -1,4 +1,7 @@
 import styles from "styles/TweetItem.module.scss"
+import { ReactComponent as LikeIcon } from "icons/like.svg"
+import { ReactComponent as ChatIcon } from "icons/chat.svg"
+
 
 
 export default function TweetItem({data, handleClick}){
@@ -21,13 +24,13 @@ export default function TweetItem({data, handleClick}){
             </div>
             <div className={styles.iconPanel}>
                 <div className={styles.iconContainer} id={data.id}  onClick={handleClick}>
-                    <i className={styles.replyIcon}>回覆</i>
+                    <i className={styles.replyIcon}><ChatIcon/></i>
                     <div className={styles.NumberWrapper}>
                         <span>{data.relpyedCounts}</span>
                     </div>
                 </div>
                 <div className={styles.iconContainer} id={data.id} onClick={handleClick}>
-                    <i className={styles.likeIcon}>喜歡</i>
+                    <i className={styles.likeIcon}><LikeIcon/></i>
                     <div className={styles.NumberWrapper}>
                         <span>{data.likedCounts}</span>
                     </div>

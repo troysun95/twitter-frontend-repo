@@ -8,9 +8,10 @@
   flex-direction: row;
   position: relative;
   .avatarWrapper{
-    margin-left: 5px;
+    margin-left: 24px;
     height: 50px;
     width: 50px;
+    border: 1px solid #000;
     img{
       height: 100%;
       width: 100%;
@@ -23,6 +24,8 @@
     width: 528px;
     display: flex;
     flex-direction: column;
+    margin-left: 6px;
+    //border: 1px solid red;
     .userInfo{
       display: flex;
       flex-direction: row;
@@ -32,7 +35,6 @@
         font-weight: 700;
       }
       .accountWrapper{
-        padding-left: 8px;
         color:var(--grey-800)
       }
     }
@@ -50,8 +52,13 @@
       color:var(--grey-800);
       .iconContainer{
         display: flex;
+        align-items: center;
+        margin-right: 40px;
         .NumberWrapper{
           padding-left: 8px;
+          text-align: center;
+          font-weight: 700;
+          color:var(--grey-700)
         }
       }
       

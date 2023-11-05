@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import styles from "styles/AdminPage.module.scss";
 import { ReactComponent as AdminLogInBtn } from "icons/adminLoginBtn.svg";
 import { ReactComponent as Logo } from "icons/logo.svg";
-import {adminLogin} from '../api/auth'
+import {adminLogin, checkTokenIsValid} from '../api/auth'
 import Swal from 'sweetalert2';
+import { useNavigate } from "react-router-dom"; 
 
 const AuthInput = ({ type, label, value, placeholder, onChange }) => {
   return (
@@ -22,8 +23,8 @@ const AuthInput = ({ type, label, value, placeholder, onChange }) => {
 const AdminPage = () => {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
-
- 
+  const navigate = useNavigate('')
+  
   
   //handler
   const handleClick = async () => {
@@ -58,8 +59,46 @@ const AdminPage = () => {
         showConfirmButton: false,
       });
     }
-    
   };
+//攜帶驗證並跳轉頁面
+
+// useEffect(() => {
+  
+//   const checkTokenIsValid = async () => {
+//     const authToken = localStorage.getItem('authToken');
+//     if (authToken) {
+//       return {
+//         headers: {
+//           Authorization: 'Bearer ' + authToken,
+//         }};
+//         navigate('/admin/main')
+//     }else{return }
+//     // const result = await checkPermission(authToken);
+//     // if (result) {
+//     //   //navigate('/admin/main');
+//     // }
+//   };
+
+//   checkTokenIsValid();
+// }, [navigate]);
+
+useEffect(() => {
+  const checkAndNavigate = async () => {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      const AuthKey = await checkTokenIsValid(authToken)
+      if(AuthKey){navigate('/admin/main');}
+    } else {
+      console.log('fail to get Authorize')
+      localStorage.removeItem('authToken');
+    }
+  };
+
+  checkAndNavigate();
+}, [navigate]);
+
+
+
   return (
     <div className={styles.adminLogInContainer}>
       <div className={styles.brandContainer}>
