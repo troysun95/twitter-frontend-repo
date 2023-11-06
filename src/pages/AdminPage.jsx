@@ -5,6 +5,7 @@ import { ReactComponent as Logo } from "icons/logo.svg";
 import {adminLogin} from '../api/auth'
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom"; 
+//import { checkPermission } from "../api/auth";
 
 const AuthInput = ({ type, label, value, placeholder, onChange }) => {
   return (
@@ -34,16 +35,16 @@ const AdminPage = () => {
     if (password.length === 0) {
       return;
     }
-    const  {success, token, Authorization} = await adminLogin({
+    const  data = await adminLogin({
       account,
       password
     });
 
-
-    if(success){
-      localStorage.setItem('token', token);
-      console.log(token)
-      localStorage.setItem('Authorization', JSON.stringify(Authorization));
+    console.log(data);
+    if(data.success){
+      localStorage.setItem('authToken', data.token);
+      console.log(data.token)
+      //localStorage.setItem('Authorization', JSON.stringify(data.Authorization));
       Swal.fire({
         position: 'top',
         title: '登入成功！',
@@ -63,6 +64,23 @@ const AdminPage = () => {
     }
   };
 
+
+
+  // 驗證用
+  //useEffect(() => {
+  //   const checkTokenIsValid = async () => {
+  //     const authToken = localStorage.getItem('authToken');
+  //     if (!authToken) {
+  //       navigate('/admin');
+  //     }
+  //     const result = await checkPermission(authToken);
+  //     if (!result) {
+  //       navigate('/admin');
+  //     }
+  //   };
+
+  //   checkTokenIsValid();
+  // }, [navigate]);
 
 
 

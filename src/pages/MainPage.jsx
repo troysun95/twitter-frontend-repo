@@ -7,22 +7,27 @@ import  {ReactComponent as UserIcon} from "icons/user.svg"
 import  {ReactComponent as SettingIcon} from "icons/setting.svg"
 import PopularList from "components/PopularList";
 import TweetItem from "components/TweetItems/TweetItem";
+import { useNavigate } from "react-router-dom";
+//import * as jwt from "jsonwebtoken";
 
 //假資料
-import {user} from "data/user"
+import {prevUser} from "data/user"
 import {tweets} from "data/tweets"
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 
 
 const MainPage = ()=> {
-  
-  const navigate = useNavigate();
-  //寫法可能要改，若回傳Alltweets ，只需要取第一層
+    //寫法可能要改，若回傳Alltweets ，只需要取第一層
   const [tweetsList, setTweetsList] = useState(tweets)
   const [inputValue, setInputValue] = useState("");
   const [isSubmit, setIsSubmit] = useState(false)
+
+  
+  //const [isAuthenticated, setIsAuthenticated] = useState(false);
+  //const [payload, setPayload] = useState(null);
+  // 儲存 userInfo 物件方便運用，裡面包含 account、avatar、banner、name 等
+  const navigate = useNavigate()
 
   //handler
 
@@ -34,9 +39,9 @@ const MainPage = ()=> {
    if(inputValue.length !== 0 &&  inputValue.length < 150){
       const newTweet = {
         id:tweetsList.length + 1,
-        avatar:user.avatar,
-        name:user.name,
-        account:user.account, 
+        avatar:prevUser.avatar,
+        name:prevUser.name,
+        account:prevUser.account, 
         time:"5hrs", 
         tweet:inputValue,
         relpyedCounts:0,
@@ -50,6 +55,50 @@ const MainPage = ()=> {
    }
     
   }
+
+  useEffect(() => {
+    const checkTokenIsValid = async () => {
+      // 從 localStorage 拿 token
+      const authToken = localStorage.getItem("authToken");
+      // 如果 token 不存在則進行相關設定
+      if (!authToken) {
+        //setIsAuthenticated(false);
+        //setPayload(null);
+        return navigate('/admin')
+      }
+      
+      // if (authToken) {
+      //   //const tempPayload = jwt.decode(authToken);
+      //   //setPayload(tempPayload);
+      //   // if (!tempPayload) {
+      //   //   setIsAuthenticated(false);
+      //   //   setPayload(null);
+      //   //   return navigate('/admin')
+      //   // }
+      //   // setIsAuthenticated(true);
+      //   // // 使用 localStorage 中的 userInfo 來初始化
+      //   // const savedUserInfo = localStorage.getItem("userInfo");
+      //   // if (savedUserInfo) {
+      //   //   setUserInfo(JSON.parse(savedUserInfo));
+      //   // }
+      //   // // 使用 localStorage 中的 tweetId 來初始化
+      //   // const savedTweetId = localStorage.getItem("tweetId");
+      //   // if (savedTweetId) {
+      //   //   setTweetId(savedTweetId);
+      //   }
+      //   } else {
+      //   // 無效
+      //   setIsAuthenticated(false);
+      //   setPayload(null);
+      //   navigate('/admin')
+      // }
+    };
+    checkTokenIsValid();
+    //console.log('AuthProvider 重新渲染')
+}, [ navigate]);
+
+
+
   
   return(
 <div className={styles.appContainer}>
@@ -72,7 +121,7 @@ const MainPage = ()=> {
       <div className={styles.headerContainer}>
         <h4>首頁</h4>
       </div>
-      <ToTweetPanel user={user} handleSubmitTweet={handleSubmitTweet} handleInputChange={handleInputChange} isSubmit={isSubmit}/>
+      <ToTweetPanel user={prevUser} handleSubmitTweet={handleSubmitTweet} handleInputChange={handleInputChange} isSubmit={isSubmit}/>
       {tweetsList.map((tweet) => {
           return (
             <TweetItem

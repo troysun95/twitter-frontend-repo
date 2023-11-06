@@ -7,7 +7,17 @@ import AdminMainPage from './AdminMainPage'
 import MainReplyPage from './MainReplylPage'
 import MainTweetPage from './MainTweetPage'
 import SettingPage from './SettingPage'
+import LoginPage from './LoginPage'
 
 
 
-export  {MainPage, MainReplyPage, MainTweetPage ,UserPage, AdminPage, AdminUserPage, AdminMainPage, SettingPage}  
+export  {
+MainPage,
+MainReplyPage, 
+MainTweetPage,
+UserPage, 
+AdminPage, 
+AdminUserPage, 
+AdminMainPage, 
+SettingPage,
+LoginPage}  

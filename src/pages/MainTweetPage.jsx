@@ -10,7 +10,7 @@ import TweetItem from "components/TweetItems/TweetItem";
 
 
 // //假資料
-import {user} from "data/user"
+import {prevUser} from "data/user"
 import {tweets} from "data/tweets"
 
 
@@ -37,7 +37,7 @@ const MainPage = ()=> {
     </div>
     <div className={styles.content}>
       
-      <TweetModal user={user}/>
+      <TweetModal user={prevUser}/>
       {tweets.map((tweet) => {
           return (
             <TweetItem

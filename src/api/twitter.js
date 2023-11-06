@@ -6,12 +6,35 @@ const baseUrl = ' https://warm-forest-67690-2e44d4cd1684.herokuapp.com';
 //AdminPage
 
 
+const axiosInstance = axios.create({
+  baseURL: baseUrl,
+});
+
+//每次發請求前，先到這邊取出token
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+      console.log('取得token')
+      console.log(config.headers)
+    }
+    
+    return config;
+  },
+  (error) => {
+    console.log('no取得token')
+    console.error(error);
+  },
+);
+
+
 export const getTweets = async () => {
   try {
-    const res = await axios.get(`${baseUrl}/api/admin/tweets`);
+    const res = await axiosInstance.get(`${baseUrl}/api/admin/tweets`);
     return res.data;
   } catch (error) {
-    console.error('[Get Users failed]: ', error);
+    console.error('[Get Tweets failed]: ', error);
   }
 };
 
@@ -19,7 +42,7 @@ export const getTweets = async () => {
 
 export const getUsers = async () => {
   try {
-    const res = await axios.get(`${baseUrl}/api/admin/users`);
+    const res = await axiosInstance.get(`${baseUrl}/api/admin/users`);
     return res.data;
   } catch (error) {
     console.error('[Get Users failed]: ', error);
