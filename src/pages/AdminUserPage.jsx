@@ -3,7 +3,7 @@ import MainNavbar from "components/MainNavbar";
 import NavItem from "components/NavItem";
 import { ReactComponent as HomeIcon } from "icons/home.svg";
 import { ReactComponent as UserActiveIcon } from "icons/userActive.svg";
-import styles from "styles/Layout2.module.scss"
+import styles from "styles/AdminUsers.module.scss"
 import {getUsers} from '../api/twitter.js'
 import { useEffect, useState } from 'react';
 

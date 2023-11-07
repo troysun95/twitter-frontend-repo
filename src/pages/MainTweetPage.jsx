@@ -10,54 +10,50 @@ import TweetItem from "components/TweetItems/TweetItem";
 
 
 // //假資料
-import {user} from "data/user"
+import {prevUser} from "data/user"
 import {tweets} from "data/tweets"
 
 
 
-const MainPage = ()=> {
+const MainTweetPage= ()=> {
 
+  //設定讓背景無法點擊
   
+   
+
   return(
-<div className={styles.appContainerModal}>
-    <div className={styles.navbarContainer}>
-      <MainNavbar>
-            <NavItem title="首頁" toRoute="/main" >
-              <HomeActiveIcon/>
-            </NavItem>
-          <NavItem title="個人資料" toRoute="/user">
-            <UserIcon/>
-          </NavItem>
-            <NavItem title="設定" toRoute="/setting">
-                <SettingIcon/>
-            </NavItem>
-        
-       <button className={styles.tweetButton}>推文</button>
-      </MainNavbar>
+    <div className={styles.appContainerModal}>
+        <div className={styles.navbarContainer}>
+          <MainNavbar>
+                <NavItem title="首頁" toRoute="/main" >
+                  <HomeActiveIcon/>
+                </NavItem>
+              <NavItem title="個人資料" toRoute="/user">
+                <UserIcon/>
+              </NavItem>
+                <NavItem title="設定" toRoute="/setting">
+                    <SettingIcon/>
+                </NavItem>
+          <button className={styles.tweetButton}>推文</button>
+          </MainNavbar>
+        </div>
+        <div className={styles.content}> 
+          <TweetModal user={prevUser}/>
+          {tweets.map((tweet) => {
+              return (
+                <TweetItem
+                  key={tweet.id}
+                  data={tweet}
+                />); 
+          })}
+        </div>
+        <div className={styles.popularList}>
+            <PopularList/>
+        </div>
     </div>
-    <div className={styles.content}>
-      
-      <TweetModal user={user}/>
-      {tweets.map((tweet) => {
-          return (
-            <TweetItem
-              key={tweet.id}
-              data={tweet}
-            />
-          );
-          
-        })}
-    </div>
-    <div className={styles.popularList}>
-        <PopularList/>
-    </div>
-</div>
-    
-
-
   )
 }
 
 
-export default MainPage;
+export default MainTweetPage;
 

@@ -4,7 +4,7 @@ import { ReactComponent as LogOutIcon } from "icons/logout.svg";
 
 
 
-export default function MainNavbar({children, handleClick}){
+export default function MainNavbar({children, handleLogout}){
   
     return (
       <div className={styles.navbarContainer}>
@@ -16,7 +16,7 @@ export default function MainNavbar({children, handleClick}){
           <div className={styles.logoutContainer}>
             <div className={styles.itemWrapper}>
               <LogOutIcon />
-              <div className={styles.logoutTilte} onClick={handleClick}>登出</div>
+              <div className={styles.logoutTilte} onClick={handleLogout}>登出</div>
             </div>
           </div>
         </div>
