@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/twitter-frontend-repo/static/css/main.da2eba59.css",
-    "main.js": "/twitter-frontend-repo/static/js/main.936c6124.js",
+    "main.js": "/twitter-frontend-repo/static/js/main.9ea86da5.js",
     "static/js/787.2f7e3544.chunk.js": "/twitter-frontend-repo/static/js/787.2f7e3544.chunk.js",
     "static/media/setting.svg": "/twitter-frontend-repo/static/media/setting.27096e8c3e60a8dbd2ac2f93de3d3af4.svg",
     "static/media/settingActive.svg": "/twitter-frontend-repo/static/media/settingActive.53670273838eeeda8dbecd8c276f620c.svg",
@@ -12,6 +12,7 @@
     "static/media/logout.svg": "/twitter-frontend-repo/static/media/logout.83dbfa18fdefe5486e9015b156dbceec.svg",
     "static/media/user.svg": "/twitter-frontend-repo/static/media/user.ebca9623e7e3cf336d8bf539c9f2cd9f.svg",
     "static/media/home.svg": "/twitter-frontend-repo/static/media/home.aa574ca43ae829be222338e724db31e9.svg",
+    "static/media/chat.svg": "/twitter-frontend-repo/static/media/chat.03544a04581c89dc438bd368c1e856d5.svg",
     "static/media/postTweets.svg": "/twitter-frontend-repo/static/media/postTweets.03544a04581c89dc438bd368c1e856d5.svg",
     "static/media/homeActive.svg": "/twitter-frontend-repo/static/media/homeActive.c9340fbed3f71adea47a4d9bccf2c2e2.svg",
     "static/media/like.svg": "/twitter-frontend-repo/static/media/like.6b2b60f5db5362b3db01254d1eecbfab.svg",
@@ -19,12 +20,13 @@
     "static/media/userActive.svg": "/twitter-frontend-repo/static/media/userActive.fc9aa2f6bc2940d624e0c31b3a09248a.svg",
     "index.html": "/twitter-frontend-repo/index.html",
     "static/media/deleteActive.svg": "/twitter-frontend-repo/static/media/deleteActive.ec836a391a46da514f8de82535a3e495.svg",
+    "static/media/likeActie.svg": "/twitter-frontend-repo/static/media/likeActie.2a40884f9e319b99a68768cadcc4db69.svg",
     "main.da2eba59.css.map": "/twitter-frontend-repo/static/css/main.da2eba59.css.map",
-    "main.936c6124.js.map": "/twitter-frontend-repo/static/js/main.936c6124.js.map",
+    "main.9ea86da5.js.map": "/twitter-frontend-repo/static/js/main.9ea86da5.js.map",
     "787.2f7e3544.chunk.js.map": "/twitter-frontend-repo/static/js/787.2f7e3544.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.da2eba59.css",
-    "static/js/main.936c6124.js"
+    "static/js/main.9ea86da5.js"
   ]
 }
