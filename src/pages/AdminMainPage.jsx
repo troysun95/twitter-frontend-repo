@@ -42,10 +42,10 @@ const AdminMainPage = ()=> {
     <div className={styles.appContainer}>
       <div className={styles.navbarContainer}>
         <MainNavbar handleClick={handleClick}>
-          <NavItem title="推文清單">
+          <NavItem title="推文清單"  >
             <HomeActiveIcon/>
           </NavItem>
-          <NavItem title="使用者列表">
+          <NavItem title="使用者列表" >
             <UserIcon/>
           </NavItem>
         </MainNavbar>

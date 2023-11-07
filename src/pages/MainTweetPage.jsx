@@ -6,20 +6,28 @@ import  {ReactComponent as HomeActiveIcon} from "icons/homeActive.svg"
 import  {ReactComponent as UserIcon} from "icons/user.svg"
 import  {ReactComponent as SettingIcon} from "icons/setting.svg"
 import PopularList from "components/PopularList";
-import TweetItem from "components/TweetItems/TweetItem";
-
-
-// //假資料
-import {prevUser} from "data/user"
-import {tweets} from "data/tweets"
-
+import TweetList from "components/TweetList"
+import {getTweets} from "api/twitter"
+import { useEffect ,useState} from "react";
 
 
 const MainTweetPage= ()=> {
-
+  const [tweets, setTweets] = useState([]);
+  const user = localStorage.getItem('user')
   //設定讓背景無法點擊
   
-   
+  useEffect(() => {
+    const getTweetsAsync = async () => {
+    try {
+    const tweets = await getTweets();
+    console.log(tweets)
+    setTweets(tweets.map((tweet) => ({...tweet})));
+    } catch (error) {
+    console.error (error);
+    }
+    };
+    getTweetsAsync();
+    }, []);
 
   return(
     <div className={styles.appContainerModal}>
@@ -38,14 +46,8 @@ const MainTweetPage= ()=> {
           </MainNavbar>
         </div>
         <div className={styles.content}> 
-          <TweetModal user={prevUser}/>
-          {tweets.map((tweet) => {
-              return (
-                <TweetItem
-                  key={tweet.id}
-                  data={tweet}
-                />); 
-          })}
+          <TweetModal user={user}/>
+          <TweetList tweets={tweets} />
         </div>
         <div className={styles.popularList}>
             <PopularList/>

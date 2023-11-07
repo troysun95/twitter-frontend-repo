@@ -6,7 +6,7 @@ import  {ReactComponent as HomeActiveIcon} from "icons/homeActive.svg"
 import  {ReactComponent as UserIcon} from "icons/user.svg"
 import  {ReactComponent as SettingIcon} from "icons/setting.svg"
 import PopularList from "components/PopularList";
-import TweetItem from "components/TweetItems/TweetItem";
+import TweetList from "components/TweetList";
 import { useNavigate } from "react-router-dom";
 import {getTweets} from "api/twitter"
 
@@ -19,7 +19,7 @@ const MainPage = ()=> {
   const [tweets, setTweets] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const user = localStorage.getItem("user")
 
   //handler
@@ -28,7 +28,15 @@ const MainPage = ()=> {
     setInputValue(value);
   };
 
- 
+
+  const handleLogout =()=>{
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user')
+    navigate('/login')
+  }
+
+
+
  //發送推文
   const handleSubmitTweet = ()=>{
     if(inputValue.length !== 0 &&  inputValue.length < 150){
@@ -51,10 +59,8 @@ const MainPage = ()=> {
     const getTweetsAsync = async () => {
     try {
     const tweets = await getTweets();
-    // let ids = []
-    // ids = tweets.map((tweet)=>ids.push(tweet.id))
-    // console.log(ids)
-    setTweets(tweets.map((tweet) => ({tweet})));
+    console.log(tweets)
+    setTweets(tweets.map((tweet) => ({...tweet})));
     } catch (error) {
     console.error (error);
     }
@@ -68,7 +74,7 @@ const MainPage = ()=> {
   return(
     <div className={styles.appContainer}>
         <div className={styles.navbarContainer}>
-          <MainNavbar>
+          <MainNavbar handleLogout={handleLogout}>
               <NavItem title="首頁"  toRoute='/main'>
                 <HomeActiveIcon/>
               </NavItem>
@@ -87,12 +93,7 @@ const MainPage = ()=> {
           </div>
           
           <ToTweetPanel user={user} handleSubmitTweet={handleSubmitTweet} handleInputChange={handleInputChange} isSubmit={isSubmit}/>
-           {tweets.map((tweet) => {
-              return (
-                <TweetItem  
-                />
-              );
-            })}
+          <TweetList tweets={tweets} />
         </div>
         <div className={styles.popularList}>
             <PopularList/>

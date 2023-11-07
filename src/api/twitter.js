@@ -58,3 +58,16 @@ export const getTweets = async () => {
     console.error('[Get TWeets failed]: ', error);
   }
 };
+
+
+export const UnlikeTweet = async (id) => {
+  try {
+    const res = await axios.post(`${baseUrl}/api/tweets/:id/unlike`);
+    return res.data;
+  } catch (error) {
+    console.error('[Unlike Tweet failed]: ', error);
+  }
+};
+
+
+
