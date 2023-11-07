@@ -1,15 +1,6 @@
 import axios from 'axios';
 
-//
 const baseUrl = ' https://warm-forest-67690-2e44d4cd1684.herokuapp.com';
-
-//AdminPage
-
-
-// const axiosInstance = axios.create({
-//   baseURL: baseUrl,
-// });
-
 
 //每次發請求前，先到這邊取出token(全域？)
 const  token =localStorage.getItem('token')
@@ -61,9 +52,9 @@ export const getUsers = async () => {
 
 export const getTweets = async () => {
   try {
-    const res = await axios.get(`${baseUrl}/api/users`);
+    const res = await axios.get(`${baseUrl}/api/tweets`);
     return res.data;
   } catch (error) {
-    console.error('[Get Users failed]: ', error);
+    console.error('[Get TWeets failed]: ', error);
   }
 };

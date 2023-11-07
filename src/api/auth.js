@@ -37,7 +37,7 @@ export const Login = async ({ account, password }) => {
     });
     const  {token} = response.data.data;
     const success = response.data.status === 'success';
-    const  user  = response.data.data.user 
+    const  {user}  = response.data.data
     return { success, token: token , user: user }
     
   }catch (error) {

@@ -42,7 +42,7 @@ const LoginPage = () => {
     });
 
     if(data.success){
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('authToken', data.token);
         //localStorage.setItem('Authorization', JSON.stringify(Authorization));
         //將 userid儲存進去，以幫助跳轉使用者時使用
         localStorage.setItem('user', data.user)
@@ -92,7 +92,7 @@ const LoginPage = () => {
       <button>
         <AdminLogInBtn  onClick={handleClick}/>
       </button>
-      <div className={styles.linkText} onClick={()=>{navigate('/setting')}}>註冊</div>
+      <div className={styles.linkText} onClick={()=>{navigate('/register')}}>註冊</div>
       <div className={styles.linkText} onClick={()=>{navigate('/admin')}}>後台登入</div>
     </div>
   );

@@ -8,8 +8,8 @@ import MainReplyPage from './MainReplylPage'
 import MainTweetPage from './MainTweetPage'
 import SettingPage from './SettingPage'
 import LoginPage from './LoginPage'
-
-
+import ReplyListPage from './ReplyListPage'
+import RegisterPage from './RegisterPage'
 
 export  {
 MainPage,
@@ -20,4 +20,6 @@ AdminPage,
 AdminUserPage, 
 AdminMainPage, 
 SettingPage,
-LoginPage}  
+LoginPage, 
+ReplyListPage,
+RegisterPage}  

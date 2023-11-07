@@ -28,8 +28,8 @@ const AdminMainPage = ()=> {
   useEffect(() => {
     const getAdminTweetsAsync = async () => {
     try {
-    const todos = await getAdminTweets();
-    setTweets(todos.map((tweet ) => ({...tweet})));
+    const tweets = await getAdminTweets();
+    setTweets(tweets.map((tweet ) => ({...tweet})));
     } catch (error) {
     console.error (error);
     }

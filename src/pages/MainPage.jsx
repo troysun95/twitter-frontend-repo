@@ -11,20 +11,16 @@ import { useNavigate } from "react-router-dom";
 import {getTweets} from "api/twitter"
 
 //假資料
-import {prevUser} from "data/user"
 import { useState,useEffect } from "react";
 
 
 
 const MainPage = ()=> {
-  
-  const [tweets, setTweets] = useState();
+  const [tweets, setTweets] = useState([]);
   const [inputValue, setInputValue] = useState("");
-  const [isSubmit, setIsSubmit] = useState(false)
-
-  
- 
+  const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate()
+  const user = localStorage.getItem("user")
 
   //handler
 
@@ -37,14 +33,8 @@ const MainPage = ()=> {
   const handleSubmitTweet = ()=>{
     if(inputValue.length !== 0 &&  inputValue.length < 150){
        const newTweet = {
-         id: tweets.length + 1,
-         avatar:prevUser.avatar,
-         name:prevUser.name,
-         account:prevUser.account, 
-         time:"5hrs", 
-         tweet:inputValue,
-         relpyedCounts:0,
-         likedCounts:0,
+       id: tweets.length + 1,
+       descrption: inputValue
      }
 
      //先取得所有推文，再新增推文
@@ -60,8 +50,11 @@ const MainPage = ()=> {
   useEffect(() => {
     const getTweetsAsync = async () => {
     try {
-    const todos = await getTweets();
-    setTweets(todos.map((tweet ) => ({...tweet})));
+    const tweets = await getTweets();
+    // let ids = []
+    // ids = tweets.map((tweet)=>ids.push(tweet.id))
+    // console.log(ids)
+    setTweets(tweets.map((tweet) => ({tweet})));
     } catch (error) {
     console.error (error);
     }
@@ -93,13 +86,10 @@ const MainPage = ()=> {
             <h4>首頁</h4>
           </div>
           
-          <ToTweetPanel user={prevUser} handleSubmitTweet={handleSubmitTweet} handleInputChange={handleInputChange} isSubmit={isSubmit}/>
-          {/* 抓User裡的推文資料，並用 外面那層的 updatedAt 排順序 */}
-          {tweets.map((tweet) => {
+          <ToTweetPanel user={user} handleSubmitTweet={handleSubmitTweet} handleInputChange={handleInputChange} isSubmit={isSubmit}/>
+           {tweets.map((tweet) => {
               return (
-                <TweetItem
-                  key={tweet.id}
-                  data={tweet.User}
+                <TweetItem  
                 />
               );
             })}
