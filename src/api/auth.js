@@ -14,10 +14,10 @@ export const adminLogin = async ({ account, password }) => {
     });
     const  {token} = response.data.data;
     const success = response.data.status === 'success';
-    const Authorization = {headers: {
-    Authorization: 'Bearer ' + token}}
-    console.log(Authorization)
-    return { success, token: token , Authorization}
+    // const Authorization = {headers: {
+    // Authorization: 'Bearer ' + token}}
+    // console.log(Authorization)
+    return { success, token: token }
     
   }catch (error) {
     console.error('[AdminLogin Failed]:', error);
@@ -37,10 +37,8 @@ export const Login = async ({ account, password }) => {
     });
     const  {token} = response.data.data;
     const success = response.data.status === 'success';
-    const Authorization = {headers: {
-    Authorization: 'Bearer ' + token}}
-    console.log(Authorization)
-    return { success, token: token , Authorization}
+    const  user  = response.data.data.user 
+    return { success, token: token , user: user }
     
   }catch (error) {
     console.error('[Login Failed]:', error);

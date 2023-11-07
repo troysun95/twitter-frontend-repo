@@ -5,19 +5,19 @@ export default function AdminTweetItem({data}) {
     return(
         <div className={styles.tweetContainer}>
             <div className={styles.avatarWrapper}>
-                <img src={data.avatar} alt={data.name} />
+                <img src={data.User.avatar} alt={data.User.name} />
             </div>
             <div className={styles.tweetWrapper}>
                 <div className={styles.userInfo}>
-                    <span className={styles.userName}>{data.name}</span>
+                    <span className={styles.userName}>{data.User.name}</span>
                     <div className={styles.accountWrapper}>
                         <span>@{data.account}</span>
-                        <span> . {data.time}</span>
+                        <span> . {data.createdAt}</span>
                     </div>
                     
                 </div>
                 <div className={styles.tweetWrapper}>
-                    <p className={styles.tweet}>{data.tweet}</p>
+                    <p className={styles.tweet}>{data.description}</p>
                 </div>
                 <div className={styles.iconWrapper}>
                     <DeletIcon/>

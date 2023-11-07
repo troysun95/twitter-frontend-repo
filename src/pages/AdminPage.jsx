@@ -66,21 +66,6 @@ const AdminPage = () => {
 
 
 
-  // 驗證用
-  //useEffect(() => {
-  //   const checkTokenIsValid = async () => {
-  //     const authToken = localStorage.getItem('authToken');
-  //     if (!authToken) {
-  //       navigate('/admin');
-  //     }
-  //     const result = await checkPermission(authToken);
-  //     if (!result) {
-  //       navigate('/admin');
-  //     }
-  //   };
-
-  //   checkTokenIsValid();
-  // }, [navigate]);
 
 
 
@@ -109,7 +94,7 @@ const AdminPage = () => {
       <button>
         <AdminLogInBtn  onClick={handleClick}/>
       </button>
-      <div className={styles.linkText}>前台登入</div>
+      <div className={styles.linkText} onClick={()=>{navigate('/login')}}>前台登入</div>
     </div>
   );
 };

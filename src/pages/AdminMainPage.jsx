@@ -1,4 +1,3 @@
-
 import MainNavbar from "components/MainNavbar";
 import NavItem from "components/NavItem";
 import AdminTweetList from "components/AdminTweetList"
@@ -7,7 +6,7 @@ import{ReactComponent as HomeActiveIcon} from "icons/homeActive.svg"
 import{ReactComponent as UserIcon} from "icons/user.svg";
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
-import {getTweets} from"api/twitter"
+import {getAdminTweets} from"api/twitter"
 
 
 
@@ -19,7 +18,7 @@ const AdminMainPage = ()=> {
 
   const handleClick = () => {
     localStorage.removeItem('authToken');
-    //localStorage.removeItem('Authorization');
+    localStorage.removeItem('Authorization');
     navigate('/admin');
   };
 
@@ -27,15 +26,15 @@ const AdminMainPage = ()=> {
 
 
   useEffect(() => {
-    const getTweetsAsync = async () => {
+    const getAdminTweetsAsync = async () => {
     try {
-    const todos = await getTweets();
-    setTweets(todos.map((tweet ) => ({tweet })));
+    const todos = await getAdminTweets();
+    setTweets(todos.map((tweet ) => ({...tweet})));
     } catch (error) {
     console.error (error);
     }
     };
-    getTweetsAsync();
+    getAdminTweetsAsync();
     }, []);
 
 

@@ -24,6 +24,11 @@ const LoginPage = () => {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate('')
+
+  
+
+
+  //handler
   const handleClick = async () => {
     if (account.length === 0) {
         return;
@@ -31,15 +36,17 @@ const LoginPage = () => {
     if (password.length === 0) {
         return;
     }
-    const  {success, token, Authorization} = await Login({
+    const data = await Login({
     account,
     password
     });
 
-    if(success){
-        localStorage.setItem('token', token);
-        console.log(token)
-        localStorage.setItem('Authorization', JSON.stringify(Authorization));
+    if(data.success){
+        localStorage.setItem('token', data.token);
+        //localStorage.setItem('Authorization', JSON.stringify(Authorization));
+        //將 userid儲存進去，以幫助跳轉使用者時使用
+        localStorage.setItem('user', data.user)
+        
         Swal.fire({
             position: 'top',
             title: '登入成功！',

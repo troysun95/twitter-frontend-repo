@@ -8,25 +8,22 @@ import  {ReactComponent as SettingIcon} from "icons/setting.svg"
 import PopularList from "components/PopularList";
 import TweetItem from "components/TweetItems/TweetItem";
 import { useNavigate } from "react-router-dom";
-//import * as jwt from "jsonwebtoken";
+import {getTweets} from "api/twitter"
 
 //假資料
 import {prevUser} from "data/user"
-import {tweets} from "data/tweets"
 import { useState,useEffect } from "react";
 
 
 
 const MainPage = ()=> {
-    //寫法可能要改，若回傳Alltweets ，只需要取第一層
-  const [tweetsList, setTweetsList] = useState(tweets)
+  
+  const [tweets, setTweets] = useState();
   const [inputValue, setInputValue] = useState("");
   const [isSubmit, setIsSubmit] = useState(false)
 
   
-  //const [isAuthenticated, setIsAuthenticated] = useState(false);
-  //const [payload, setPayload] = useState(null);
-  // 儲存 userInfo 物件方便運用，裡面包含 account、avatar、banner、name 等
+ 
   const navigate = useNavigate()
 
   //handler
@@ -35,110 +32,82 @@ const MainPage = ()=> {
     setInputValue(value);
   };
 
+ 
+ //發送推文
   const handleSubmitTweet = ()=>{
-   if(inputValue.length !== 0 &&  inputValue.length < 150){
-      const newTweet = {
-        id:tweetsList.length + 1,
-        avatar:prevUser.avatar,
-        name:prevUser.name,
-        account:prevUser.account, 
-        time:"5hrs", 
-        tweet:inputValue,
-        relpyedCounts:0,
-        likedCounts:0,
-    }
-    setTweetsList([...tweetsList, newTweet])
-    //console.log(`發文成功,內容為:${newTweet.id}`)
-    setInputValue("")
-    setIsSubmit(true)
-    setIsSubmit(false)
-   }
-    
-  }
+    if(inputValue.length !== 0 &&  inputValue.length < 150){
+       const newTweet = {
+         id: tweets.length + 1,
+         avatar:prevUser.avatar,
+         name:prevUser.name,
+         account:prevUser.account, 
+         time:"5hrs", 
+         tweet:inputValue,
+         relpyedCounts:0,
+         likedCounts:0,
+     }
 
+     //先取得所有推文，再新增推文
+     setTweets([...tweets, newTweet])
+     setInputValue("")
+
+     setIsSubmit(true)
+     setIsSubmit(false)
+    }
+  }   
+
+  
   useEffect(() => {
-    const checkTokenIsValid = async () => {
-      // 從 localStorage 拿 token
-      const authToken = localStorage.getItem("authToken");
-      // 如果 token 不存在則進行相關設定
-      if (!authToken) {
-        //setIsAuthenticated(false);
-        //setPayload(null);
-        return navigate('/admin')
-      }
-      
-      // if (authToken) {
-      //   //const tempPayload = jwt.decode(authToken);
-      //   //setPayload(tempPayload);
-      //   // if (!tempPayload) {
-      //   //   setIsAuthenticated(false);
-      //   //   setPayload(null);
-      //   //   return navigate('/admin')
-      //   // }
-      //   // setIsAuthenticated(true);
-      //   // // 使用 localStorage 中的 userInfo 來初始化
-      //   // const savedUserInfo = localStorage.getItem("userInfo");
-      //   // if (savedUserInfo) {
-      //   //   setUserInfo(JSON.parse(savedUserInfo));
-      //   // }
-      //   // // 使用 localStorage 中的 tweetId 來初始化
-      //   // const savedTweetId = localStorage.getItem("tweetId");
-      //   // if (savedTweetId) {
-      //   //   setTweetId(savedTweetId);
-      //   }
-      //   } else {
-      //   // 無效
-      //   setIsAuthenticated(false);
-      //   setPayload(null);
-      //   navigate('/admin')
-      // }
+    const getTweetsAsync = async () => {
+    try {
+    const todos = await getTweets();
+    setTweets(todos.map((tweet ) => ({...tweet})));
+    } catch (error) {
+    console.error (error);
+    }
     };
-    checkTokenIsValid();
-    //console.log('AuthProvider 重新渲染')
-}, [ navigate]);
+    getTweetsAsync();
+    }, []);
 
 
 
   
   return(
-<div className={styles.appContainer}>
-    <div className={styles.navbarContainer}>
-      <MainNavbar>
-            <NavItem title="首頁"  toRoute='/main'>
-              <HomeActiveIcon/>
-            </NavItem>
-          <NavItem title="個人資料" toRoute='/user'>
-            <UserIcon/>
-          </NavItem>
-            <NavItem title="設定"   toRoute='setting'>
-                <SettingIcon/>
-            </NavItem>
-        
-       <button className={styles.tweetButton} onClick={()=>navigate('/main/tweet')}>推文</button>
-      </MainNavbar>
-    </div>
-    <div className={styles.content}>
-      <div className={styles.headerContainer}>
-        <h4>首頁</h4>
-      </div>
-      <ToTweetPanel user={prevUser} handleSubmitTweet={handleSubmitTweet} handleInputChange={handleInputChange} isSubmit={isSubmit}/>
-      {tweetsList.map((tweet) => {
-          return (
-            <TweetItem
-              key={tweet.id}
-              data={tweet}
-            />
-          );
+    <div className={styles.appContainer}>
+        <div className={styles.navbarContainer}>
+          <MainNavbar>
+              <NavItem title="首頁"  toRoute='/main'>
+                <HomeActiveIcon/>
+              </NavItem>
+              <NavItem title="個人資料" toRoute='/user'>
+                <UserIcon/>
+              </NavItem>
+              <NavItem title="設定"   toRoute='setting'>
+                  <SettingIcon/>
+              </NavItem>
+            <button className={styles.tweetButton} onClick={()=>navigate('/main/tweet')}>推文</button>
+          </MainNavbar>
+        </div>
+        <div className={styles.content}>
+          <div className={styles.headerContainer}>
+            <h4>首頁</h4>
+          </div>
           
-        })}
+          <ToTweetPanel user={prevUser} handleSubmitTweet={handleSubmitTweet} handleInputChange={handleInputChange} isSubmit={isSubmit}/>
+          {/* 抓User裡的推文資料，並用 外面那層的 updatedAt 排順序 */}
+          {tweets.map((tweet) => {
+              return (
+                <TweetItem
+                  key={tweet.id}
+                  data={tweet.User}
+                />
+              );
+            })}
+        </div>
+        <div className={styles.popularList}>
+            <PopularList/>
+        </div>
     </div>
-    <div className={styles.popularList}>
-        <PopularList/>
-    </div>
-</div>
-    
-
-
   )
 }
 
