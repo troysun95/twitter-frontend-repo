@@ -1,8 +1,9 @@
 import styles from "styles/ToTweetPanel.module.scss"
 import { ReactComponent as TweetBtn } from "icons/tweetBtn.svg"
 import { useState } from "react";
-export default function ToTweetPanel({user,handleSubmitTweet,handleInputChange,isSubmit}){
+export default function ToTweetPanel({user ,handleSubmitTweet ,handleInputChange,isSubmit}){
     const [inputValue, setInputValue]  = useState("");
+    
     //handler
     const handleChange = (event) => {
         setInputValue(event.target.value);

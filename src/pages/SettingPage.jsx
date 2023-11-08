@@ -14,25 +14,31 @@ import {prevUser} from "data/user"
 
 const SettingPage = ()=>{
     const navigate = useNavigate();
+    //const  prevUser = localStorage.getItem("user")
     const [user, setUser] = useState(prevUser);
-    console.log(prevUser);
+    //接資料接 user 的
+    //console.log(prevUser);
+    const [isError, setIsError]= useState(false);
     const [passwordConfirm, setPasswordConfirm] = useState("");
 
 
 
     const handleChange = (e, key) => {
+        
         setUser({
             ...user,
             [key]: e.target.value
         });
+        if(user.name.length >50 ){
+            setIsError(true)
+        }
         console.log(`更新後資料為${user}`)
     };
 
 
-
     const handleLogout = ()=>{
         localStorage.removeItem('authToken');
-        localStorage.removeItem('Authorization');
+        //localStorage.getItem("user")
         navigate('/login')
     }
 
@@ -42,11 +48,14 @@ const SettingPage = ()=>{
     }
 
     const handleSave = ()=>{
-        if(passwordConfirm === user.password){
-            setUser(user)
-            console.log(user)
-            //預計回傳使用者 ， api: post api/users
-        }else{console.error('不成功')}
+        // if(passwordConfirm === user.password){
+        //     setUser(user)
+        //     console.log(user)
+        //     //預計回傳使用者 ， api: post api/users/:id
+        //     //
+        // }else{console.error('不成功')}
+        setUser(user)
+        console.log(user)
     }
      
 
@@ -71,13 +80,13 @@ const SettingPage = ()=>{
                 <div className={styles.headerContainer}>
                     <h4>帳戶設定</h4>
                 </div>
-                    <SettingInput label="帳號"  placeholder= "" defaultValue={user.account} onChange={(e) => handleChange(e, 'account')}/>
-                    <SettingInput label="名稱"  placeholder= "" defaultValue={user.name} onChange={(e) => handleChange(e, 'name')}/>
-                    <SettingInput label="Email" defaultValue={user.email} onChange={(e) => handleChange(e, 'email')}/>
-                    <SettingInput label="密碼" placeholder="請設定密碼" defaultValue="" value={user.password}  onChange={(e) => handleChange(e, 'password')}/>
-                    <SettingInput label="密碼再確認" placeholder="請再次輸入密碼"  defaultValue="" value={passwordConfirm} onChange={handlePassworConfirm}/>          
+                    <SettingInput label="帳號"  placeholder= "" defaultValue={user.account} onChange={(e) => handleChange(e, 'account')} isError={isError} />
+                    <SettingInput label="名稱"  placeholder= "" defaultValue={user.name} onChange={(e) => handleChange(e, 'name')} isError={isError} errMassage="字數超過上限！"/>
+                    <SettingInput label="Email" defaultValue={user.email} onChange={(e) => handleChange(e, 'email')} isError={isError}/>
+                    <SettingInput label="密碼" placeholder="請設定密碼" defaultValue="" value={user.password}  onChange={(e) => handleChange(e, 'password')} isError={isError} />
+                    <SettingInput label="密碼再確認" placeholder="請再次輸入密碼"  defaultValue="" value={passwordConfirm} onChange={handlePassworConfirm} isError={isError} errMassage="輸入密碼不相同"/>          
+                <div className={styles.saveBtn} onClick={handleSave} ><SaveBtn /></div>
             </div>
-            <div className={styles.saveBtn} onClick={handleSave} ><SaveBtn /></div>
       </div>
     )
 }

@@ -13,7 +13,6 @@ axios.interceptors.request.use(
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
       console.log('取得token')
-      console.log(config.headers)
     }
     return config;
   },
@@ -60,7 +59,7 @@ export const getTweets = async () => {
 };
 
 
-export const UnlikeTweet = async (id) => {
+export const UnlikeTweet = async () => {
   try {
     const res = await axios.post(`${baseUrl}/api/tweets/:id/unlike`);
     return res.data;
@@ -69,5 +68,22 @@ export const UnlikeTweet = async (id) => {
   }
 };
 
+export const DeleteTweet = async () => {
+  try {
+    const res = await axios.post(`${baseUrl}/api/admin/tweets/:id`);
+    return res.data;
+  } catch (error) {
+    console.error('[Delete Tweet failed]: ', error);
+  }
+};
 
 
+//編輯個人頁面、設定個人資料
+export const EditUser = async () => {
+  try {
+    const res = await axios.put(`${baseUrl}/api/users/:id`);
+    return res.data;
+  } catch (error) {
+    console.error('[Delete Tweet failed]: ', error);
+  }
+};

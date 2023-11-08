@@ -19,7 +19,7 @@ export default function TweetModal({user}){
     return(
         <div className={styles.modalContainer}>
             <div className={styles.header}>
-                 <div className={styles.iconWrapper}><DeleteActive/></div>
+                 <div className={styles.iconWrapper} onClick={()=>{navigate('/main')}}><DeleteActive/></div>
             </div>
             <div className={styles.toTweetWrapper}>
                 <div className={styles.avatar}>

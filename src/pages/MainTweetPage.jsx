@@ -14,7 +14,7 @@ import { useEffect ,useState} from "react";
 const MainTweetPage= ()=> {
   const [tweets, setTweets] = useState([]);
   const user = localStorage.getItem('user')
-  //設定讓背景無法點擊
+  
   
   useEffect(() => {
     const getTweetsAsync = async () => {
@@ -33,19 +33,22 @@ const MainTweetPage= ()=> {
     <div className={styles.appContainerModal}>
         <div className={styles.navbarContainer}>
           <MainNavbar>
-                <NavItem title="首頁" toRoute="/main" >
+                <NavItem title="首頁" >
                   <HomeActiveIcon/>
                 </NavItem>
-              <NavItem title="個人資料" toRoute="/user">
+              <NavItem title="個人資料">
                 <UserIcon/>
               </NavItem>
-                <NavItem title="設定" toRoute="/setting">
+                <NavItem title="設定">
                     <SettingIcon/>
                 </NavItem>
           <button className={styles.tweetButton}>推文</button>
           </MainNavbar>
         </div>
         <div className={styles.content}> 
+        <div className={styles.headerContainer}>
+            <h4>推文</h4>
+          </div>
           <TweetModal user={user}/>
           <TweetList tweets={tweets} />
         </div>

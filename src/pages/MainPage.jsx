@@ -8,7 +8,7 @@ import  {ReactComponent as SettingIcon} from "icons/setting.svg"
 import PopularList from "components/PopularList";
 import TweetList from "components/TweetList";
 import { useNavigate } from "react-router-dom";
-import {getTweets} from "api/twitter"
+import {getTweets} from "api/twitter";
 
 //假資料
 import { useState,useEffect } from "react";
@@ -28,6 +28,7 @@ const MainPage = ()=> {
     setInputValue(value);
   };
 
+  //頁面跳轉
 
   const handleLogout =()=>{
     localStorage.removeItem('authToken');
@@ -41,32 +42,46 @@ const MainPage = ()=> {
   const handleSubmitTweet = ()=>{
     if(inputValue.length !== 0 &&  inputValue.length < 150){
        const newTweet = {
-       id: tweets.length + 1,
-       descrption: inputValue
-     }
+        id: tweets.length + 1,
+        descrption: inputValue,
+        createdAt: "剛剛",
+        updatedAt: "2023-11-05T12:50:12.000Z", //發文時間函式
+        User:{...user},
+        Replies: [
+              {
+              }
+          ],
+        LikedUsers: [],
+        repliesAmount: 0,
+        likesAmount: 0
+      }
 
+     console.log(newTweet)
      //先取得所有推文，再新增推文
      setTweets([...tweets, newTweet])
      setInputValue("")
-
      setIsSubmit(true)
      setIsSubmit(false)
     }
-  }   
+  }
+ 
 
+ 
+  let date = new Date().toDateString();
+  console.log(date);
   
   useEffect(() => {
     const getTweetsAsync = async () => {
     try {
     const tweets = await getTweets();
-    console.log(tweets)
+    console.log(tweets);
     setTweets(tweets.map((tweet) => ({...tweet})));
     } catch (error) {
     console.error (error);
     }
     };
     getTweetsAsync();
-    }, []);
+    }, [tweets]);
 
 
 
@@ -75,15 +90,23 @@ const MainPage = ()=> {
     <div className={styles.appContainer}>
         <div className={styles.navbarContainer}>
           <MainNavbar handleLogout={handleLogout}>
-              <NavItem title="首頁"  toRoute='/main'>
+            <div onClick={()=>navigate('/main')}>
+              <NavItem title="首頁"  >
                 <HomeActiveIcon/>
               </NavItem>
-              <NavItem title="個人資料" toRoute='/user'>
+            </div>
+            <div onClick={()=>navigate('/user')}>
+              <NavItem title="個人資料">
                 <UserIcon/>
               </NavItem>
-              <NavItem title="設定"   toRoute='setting'>
+            </div>
+            <div onClick={()=>navigate('/setting')}>
+              <NavItem title="設定" >
                   <SettingIcon/>
-              </NavItem>
+                </NavItem>
+            </div>
+              
+              
             <button className={styles.tweetButton} onClick={()=>navigate('/main/tweet')}>推文</button>
           </MainNavbar>
         </div>
@@ -91,13 +114,12 @@ const MainPage = ()=> {
           <div className={styles.headerContainer}>
             <h4>首頁</h4>
           </div>
-          
           <ToTweetPanel user={user} handleSubmitTweet={handleSubmitTweet} handleInputChange={handleInputChange} isSubmit={isSubmit}/>
           <TweetList tweets={tweets} />
         </div>
         <div className={styles.popularList}>
             <PopularList/>
-        </div>
+        </div> 
     </div>
   )
 }
