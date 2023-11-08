@@ -56,7 +56,6 @@ const MainPage = ()=> {
         likesAmount: 0
       }
 
-     console.log(newTweet)
      //先取得所有推文，再新增推文
      setTweets([...tweets, newTweet])
      setInputValue("")
@@ -67,14 +66,15 @@ const MainPage = ()=> {
  
 
  
-  let date = new Date().toDateString();
-  console.log(date);
+  //let date = new Date().toDateString();
   
   useEffect(() => {
     const getTweetsAsync = async () => {
     try {
     const tweets = await getTweets();
-    console.log(tweets);
+    //  tweetsArranged.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt));
+    // setTweets(tweetsArranged);
+    setTweets(tweets);
     setTweets(tweets.map((tweet) => ({...tweet})));
     } catch (error) {
     console.error (error);
@@ -82,8 +82,6 @@ const MainPage = ()=> {
     };
     getTweetsAsync();
     }, [tweets]);
-
-
 
   
   return(
@@ -114,7 +112,7 @@ const MainPage = ()=> {
           <div className={styles.headerContainer}>
             <h4>首頁</h4>
           </div>
-          <ToTweetPanel user={user} handleSubmitTweet={handleSubmitTweet} handleInputChange={handleInputChange} isSubmit={isSubmit}/>
+          <ToTweetPanel  handleSubmitTweet={handleSubmitTweet} handleInputChange={handleInputChange} isSubmit={isSubmit}/>
           <TweetList tweets={tweets} />
         </div>
         <div className={styles.popularList}>

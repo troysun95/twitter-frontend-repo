@@ -28,7 +28,7 @@ export default function TweetItem({data}){
     }
 
     const  handleReply =()=>{
-        navigate('replylist')
+        navigate('/replylist')
     }
     
     return(

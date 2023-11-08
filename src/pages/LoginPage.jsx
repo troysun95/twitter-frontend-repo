@@ -41,11 +41,13 @@ const LoginPage = () => {
     password
     });
 
+    console.log({account:account, password:password})
+
     if(data.success){
         localStorage.setItem('authToken', data.token);
         //localStorage.setItem('Authorization', JSON.stringify(Authorization));
         //將 userid儲存進去，以幫助跳轉使用者時使用
-        localStorage.setItem('user', data.user.data)
+        localStorage.setItem('user', JSON.stringify(data.user));
         
         Swal.fire({
             position: 'top',
