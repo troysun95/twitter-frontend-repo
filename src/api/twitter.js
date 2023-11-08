@@ -58,3 +58,21 @@ export const getTweets = async () => {
     console.error('[Get TWeets failed]: ', error);
   }
 };
+
+// UserPage
+// 使用者點擊時能瀏覽使用者的推文
+// GET /api/users/:id/tweets
+export const getUserTweets = async (id) => {
+  try {
+    // const res = await axios.get(`${baseUrl}/api/users/${id}/tweets`);
+    const {data} = await axios.get(`${baseUrl}/api/users/${id}/tweets`);
+
+    console.log('tweets.js 裡的 getUserTweets 回傳值: ', data);
+    // 這邊要注意回傳內容，只有一層 data
+    // return res.data;
+    return data;
+
+  } catch (error) {
+    console.error('[Get AllTweets failed]: ', error);
+  }
+};

@@ -1,8 +1,11 @@
-import { useState } from "react";
+// import { useState } from "react";
+import { useState, useEffect } from "react";//add
+import {Login, checkPermission} from '../api/auth'
+
 import styles from "styles/AdminPage.module.scss";
 import { ReactComponent as AdminLogInBtn } from "icons/adminLoginBtn.svg";
 import { ReactComponent as Logo } from "icons/logo.svg";
-import {Login} from '../api/auth'
+// import {Login} from '../api/auth'
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom"; 
 
@@ -24,9 +27,6 @@ const LoginPage = () => {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate('')
-
-  
-
 
   //handler
   const handleClick = async () => {
@@ -54,7 +54,9 @@ const LoginPage = () => {
             icon: 'success',
             showConfirmButton: false,
         });
-        navigate('/main');
+        // navigate('/main');
+        navigate('/user');
+
     }else{
         Swal.fire({
             position: 'top',
@@ -66,6 +68,22 @@ const LoginPage = () => {
       }
     };
 
+  useEffect(() => {
+    //add
+    const checkTokenIsValid = async () => {
+      const authToken = localStorage.getItem("authToken");
+      if (!authToken) {
+        return;
+      }
+      const result = await checkPermission(authToken);
+
+      if (result) {
+        navigate('/user');
+      }
+    };
+    checkTokenIsValid();
+  }, [navigate]);
+  
   return (
     <div className={styles.adminLogInContainer}>
       <div className={styles.brandContainer}>
