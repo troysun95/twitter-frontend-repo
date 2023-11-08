@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import { ReactComponent as HomeIcon } from "icons/home.svg";
 import { ReactComponent as UserActiveIcon } from "icons/userActive.svg";
+import { ReactComponent as GoBackBtnIcon } from "icons/goBackBtn.svg";
+
 import { ReactComponent as EditProfileBtnIcon } from "icons/editProfileBtn.svg";
 import MainNavbar from "components/MainNavbar";
 import NavItem from "components/NavItem";
@@ -12,7 +15,12 @@ import styles from "styles/UserSelfPage.module.scss";
 import styles3 from "styles/Layout3.module.scss";
 import styles4 from "styles/tweetsCollection.module.scss";
 
-import { getUserTweets } from "../api/twitter.js";
+import {
+  getUserTweets,
+  getUserFollowings,
+  getUserFollowers,
+  getTopTenUsers,
+} from "../api/twitter.js";
 // import { useNavigate } from "react-router-dom";
 // import { checkPermission } from "../api/auth";
 
@@ -45,7 +53,7 @@ const UserProfile = ({ userInfo }) => {
         </div>
         <div className={styles.accountTitle}>
           <p className={styles.accountName}>{userInfo.name}</p>
-          <p className={styles.subTitle}>{userInfo.account}</p>
+          <p className={styles.subTitle}>@{userInfo.account}</p>
           <p className={styles.bio}>{userInfo.introduction}</p>
           <div className={styles.trackingStatus}>
             <p className={styles.followingNum}>
@@ -65,6 +73,18 @@ const UserProfile = ({ userInfo }) => {
 const UserContent = ({ tweets, userInfo }) => {
   return (
     <div className={styles3.content}>
+      <div className={styles.headerContainer}>
+        <Link to="/main">
+          <div className={styles.iconContainer}>
+            <GoBackBtnIcon />
+          </div>
+        </Link>
+
+        <div className={styles.headerTitle}>
+          <h5>{userInfo.name}</h5>
+          <p>{tweets.length} 推文</p>
+        </div>
+      </div>
       <UserProfile userInfo={userInfo} />
       <SwitchButtonPanel />
 
@@ -83,6 +103,7 @@ const UserPage = () => {
   // const [userContent, setUserContent] = useState('tweets')
   const [tweets, setTweets] = useState([]); //user發文
   //const [replies, setReplies] = useState([]); //user回覆
+  //const [followings, setFollowings] = useState([]); //user發文
 
   useEffect(() => {
     // 瀏覽使用者的推文
@@ -92,7 +113,7 @@ const UserPage = () => {
         // 確認是否有tweets
         if (tweets) {
           setTweets(tweets.map((tweet) => ({ ...tweet })));
-          console.log("tweets", tweets);
+          // console.log("tweets", tweets);
         }
         // else {
         //   setTweets(null);
@@ -101,7 +122,55 @@ const UserPage = () => {
         console.error("error", error);
       }
     };
+
+    const getUserFollowingsAsync = async () => {
+      try {
+        const followings = await getUserFollowings(id);
+        if (followings) {
+          // setFollowings(followings.map((following) => ({ ...following })));
+          // console.log("followings", followings);
+        }
+        // else {
+        //   setFollowings(null);
+        // }
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+    const getUserFollowersAsync = async () => {
+      try {
+        const followers = await getUserFollowers(id);
+        if (followers) {
+          // setFollowers(followers.map((follower) => ({ ...follower })));
+          console.log("followings", followers);
+        }
+        // else {
+        //   setFollowers(null);
+        // }
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+
+    const getTopTenUsersAsync = async () => {
+      try {
+        const topTenUsers = await getTopTenUsers(id);
+        if (topTenUsers) {
+          // setTopTenUsers(topTenUsers.map((topTenUser) => ({ ...topTenUser })));
+          console.log("topTenUsers", topTenUsers);
+        }
+        // else {
+        //   setTopTenUsers(null);
+        // }
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
     getUserTweetsAsync();
+    getUserFollowingsAsync();
+    getUserFollowersAsync()
+    getTopTenUsersAsync();
+
   }, [id]);
 
   // useEffect(() => {
