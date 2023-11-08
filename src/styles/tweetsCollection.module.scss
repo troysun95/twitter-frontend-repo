@@ -1,0 +1,100 @@
+.tweetsCollection {
+  width: 100%;
+  height: 100%;
+  overflow:hidden;
+
+  .tweetItem {
+    border: 1px solid #E6ECF0;
+    display: flex;
+    padding: 16px 24px;
+    width: 100%;
+    height: auto;//顯示全內容 // ? 要做 max-height嗎? 
+    //超過100 vh 分段顯示 
+    //(若需時間載入，可以做資料動畫 loading)
+
+    .avatar {
+      height: 50px;
+      min-width: 50px;
+      margin-right: 8px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
+    }
+    // 第一列
+    .accountTitle {
+      display: flex;
+      align-items: center;
+
+      .accountName {
+        margin-right: 8px;
+        color: var(--grey-900);
+        font-weight: 700;
+        line-height: 26px;
+      }
+      .subTitle {
+        font-size: var(--secondary-font-size);
+        font-weight: 400;
+        line-height: 22px;
+        color: var(--secondary);
+      }
+    }
+    // 回覆
+    .replyToContainer {
+      margin: 8px 0;
+      font-size: var(--secondary-font-size);
+      font-weight: 400;
+      line-height: 22px;
+      color: var(--secondary);
+      
+      .replyTo {
+      color: var(--orange);
+      }
+    }
+    // 訊息
+    .messageContainer {
+      width: 528px;
+      font-size: var(--main-font-size);
+      line-height: 26px;
+    }
+
+    // 互動按鈕
+    .interactionContainer {
+      margin-top: 8px;
+      display: flex;
+
+      .leftIcon{
+        margin-right: 40px;
+      }
+
+      .iconContainer {
+        margin-right: 8px;
+      }
+
+      .icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+} 
+
+.accountTrackingContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 528px;
+  height: 40px;
+}
+
+.bioContainer {
+  margin-top: 8px;
+  max-width: 528px;
+  line-height: 26px;
+  white-space: normal;
+
+  p {
+    white-space: normal;
+  }
+}
