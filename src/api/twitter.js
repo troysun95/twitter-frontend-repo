@@ -78,7 +78,7 @@ export const getUserTweets = async (id) => {
 // 使用者所有回覆推文
 export const getUserReplies = async (id) => {
   try {
-    const {data} = await axios.get(`${baseUrl}/api/users/${id}/replies`);
+    const {data} = await axios.get(`${baseUrl}/api/users/${id}/replied_tweets`);
     console.log('tweets.js裡的 getUserReplies 回傳值: ', data);
     return data;
 

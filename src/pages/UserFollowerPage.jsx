@@ -5,7 +5,7 @@ import NavItem from "components/NavItem";
 import UserFollowerItem from "components/TrackingItems/UserFollowerItem";
 import HeaderName from "components/HeaderName.jsx";
 import TrackingSwitchPanel from "components/TrackingSwitchPanel";
-// import PopularList from "components/PopularList.jsx";
+import PopularList from "components/PopularList.jsx";
 
 import { ReactComponent as HomeIcon } from "icons/home.svg";
 import { ReactComponent as UserActiveIcon } from "icons/userActive.svg";
@@ -80,7 +80,7 @@ const UserFollowerPage = () => {
         </MainNavbar>
       </div>
       <UserContent followers={followers}/>
-      {/* <PopularList /> */}
+      <PopularList />
     </div>
   );
 };

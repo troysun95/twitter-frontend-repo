@@ -54,7 +54,6 @@ const TweetsCollection = ({ replies }) => {
         return (
           <UserReplyItem
             key={userReplyItem.id}
-            // index={index}
             {...userReplyItem}
             // userAvatar={userInfo.avatar}
             // userName={userInfo.name}
@@ -169,8 +168,8 @@ const UserPage = () => {
         if (tweets) {
           setTweets(tweets.map((tweet) => ({ ...tweet })));
           console.log("tweets", tweets);
-          } else {
-            setTweets(null);
+        } else {
+          setTweets(null);
         }
       } catch (error) {
         console.error("error", error);
@@ -184,8 +183,7 @@ const UserPage = () => {
         if (replies) {
           setReplies(replies.map((reply) => ({ ...reply })));
           console.log("replies", replies);
-        }
-        else {
+        } else {
           setReplies(null);
         }
       } catch (error) {
@@ -199,8 +197,7 @@ const UserPage = () => {
         if (likes) {
           setLikes(likes.map((like) => ({ ...like })));
           console.log("likes", likes);
-        }
-        else {
+        } else {
           setLikes(null);
         }
       } catch (error) {
@@ -248,9 +245,9 @@ const UserPage = () => {
         console.error("error", error);
       }
     };
-    getUserTweetsAsync();
+    // getUserTweetsAsync();
     getUserRepliesAsync();
-    getUserLikesAsync();
+    // getUserLikesAsync();
     getUserFollowingsAsync();
     getUserFollowersAsync();
     getTopTenUsersAsync();
