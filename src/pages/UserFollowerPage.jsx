@@ -1,41 +1,65 @@
+import { useState, useEffect } from "react";
+// import { Link } from "react-router-dom";
 import MainNavbar from "components/MainNavbar";
 import NavItem from "components/NavItem";
 import UserFollowerItem from "components/TrackingItems/UserFollowerItem";
 import HeaderName from "components/HeaderName.jsx";
 import TrackingSwitchPanel from "components/TrackingSwitchPanel";
-import PopularList from "components/PopularList.jsx";
+// import PopularList from "components/PopularList.jsx";
 
 import { ReactComponent as HomeIcon } from "icons/home.svg";
 import { ReactComponent as UserActiveIcon } from "icons/userActive.svg";
 
 import styles from "styles/UserSelfPage.module.scss";
 import styles3 from "styles/Layout3.module.scss";
-import styles4 from "styles/tweetsCollection.module.scss";
+import styles4 from "styles/TweetsCollection.module.scss";
+import {getUserFollowers} from "../api/twitter.js";
 
-import { usersBio } from "data/usersBio.js";
-
-const TrackingCollection = () => {
+const TrackingCollection = ({ followers }) => {
   return (
     <div className={styles4.tweetsCollection}>
-      {usersBio[0].follower.reverse().map((usersBio) => {
-        return <UserFollowerItem key={usersBio.id} {...usersBio} />;
+      {followers.map((followerItem) => {
+        return <UserFollowerItem key={followerItem.id} {...followerItem} />;
       })}
     </div>
   );
 };
 
-const UserContent = () => {
+const UserContent = ({ followers }) => {
   return (
     <div className={styles.content}>
       <HeaderName />
       <TrackingSwitchPanel />
-      <TrackingCollection>
+      <TrackingCollection followers={followers}>
         <UserFollowerItem />
       </TrackingCollection>
     </div>
   );
 };
 const UserFollowerPage = () => {
+  const savedUserInfo = JSON.parse(localStorage.getItem("user"));
+  console.log("savedUserInfo", savedUserInfo);
+  const id = savedUserInfo.id;
+  
+  const [followers, setFollowers] = useState([]);
+
+  useEffect(() => {
+    const getUserFollowersAsync = async () => {
+      try {
+        const followers = await getUserFollowers(id);
+        if (followers) {
+          setFollowers(followers.map((follower) => ({ ...follower })));
+          console.log("followers", followers);
+        } else {
+          setFollowers(null);
+        }
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+    getUserFollowersAsync()
+  },[id]);
+
   return (
     <div className={styles3.appContainer}>
       <div className={styles3.navbarContainer}>
@@ -55,8 +79,8 @@ const UserFollowerPage = () => {
           </NavItem>
         </MainNavbar>
       </div>
-      <UserContent />
-      <PopularList />
+      <UserContent followers={followers}/>
+      {/* <PopularList /> */}
     </div>
   );
 };
