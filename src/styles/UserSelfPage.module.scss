@@ -72,16 +72,26 @@
       .trackingStatus {
         display: flex;
         margin-bottom: 16px;
-
+        font-weight: 400;
+        height: 22px;
+        font-size: var(--secondary-font-size);
+        a {
+          text-decoration: none;
+            color: var(--secondary);
+          p span {
+            color: var(--main-text);
+          }
+        }
+        
         .followingNum {
           margin-right: 20px;
+          text-decoration: none;
         }
       }
     }
   }
 
   .editProfileBtn {
-    outline: 1px solid red;
     all: unset;
     border: none;
     position: absolute;

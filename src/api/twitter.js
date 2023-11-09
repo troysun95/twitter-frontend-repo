@@ -75,16 +75,29 @@ export const getUserTweets = async (id) => {
   }
 };
 
-// export const getUserReplies = async (id) => {
-//   try {
-//     const {data} = await axios.get(`${baseUrl}/api/users/${id}/tweets`);
-//     console.log('tweets.js裡的 getUserReplies 回傳值: ', data);
-//     return data;
+// 使用者所有回覆推文
+export const getUserReplies = async (id) => {
+  try {
+    const {data} = await axios.get(`${baseUrl}/api/users/${id}/replies`);
+    console.log('tweets.js裡的 getUserReplies 回傳值: ', data);
+    return data;
 
-//   } catch (error) {
-//     console.error('[Get AllReplies failed]: ', error);
-//   }
-// };
+  } catch (error) {
+    console.error('[Get AllReplies failed]: ', error);
+  }
+};
+
+// 使用者瀏覽 like 過的推文清單
+export const getUserLikes = async (id) => {
+  try {
+    const {data} = await axios.get(`${baseUrl}/api/users/${id}/likes`);
+    console.log('tweets.js裡的 getUserLikes 回傳值: ', data);
+    return data;
+
+  } catch (error) {
+    console.error('[Get AllLikes failed]: ', error);
+  }
+};
 
 export const getUserFollowings = async (id) => {
   try {

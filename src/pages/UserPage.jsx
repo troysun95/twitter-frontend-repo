@@ -9,8 +9,10 @@ import MainNavbar from "components/MainNavbar";
 import NavItem from "components/NavItem";
 import SwitchButtonPanel from "components/SwitchButtonPanel";
 import UserTweetItem from "components/TweetItems/UserTweetItem";
-import HeaderName from "components/HeaderName.jsx"
-import PopularList from "components/PopularList.jsx";
+import UserReplyItem from "components/TweetItems/UserReplyItem";
+import UserLikeItem from "components/TweetItems/UserLikeItem";
+import HeaderName from "components/HeaderName";
+import PopularList from "components/PopularList";
 
 import styles from "styles/UserSelfPage.module.scss";
 import styles3 from "styles/Layout3.module.scss";
@@ -21,28 +23,50 @@ import {
   getUserFollowings,
   getUserFollowers,
   getTopTenUsers,
+  getUserReplies,
+  getUserLikes,
 } from "../api/twitter.js";
 // import { useNavigate } from "react-router-dom";
 // import { checkPermission } from "../api/auth";
 
-const TweetsCollection = ({ tweets, userInfo }) => {
+// const TweetsCollection = ({ tweets, userInfo }) => {
+//   return (
+//     <div className={styles4.tweetsCollection}>
+//       {tweets.map((userTweetItem) => {
+//         return (
+//           <UserTweetItem
+//             key={userTweetItem.id}
+//             {...userTweetItem}
+//             userAvatar={userInfo.avatar}
+//             userName={userInfo.name}
+//             userAccount={userInfo.account}
+//           />
+//         );
+//       })}
+//     </div>
+//   );
+// };
+
+const TweetsCollection = ({ replies }) => {
   return (
     <div className={styles4.tweetsCollection}>
-      {tweets.map((userTweetItem) => {
+      {replies.map((userReplyItem) => {
         return (
-          <UserTweetItem
-            key={userTweetItem.id}
-            {...userTweetItem}
-            userAvatar={userInfo.avatar}
-            userName={userInfo.name}
-            userAccount={userInfo.account}
+          <UserReplyItem
+            key={userReplyItem.id}
+            // index={index}
+            {...userReplyItem}
+            // userAvatar={userInfo.avatar}
+            // userName={userInfo.name}
+            // userAccount={userInfo.account}
+            // comment={userReplyItem.comment}
           />
         );
       })}
     </div>
   );
 };
-const UserProfile = ({ userInfo }) => {
+const UserProfile = ({ userInfo, followers, followings }) => {
   return (
     <div className={styles.userProfileContainer}>
       <div className={styles.userProfileBg}>
@@ -59,11 +83,13 @@ const UserProfile = ({ userInfo }) => {
           <div className={styles.trackingStatus}>
             <Link to="/user/following">
               <p className={styles.followingNum}>
-                {userInfo.followingNum}個追隨中
+                <span>{followings.length} 個</span>追隨中
               </p>
             </Link>
             <Link to="/user/follower">
-              <p>{userInfo.followerNum}位追隨者</p>
+              <p>
+                <span>{followers.length} 位</span>追隨者
+              </p>
             </Link>
           </div>
         </div>
@@ -75,17 +101,44 @@ const UserProfile = ({ userInfo }) => {
   );
 };
 
-const UserContent = ({ tweets, userInfo }) => {
+const UserContent = ({
+  userContent,
+  tweets,
+  replies,
+  likes,
+  userInfo,
+  followers,
+  followings,
+  handleChangeUserContent,
+}) => {
   return (
     <div className={styles3.content}>
       <HeaderName />
-      
-      <UserProfile userInfo={userInfo} />
-      <SwitchButtonPanel />
 
-      <TweetsCollection tweets={tweets} userInfo={userInfo}>
-        <UserTweetItem userInfo={userInfo} />
-      </TweetsCollection>
+      <UserProfile
+        userInfo={userInfo}
+        followers={followers}
+        followings={followings}
+      />
+      <SwitchButtonPanel
+        userContent={userContent}
+        handleChangeUserContent={handleChangeUserContent}
+      />
+      {userContent === "tweets" && (
+        <TweetsCollection tweets={tweets} userInfo={userInfo}>
+          <UserTweetItem userInfo={userInfo} />
+        </TweetsCollection>
+      )}
+      {userContent === "replies" && (
+        <TweetsCollection replies={replies} userInfo={userInfo}>
+          <UserReplyItem />
+        </TweetsCollection>
+      )}
+      {userContent === "likes" && (
+        <TweetsCollection>
+          <UserLikeItem />
+        </TweetsCollection>
+      )}
     </div>
   );
 };
@@ -95,12 +148,17 @@ const UserPage = () => {
   console.log("savedUserInfo", savedUserInfo);
   const id = savedUserInfo.id;
 
-  // const [userContent, setUserContent] = useState('tweets')
+  const [userContent, setUserContent] = useState("replies");
   const [tweets, setTweets] = useState([]); //user發文
-  //const [replies, setReplies] = useState([]); //user回覆
-  const [followers, setFollowers] = useState([]); 
-  const [followings, setFollowings] = useState([]); 
-  const [topTenUsers, setTopTenUsers] = useState([]); 
+  const [replies, setReplies] = useState([]); //user回覆
+  const [likes, setLikes] = useState([]);
+  const [followers, setFollowers] = useState([]);
+  const [followings, setFollowings] = useState([]);
+  const [topTenUsers, setTopTenUsers] = useState([]);
+
+  const handleChangeUserContent = (clickItems) => {
+    setUserContent(clickItems);
+  };
 
   useEffect(() => {
     // 瀏覽使用者的推文
@@ -111,9 +169,39 @@ const UserPage = () => {
         if (tweets) {
           setTweets(tweets.map((tweet) => ({ ...tweet })));
           console.log("tweets", tweets);
+          } else {
+            setTweets(null);
+        }
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+
+    const getUserRepliesAsync = async () => {
+      try {
+        const replies = await getUserReplies(id);
+        // 確認是否有tweets
+        if (replies) {
+          setReplies(replies.map((reply) => ({ ...reply })));
+          console.log("replies", replies);
         }
         else {
-          setTweets(null);
+          setReplies(null);
+        }
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+
+    const getUserLikesAsync = async () => {
+      try {
+        const likes = await getUserLikes(id);
+        if (likes) {
+          setLikes(likes.map((like) => ({ ...like })));
+          console.log("likes", likes);
+        }
+        else {
+          setLikes(null);
         }
       } catch (error) {
         console.error("error", error);
@@ -126,8 +214,7 @@ const UserPage = () => {
         if (followings) {
           setFollowings(followings.map((following) => ({ ...following })));
           console.log("followings", followings);
-        }
-        else {
+        } else {
           setFollowings(null);
         }
       } catch (error) {
@@ -140,8 +227,7 @@ const UserPage = () => {
         if (followers) {
           setFollowers(followers.map((follower) => ({ ...follower })));
           console.log("followers", followers);
-        }
-        else {
+        } else {
           setFollowers(null);
         }
       } catch (error) {
@@ -155,8 +241,7 @@ const UserPage = () => {
         if (topTenUsers) {
           // setTopTenUsers(topTenUsers.map((topTenUser) => ({ ...topTenUser })));
           console.log("topTenUsers", topTenUsers);
-        }
-        else {
+        } else {
           setTopTenUsers(null);
         }
       } catch (error) {
@@ -164,6 +249,8 @@ const UserPage = () => {
       }
     };
     getUserTweetsAsync();
+    getUserRepliesAsync();
+    getUserLikesAsync();
     getUserFollowingsAsync();
     getUserFollowersAsync();
     getTopTenUsersAsync();
@@ -206,15 +293,17 @@ const UserPage = () => {
         </MainNavbar>
       </div>
       <UserContent
-        // userContent={userContent}
+        userContent={userContent}
         // onClick={handleClick}
         followers={followers}
         followings={followings}
         userInfo={savedUserInfo}
         tweets={tweets}
+        replies={replies}
         topTenUsers={topTenUsers}
+        handleChangeUserContent={handleChangeUserContent}
       />
-      <PopularList />
+      <PopularList topTenUsers={topTenUsers} />
     </div>
   );
 };

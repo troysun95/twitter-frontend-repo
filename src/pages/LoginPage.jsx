@@ -42,21 +42,21 @@ const LoginPage = () => {
     });
 
     if(data.success){
-        localStorage.setItem('authToken', data.token);
-        //localStorage.setItem('Authorization', JSON.stringify(Authorization));
-        //將 userid儲存進去，以幫助跳轉使用者時使用
-        localStorage.setItem('user', data.user)
-        
-        Swal.fire({
-            position: 'top',
-            title: '登入成功！',
-            timer: 1000,
-            icon: 'success',
-            showConfirmButton: false,
-        });
-        // navigate('/main');
-        navigate('/user');
+      localStorage.setItem("authToken", data.token);
+      //localStorage.setItem('Authorization', JSON.stringify(Authorization));
+      //將 userid儲存進去，以幫助跳轉使用者時使用
+      // localStorage.setItem('user', data.user)
+      localStorage.setItem("user", JSON.stringify(data.user)) //try
 
+      Swal.fire({
+        position: "top",
+        title: "登入成功！",
+        timer: 1000,
+        icon: "success",
+        showConfirmButton: false,
+      });
+      // navigate('/main');
+      navigate("/user");
     }else{
         Swal.fire({
             position: 'top',

@@ -13,7 +13,7 @@ function SwitchButton ({title, isActive, id, handelClick}){
 
 export default function SwitchButtonPanel() {
     //state
-    const prevActive = [1, 0 ]
+    const prevActive = [0, 1 ]
     const [isActive, setIsActive] = useState(prevActive)
     const navigate = useNavigate('')
 
