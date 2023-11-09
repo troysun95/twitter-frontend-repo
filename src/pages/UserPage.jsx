@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 
 import { ReactComponent as HomeIcon } from "icons/home.svg";
 import { ReactComponent as UserActiveIcon } from "icons/userActive.svg";
-import { ReactComponent as GoBackBtnIcon } from "icons/goBackBtn.svg";
 
 import { ReactComponent as EditProfileBtnIcon } from "icons/editProfileBtn.svg";
 import MainNavbar from "components/MainNavbar";
 import NavItem from "components/NavItem";
 import SwitchButtonPanel from "components/SwitchButtonPanel";
 import UserTweetItem from "components/TweetItems/UserTweetItem";
+import HeaderName from "components/HeaderName.jsx"
+import PopularList from "components/PopularList.jsx";
 
 import styles from "styles/UserSelfPage.module.scss";
 import styles3 from "styles/Layout3.module.scss";
@@ -56,10 +57,14 @@ const UserProfile = ({ userInfo }) => {
           <p className={styles.subTitle}>@{userInfo.account}</p>
           <p className={styles.bio}>{userInfo.introduction}</p>
           <div className={styles.trackingStatus}>
-            <p className={styles.followingNum}>
-              {userInfo.followingNum}個追隨中
-            </p>
-            <p>{userInfo.followerNum}位追隨者</p>
+            <Link to="/user/following">
+              <p className={styles.followingNum}>
+                {userInfo.followingNum}個追隨中
+              </p>
+            </Link>
+            <Link to="/user/follower">
+              <p>{userInfo.followerNum}位追隨者</p>
+            </Link>
           </div>
         </div>
       </div>
@@ -73,18 +78,8 @@ const UserProfile = ({ userInfo }) => {
 const UserContent = ({ tweets, userInfo }) => {
   return (
     <div className={styles3.content}>
-      <div className={styles.headerContainer}>
-        <Link to="/main">
-          <div className={styles.iconContainer}>
-            <GoBackBtnIcon />
-          </div>
-        </Link>
-
-        <div className={styles.headerTitle}>
-          <h5>{userInfo.name}</h5>
-          <p>{tweets.length} 推文</p>
-        </div>
-      </div>
+      <HeaderName />
+      
       <UserProfile userInfo={userInfo} />
       <SwitchButtonPanel />
 
@@ -103,7 +98,9 @@ const UserPage = () => {
   // const [userContent, setUserContent] = useState('tweets')
   const [tweets, setTweets] = useState([]); //user發文
   //const [replies, setReplies] = useState([]); //user回覆
-  //const [followings, setFollowings] = useState([]); //user發文
+  const [followers, setFollowers] = useState([]); 
+  const [followings, setFollowings] = useState([]); 
+  const [topTenUsers, setTopTenUsers] = useState([]); 
 
   useEffect(() => {
     // 瀏覽使用者的推文
@@ -113,11 +110,11 @@ const UserPage = () => {
         // 確認是否有tweets
         if (tweets) {
           setTweets(tweets.map((tweet) => ({ ...tweet })));
-          // console.log("tweets", tweets);
+          console.log("tweets", tweets);
         }
-        // else {
-        //   setTweets(null);
-        // }
+        else {
+          setTweets(null);
+        }
       } catch (error) {
         console.error("error", error);
       }
@@ -127,12 +124,12 @@ const UserPage = () => {
       try {
         const followings = await getUserFollowings(id);
         if (followings) {
-          // setFollowings(followings.map((following) => ({ ...following })));
-          // console.log("followings", followings);
+          setFollowings(followings.map((following) => ({ ...following })));
+          console.log("followings", followings);
         }
-        // else {
-        //   setFollowings(null);
-        // }
+        else {
+          setFollowings(null);
+        }
       } catch (error) {
         console.error("error", error);
       }
@@ -141,12 +138,12 @@ const UserPage = () => {
       try {
         const followers = await getUserFollowers(id);
         if (followers) {
-          // setFollowers(followers.map((follower) => ({ ...follower })));
-          console.log("followings", followers);
+          setFollowers(followers.map((follower) => ({ ...follower })));
+          console.log("followers", followers);
         }
-        // else {
-        //   setFollowers(null);
-        // }
+        else {
+          setFollowers(null);
+        }
       } catch (error) {
         console.error("error", error);
       }
@@ -154,23 +151,22 @@ const UserPage = () => {
 
     const getTopTenUsersAsync = async () => {
       try {
-        const topTenUsers = await getTopTenUsers(id);
+        const topTenUsers = await getTopTenUsers();
         if (topTenUsers) {
           // setTopTenUsers(topTenUsers.map((topTenUser) => ({ ...topTenUser })));
           console.log("topTenUsers", topTenUsers);
         }
-        // else {
-        //   setTopTenUsers(null);
-        // }
+        else {
+          setTopTenUsers(null);
+        }
       } catch (error) {
         console.error("error", error);
       }
     };
     getUserTweetsAsync();
     getUserFollowingsAsync();
-    getUserFollowersAsync()
+    getUserFollowersAsync();
     getTopTenUsersAsync();
-
   }, [id]);
 
   // useEffect(() => {
@@ -212,9 +208,13 @@ const UserPage = () => {
       <UserContent
         // userContent={userContent}
         // onClick={handleClick}
+        followers={followers}
+        followings={followings}
         userInfo={savedUserInfo}
         tweets={tweets}
+        topTenUsers={topTenUsers}
       />
+      <PopularList />
     </div>
   );
 };
