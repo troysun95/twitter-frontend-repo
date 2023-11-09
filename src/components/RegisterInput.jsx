@@ -1,6 +1,6 @@
 import styles from "styles/SettingInput.module.scss"
 
-const SettingInput =({
+const RegisterInput =({
     label, 
     value, 
     placeholder, 
@@ -19,4 +19,4 @@ const SettingInput =({
     )
 }
 
-export default SettingInput
+export default RegisterInput

@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import {MainPage, MainTweetPage ,UserPage, AdminPage, AdminUserPage, 
+import {MainPage ,UserPage, AdminPage, AdminUserPage, 
   AdminMainPage, SettingPage, LoginPage, ReplyListPage, RegisterPage}  from 'pages'
 import './styles/reset.scss'
 import  './styles/base.scss'
@@ -15,7 +15,6 @@ function App() {
           <Route path="admin/main" element={<AdminMainPage />} />
           <Route path="admin/users" element={<AdminUserPage />} />
           <Route path="main" element={<MainPage />} />
-          <Route path="main/tweet" element={<MainTweetPage />} />
           <Route path="user" element={<UserPage />} />
           <Route path="setting" element={<SettingPage />} />
           <Route path="login" element={<LoginPage/>} />

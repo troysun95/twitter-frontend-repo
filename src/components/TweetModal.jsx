@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ReactComponent as DeleteActive } from "icons/deleteActive.svg";
 
-export default function TweetModal({user}){
+export default function TweetModal({user,onClick}){
     const navigate=useNavigate();
     const [isError, setIsError] =  useState(false)
     function handleErrorCheck(e){
@@ -19,7 +19,7 @@ export default function TweetModal({user}){
     return(
         <div className={styles.modalContainer}>
             <div className={styles.header}>
-                 <div className={styles.iconWrapper} onClick={()=>{navigate('/main')}}><DeleteActive/></div>
+                 <div className={styles.iconWrapper} onClick={onClick}><DeleteActive/></div>
             </div>
             <div className={styles.toTweetWrapper}>
                 <div className={styles.avatar}>

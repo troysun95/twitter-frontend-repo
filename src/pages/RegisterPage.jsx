@@ -2,89 +2,94 @@ import { useState } from "react";
 import styles from "styles/Layout1.module.scss";
 import { ReactComponent as Logo } from "icons/logo.svg";
 import { ReactComponent as RegistBtn} from "icons/registBtn.svg"
-import {Regist} from '../api/auth'
-//import Swal from 'sweetalert2';
+import RegisterInput from "components/RegisterInput"
+import {Register} from "api/auth"
 import { useNavigate } from "react-router-dom"; 
 
 
-const RegistInput = ({ type, label, value, placeholder, onChange }) => {
-    return (
-      <div className={styles.inputContainer}>
-        <label>{label}</label>
-        <input
-          type={type || "text"}
-          value={value || ""} 
-          placeholder={placeholder || ""} 
-          onChange={(event) => onChange?.(event.target.value)}
-        />
-      </div>
-    );
-  };
 
 const RegisterPage = ()=>{
-    const [account, setAccount] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate('')
-
-    //handler
-    const handleRegist =async()=>{
-        //驗證資料正確，state: isAvalabe
-
-        //post.(api/users)
-        const response = await Regist()
+    const [account, setAccount] = useState('');
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
+    const [checkPassword, setCheckPassword] = useState('');
+    const navigate = useNavigate("")
+    
+    
+    const handleRegister = async()=>{   
+        //   判斷 ：1. 驗證資料正確，state: isAvalabe 
+        
+        const response = await Register({
+            name,
+            account,
+            email,
+            password,
+            checkPassword
+        });
         console.log(response)
+        if(response.data.status === "success"){
+            console.log('註冊成功！')
+            console.log(`註冊資料如下${response.data.user}`)
+            
+        }else{
+
+            console.log('註冊失敗！')
+        }
     }
 
 
 
     return(
         <div className={styles.adminLogInContainer}>
-        <div className={styles.brandContainer}>
-          <Logo/>
-        </div>
-        <h3>登入 Alphitter</h3>
-        <div>
-          <RegistInput
-            label={"帳號"}
-            value={account}
-            placeholder={"請輸入帳號"}
-            onChange={(nameInputValue) => setAccount(nameInputValue)}
-          />
-  
-          <RegistInput
-            type="password"
-            label={"密碼"}
-            value={password}
-            placeholder={"請輸入密碼"}
-            onChange={(passwordInputValue) => setPassword(passwordInputValue)}
-          />
+            <div className={styles.brandContainer}>
+            <Logo/>
+            </div>
+            <h3>建立你的帳號</h3>
+            <div>
+            <RegisterInput
+                label={"帳號"}
+                value={account}
+                placeholder={"請輸入帳號"}
+                onChange={(accountInput) => setAccount(accountInput)}
+            />
+    
+            <RegisterInput
+                label={"名稱"}
+                value={name}
+                placeholder={"請輸入使用者名稱"}
+                onChange={(nameInput) => setName(nameInput)}
+            />
 
-          <RegistInput
-            type="password"
-            label={"密碼"}
-            value={password}
-            placeholder={"請輸入密碼"}
-            onChange={(passwordInputValue) => setPassword(passwordInputValue)}
-          />
+            <RegisterInput
+                type="password"
+                label={"Email"}
+                value={email}
+                placeholder={"請輸入 Email"}
+                onChange={(emailInput) => setEmail(emailInput)}
+            />
 
+            <RegisterInput
+                type="password"
+                label={"密碼"}
+                value={password}
+                placeholder={"請輸入密碼"}
+                onChange={(passwordInput) => setPassword(passwordInput)}
+            />
 
-          <RegistInput
-            type="password"
-            label={"密碼"}
-            value={password}
-            placeholder={"請輸入密碼"}
-            onChange={(passwordInputValue) => setPassword(passwordInputValue)}
-          />
-
-
-
-  
-        </div>
-        <button>
-          <RegistBtn  onClick={handleRegist}/>
-        </button>
-        <div className={styles.linkText} onClick={()=>{navigate('/register')}}>註冊</div>
-        <div className={styles.linkText} onClick={()=>{navigate('/admin')}}>後台登入</div>
+            <RegisterInput
+                type="password"
+                label={"密碼"}
+                value={checkPassword}
+                placeholder={"請再次輸入密碼"}
+                onChange={(checkPasswordInput) => setCheckPassword(checkPasswordInput)}
+            />
+    
+            </div>
+            <button>
+            <RegistBtn  onClick={handleRegister}/>
+            </button>
+        <div className={styles.linkText} onClick={()=>{navigate('/login')}}>取消</div>
       </div>
     )
 }

@@ -17,7 +17,7 @@ axios.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.log('no取得token')
+    console.error('未取得token')
     console.error(error);
   },
 );

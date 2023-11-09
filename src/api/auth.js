@@ -38,7 +38,7 @@ export const Login = async ({ account, password }) => {
     const  {user}  = response.data.data
     console.log('login success')
     console.log( {user} )
-    return { success, token: token , user: user.id }
+    return { success, token: token , user: user }
     
   }catch (error) {
     console.error('[Login Failed]:', error);
@@ -47,21 +47,24 @@ export const Login = async ({ account, password }) => {
 }
 
 
-export const Regist = async ({ account, password }) => {
+export const Register = async ({
+  name,
+	account,
+	email,
+	password,
+	checkPassword
+}) => {
   try {
-    const response = await axios.post(`${authURL}/api/users/signin`, {
+    const response = await axios.post(`${authURL}/api/users`, {
+      name,
       account,
+      email,
       password,
+      checkPassword
     });
-    const  {token} = response.data.data;
-    const success = response.data.status === 'success';
-    const  {user}  = response.data.data
-    console.log('login success')
-    console.log( {user} )
-    return { success, token: token , user: user.id }
-    
+    return response;
   }catch (error) {
-    console.error('[Login Failed]:', error);
+    console.error('[Register Failed]:', error);
     return { success: false };
   }
 }
