@@ -1,4 +1,4 @@
-import styles4 from "styles/tweetsCollection.module.scss";
+import styles4 from "styles/TweetsCollection.module.scss";
 
 const UserReplyItem = ({  Tweet, User, comment}) => {
   return (

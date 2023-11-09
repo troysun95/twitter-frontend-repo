@@ -1,6 +1,6 @@
 import { ReactComponent as FollowingBtnIcon } from "icons/followingBtn.svg";
 
-import styles4 from "styles/tweetsCollection.module.scss";
+import styles4 from "styles/TweetsCollection.module.scss";
 
 const userFollowingItem = ({
   img,

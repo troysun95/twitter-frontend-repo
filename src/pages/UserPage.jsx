@@ -16,7 +16,7 @@ import PopularList from "components/PopularList";
 
 import styles from "styles/UserSelfPage.module.scss";
 import styles3 from "styles/Layout3.module.scss";
-import styles4 from "styles/tweetsCollection.module.scss";
+import styles4 from "styles/TweetsCollection.module.scss";
 
 import {
   getUserTweets,
