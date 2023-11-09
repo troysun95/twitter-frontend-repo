@@ -64,7 +64,7 @@ export const getTweets = async () => {
 export const getUserTweets = async (id) => {
   try {
     // const res = await axios.get(`${baseUrl}/api/users/${id}/tweets`);
-    const {data} = await axios.get(`${baseUrl}/api/users/${id}/tweets`);
+    const {data} = await axios.get(`${baseUrl}/api/users/${id}/replied_tweets`);
 
     console.log('tweets.js裡的 getUserTweets 回傳值: ', data);
     // 這邊要注意回傳內容，只有一層 data
@@ -78,7 +78,7 @@ export const getUserTweets = async (id) => {
 // 使用者所有回覆推文
 export const getUserReplies = async (id) => {
   try {
-    const {data} = await axios.get(`${baseUrl}/api/users/${id}/replies`);
+    const {data} = await axios.get(`${baseUrl}/api/users/${id}/replied_tweets`);
     console.log('tweets.js裡的 getUserReplies 回傳值: ', data);
     return data;
 
@@ -123,8 +123,8 @@ export const getUserFollowers = async (id) => {
 // 使用者能查看追蹤前10的使用者
 export const getTopTenUsers = async () => {
     try {
-        const { data } = await axios.get(`${baseUrl}/api/users`);
-        console.log('tweets.js裡的 getTopTenUsers 回傳值: data', data);
+        const { data } = await axios.get(`${baseUrl}/api/users/top10`);
+        // console.log('tweets.js裡的 getTopTenUsers 回傳值: data', data);
         return data;
     } catch (error) {
         console.error('[Get top ten users Failed]: ', error);
