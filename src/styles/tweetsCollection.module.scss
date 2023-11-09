@@ -92,9 +92,5 @@
   margin-top: 8px;
   max-width: 528px;
   line-height: 26px;
-  white-space: normal;
-
-  p {
-    white-space: normal;
-  }
+  word-wrap: break-word;
 }
