@@ -7,16 +7,16 @@ import PopularList from "components/PopularList";
 import  {ReactComponent as HomeActiveIcon} from "icons/homeActive.svg"
 import  {ReactComponent as UserIcon} from "icons/user.svg"
 import  {ReactComponent as SettingIcon} from "icons/setting.svg"
-import TweetList from "components/TweetList";
+//import TweetList from "components/TweetList";
 import { useNavigate } from "react-router-dom";
-import {getTweets} from "api/twitter";
+//import {getTweets} from "api/twitter";
 import ReplyModal from "components/ReplyModal"
 
 //假資料
 import { useState,useEffect } from "react";
 
 const MainPage = ()=> {
-  const [tweets, setTweets] = useState([]);
+  //const [tweets, setTweets] = useState([]);
   // const [inputValue, setInputValue] = useState("");
   // const [isSubmit, setIsSubmit] = useState(false);
   const [isOpen, setIsOpen] = useState(false)
@@ -80,9 +80,10 @@ const MainPage = ()=> {
   useEffect(() => {
     const getTweetsAsync = async () => {
     try {
-    const tweets = await getTweets();
-    setTweets(tweets);
-    setTweets(tweets.map((tweet) => ({...tweet})));
+    //const tweets = await getTweets();
+    //setTweets(tweets);
+   // setTweets(tweets.map((tweet) => ({...tweet})));
+   console.log('推文取得修正中')
     } catch (error) {
     console.error (error);
     }
@@ -119,7 +120,7 @@ const MainPage = ()=> {
           </div>
           <ToTweetPanel/>
           <TweetModal className={styles.tweetModal}  user={user} isOpen={isOpen}  onClick={handleClose}/>
-          <TweetList tweets={tweets} />
+          {/* <TweetList tweets={tweets} /> */}
           <ReplyModal className={styles.replyModal} Replyeduser={Replyeduser}  isOpen={isOpen}  onClick={handleClose} />
         </div>
         <div className={styles.popularList}>
