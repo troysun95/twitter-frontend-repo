@@ -17,7 +17,6 @@ export default function TweetItem({data, id}){
     const prevIsLiked = data.isLiked
     const [isliked, setIsLiked] = useState(prevIsLiked);
     const [likesAmount, setlikesAmount] = useState(prelikesAmount)
-
     const handleLiked =() =>{
         if(isliked === true){
             setlikesAmount(prelikesAmount => prelikesAmount - 1)
