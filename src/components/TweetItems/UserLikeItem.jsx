@@ -4,41 +4,47 @@ import styles4 from "styles/TweetsCollection.module.scss";
 
 
 const UserLikeItem = ({
-  img,
-  account,
-  tagAccount,
-  afterTweetTime,
-  message,
+  Tweet,
+  repliesCount,
+  createdAt,
+  isLiked,
+  likedCount,
 }) => {
+  const description = Tweet.description;
+  const otherUserName = Tweet.User.name;
+  const otherUserAccount = Tweet.User.account;
+  const otherUserAvatar = Tweet.User.avatar
+
   return (
     <div className={styles4.tweetItem}>
       <div className={styles4.avatar}>
-        <img src={img} aria-label={account} />
+        <img src={otherUserAvatar} aria-label={otherUserName} />
       </div>
       <div>
         {/* 帳號 */}
         <div className={styles4.accountTitle}>
-          <p className={styles4.accountName}>{account}</p>
+          <p className={styles4.accountName}>{otherUserName}</p>
           <p className={styles4.subTitle}>
-            <span>{tagAccount}</span>
-            <span>・{afterTweetTime}</span>
+            <span>@{otherUserAccount}</span>
+            <span>・{createdAt}</span>
           </p>
         </div>
         <div className={styles4.messageContainer}>
-          <p>{message}</p>
+          <p>{description}</p>
         </div>
         <div className={styles4.interactionContainer}>
           <p className={styles4.leftIcon}>
             <span className={styles4.iconContainer}>
               <CommentIcon className={styles4.icon} />
             </span>
-            13
+            {repliesCount}
           </p>
           <p>
             <span className={styles4.iconContainer}>
-              <LikeActiveIcon className={styles4.icon} />
+              {isLiked && <LikeActiveIcon className={styles4.icon} />}
             </span>
-            13
+            {likedCount}
+            {/*click後 POST like或取消*/}
           </p>
         </div>
       </div>

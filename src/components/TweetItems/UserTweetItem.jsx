@@ -1,24 +1,23 @@
 import { ReactComponent as LikeIcon } from "icons/like.svg";
 import { ReactComponent as LikeActiveIcon } from "icons/likeActive.svg";
-
 import { ReactComponent as CommentIcon } from "icons/comment.svg";
 import styles4 from "styles/TweetsCollection.module.scss";
 
 const UserTweetItem = ({
-  userAvatar,userName,
-  userAccount,
-  account,
-  createdAt,
+  repliesCount,
+  userInfo,
   description,
   isLiked,
   likedUsersCount,
-  repliesCount,
-  updatedAt,
+  createdAt,
 }) => {
+  const userAvatar = userInfo.avatar;
+  const userName = userInfo.name;
+  const userAccount = userInfo.account;
   return (
     <div className={styles4.tweetItem}>
       <div className={styles4.avatar}>
-        <img src={userAvatar} aria-label={account} />
+        <img src={userAvatar} aria-label={userAccount} />
       </div>
       <div>
         {/* 帳號 */}
@@ -42,9 +41,9 @@ const UserTweetItem = ({
           <p>
             <span className={styles4.iconContainer}>
               {isLiked ? (
-                <LikeIcon className={styles4.icon} />
-              ) : (
                 <LikeActiveIcon className={styles4.icon} />
+              ) : (
+                <LikeIcon className={styles4.icon} />
               )}
             </span>
             {likedUsersCount}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
 
 import { ReactComponent as HomeIcon } from "icons/home.svg";
@@ -26,41 +26,16 @@ import {
   getUserReplies,
   getUserLikes,
 } from "../api/twitter.js";
-// import { useNavigate } from "react-router-dom";
-// import { checkPermission } from "../api/auth";
 
-// const TweetsCollection = ({ tweets, userInfo }) => {
-//   return (
-//     <div className={styles4.tweetsCollection}>
-//       {tweets.map((userTweetItem) => {
-//         return (
-//           <UserTweetItem
-//             key={userTweetItem.id}
-//             {...userTweetItem}
-//             userAvatar={userInfo.avatar}
-//             userName={userInfo.name}
-//             userAccount={userInfo.account}
-//           />
-//         );
-//       })}
-//     </div>
-//   );
-// };
-
-const TweetsCollection = ({ replies }) => {
+const TweetsCollection = ({ content, renderItem, userInfo }) => {
   return (
     <div className={styles4.tweetsCollection}>
-      {replies.map((userReplyItem) => {
+      {content.map((contentItem) => {
         return (
-          <UserReplyItem
-            key={userReplyItem.id}
-            {...userReplyItem}
-            // userAvatar={userInfo.avatar}
-            // userName={userInfo.name}
-            // userAccount={userInfo.account}
-            // comment={userReplyItem.comment}
-          />
-        );
+          <Fragment key={contentItem.id} >
+            {renderItem({...contentItem, userInfo})}
+          </Fragment>
+        )
       })}
     </div>
   );
@@ -124,19 +99,21 @@ const UserContent = ({
         handleChangeUserContent={handleChangeUserContent}
       />
       {userContent === "tweets" && (
-        <TweetsCollection tweets={tweets} userInfo={userInfo}>
-          <UserTweetItem userInfo={userInfo} />
-        </TweetsCollection>
+        <TweetsCollection
+          content={tweets}
+          userInfo={userInfo}
+          renderItem={UserTweetItem}
+        />
       )}
       {userContent === "replies" && (
-        <TweetsCollection replies={replies} userInfo={userInfo}>
-          <UserReplyItem />
-        </TweetsCollection>
+        <TweetsCollection
+          content={replies}
+          userInfo={userInfo}
+          renderItem={UserReplyItem}
+        />
       )}
       {userContent === "likes" && (
-        <TweetsCollection>
-          <UserLikeItem />
-        </TweetsCollection>
+        <TweetsCollection content={likes} renderItem={UserLikeItem}/>
       )}
     </div>
   );
@@ -147,7 +124,7 @@ const UserPage = () => {
   console.log("savedUserInfo", savedUserInfo);
   const id = savedUserInfo.id;
 
-  const [userContent, setUserContent] = useState("replies");
+  const [userContent, setUserContent] = useState("tweets");
   const [tweets, setTweets] = useState([]); //user發文
   const [replies, setReplies] = useState([]); //user回覆
   const [likes, setLikes] = useState([]);
@@ -245,30 +222,13 @@ const UserPage = () => {
         console.error("error", error);
       }
     };
-    // getUserTweetsAsync();
+    getUserTweetsAsync();
     getUserRepliesAsync();
-    // getUserLikesAsync();
+    getUserLikesAsync();
     getUserFollowingsAsync();
     getUserFollowersAsync();
     getTopTenUsersAsync();
   }, [id]);
-
-  // useEffect(() => {
-  //   const checkTokenIsValid = async () => {
-  //     const authToken = localStorage.getItem("authToken");
-  //     if (!authToken) {
-  //       navigate("/login");
-  //     }
-  //     const result = await checkPermission(authToken); //驗證通過留在 UserPage
-  //     console.log("驗證通過 result: ", result)
-
-  //     if (!result) {
-  //       navigate("/login");
-  //     }
-  //   };
-
-  //   checkTokenIsValid();
-  // }, [navigate]);
 
   return (
     <div className={styles3.appContainer}>
@@ -277,7 +237,6 @@ const UserPage = () => {
           <NavItem title="首頁">
             <HomeIcon />
           </NavItem>
-
           <NavItem title="使用者列表">
             <UserActiveIcon />
           </NavItem>
@@ -291,12 +250,12 @@ const UserPage = () => {
       </div>
       <UserContent
         userContent={userContent}
-        // onClick={handleClick}
         followers={followers}
         followings={followings}
         userInfo={savedUserInfo}
         tweets={tweets}
         replies={replies}
+        likes={likes}
         topTenUsers={topTenUsers}
         handleChangeUserContent={handleChangeUserContent}
       />
