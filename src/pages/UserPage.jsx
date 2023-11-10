@@ -255,8 +255,8 @@ const UserPage = () => {
         userInfo={savedUserInfo}
         tweets={tweets}
         replies={replies}
-        likes={likes}
-        topTenUsers={topTenUsers}
+         likes={likes}
+        // topTenUsers={topTenUsers}
         handleChangeUserContent={handleChangeUserContent}
       />
       <PopularList topTenUsers={topTenUsers} />
