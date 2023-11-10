@@ -11,25 +11,14 @@ import TweetList from "components/TweetList";
 import { useNavigate } from "react-router-dom";
 import {getTweets} from "api/twitter";
 import ReplyModal from "components/ReplyModal"
-
-//假資料
 import { useState,useEffect } from "react";
 
 const MainPage = ()=> {
   const [tweets, setTweets] = useState([]);
-  // const [inputValue, setInputValue] = useState("");
-  // const [isSubmit, setIsSubmit] = useState(false);
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"))
-  //拿取特定推文的User 資訊
   const Replyeduser = localStorage.getItem("user")
-
-  
-  //handler
-  // const handleInputChange = (value) => {
-  //   setInputValue(value);
-  // };
 
   //頁面跳轉
 
