@@ -2,7 +2,6 @@ import { ReactComponent as LikeActiveIcon } from "icons/likeActive.svg";
 import { ReactComponent as CommentIcon } from "icons/comment.svg";
 import styles4 from "styles/TweetsCollection.module.scss";
 
-
 const UserLikeItem = ({
   Tweet,
   repliesCount,
