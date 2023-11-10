@@ -73,16 +73,13 @@ const SettingPage = ()=> {
     const handleSave = async()=>{
         if(CheckInputsAvalible()){
             //api 格式來源要求為 from data
-            const formData = new FormData()
-            // for (let key in dataObject) {
-            // formData.append(key, dataObject[key]);
-            // }
-            formData.set("name", name )
-            formData.set("email", email )
-            formData.set("account", account)
-            formData.set("password", password)
-            formData.set("checkPassword", checkPassword)
-            //const response = await putUserSelf(savedUserInfoId, formData)
+            const formData = {
+                account,
+                name,
+                email,
+                password,
+                checkPassword
+            }
             const response = await EditUser(user.id, formData)
             console.log(response)
         }       

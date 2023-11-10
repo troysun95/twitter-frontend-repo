@@ -72,7 +72,7 @@ export const UnlikeTweet = async () => {
 
 export const DeleteTweet = async ({id}) => {
   try {
-    const res = await axios.delete(`${baseUrl}/api/admin/tweets/:id`, {id});
+    const res = await axios.delete(`${baseUrl}/api/admin/tweets/${id}`, {id});
     return res;
   } catch (error) {
     console.error('[Delete Tweet failed]: ', error);
@@ -81,7 +81,7 @@ export const DeleteTweet = async ({id}) => {
 
 
 //設定個人資料
-export const EditUser = async ({
+export const EditUser = async (id,{
   account,
   name,
   email,
@@ -89,7 +89,7 @@ export const EditUser = async ({
   checkPassword
 }) => {
   try {
-    const res = await axios.put(`${baseUrl}/api/users/:id`,{
+    const res = await axios.put(`${baseUrl}/api/users/${id}`,{
       account,
       name,
       email,

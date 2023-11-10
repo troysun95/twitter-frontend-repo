@@ -38,7 +38,7 @@ export default function TweetItem({data, id}){
 
     const handleRplyTweet = ()=>{
         //儲存協助跳轉用
-        localStorage.setItem("RelyedTweeId:", id)
+        localStorage.setItem("RelyedTweeId:", id);
         navigate('/replylist')
     }
     
