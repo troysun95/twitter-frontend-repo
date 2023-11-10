@@ -79,7 +79,7 @@ export const getUserTweets = async (id) => {
 export const getUserReplies = async (id) => {
   try {
     const {data} = await axios.get(`${baseUrl}/api/users/${id}/replied_tweets`);
-    console.log('tweets.js裡的 getUserReplies 回傳值: ', data);
+    // console.log('tweets.js裡的 getUserReplies 回傳值: ', data);
     return data;
 
   } catch (error) {
@@ -91,7 +91,7 @@ export const getUserReplies = async (id) => {
 export const getUserLikes = async (id) => {
   try {
     const {data} = await axios.get(`${baseUrl}/api/users/${id}/likes`);
-    console.log('tweets.js裡的 getUserLikes 回傳值: ', data);
+    // console.log('tweets.js裡的 getUserLikes 回傳值: ', data);
     return data;
 
   } catch (error) {
@@ -102,7 +102,7 @@ export const getUserLikes = async (id) => {
 export const getUserFollowings = async (id) => {
   try {
     const {data} = await axios.get(`${baseUrl}/api/users/${id}/followings`);
-    console.log('tweets.js裡的 getUserFollowings 回傳值: ', data);
+    // console.log('tweets.js裡的 getUserFollowings 回傳值: ', data);
     return data;
 
   } catch (error) {
@@ -112,7 +112,7 @@ export const getUserFollowings = async (id) => {
 export const getUserFollowers = async (id) => {
   try {
     const {data} = await axios.get(`${baseUrl}/api/users/${id}/followers`);
-    console.log('tweets.js裡的 getUserFollowers 回傳值: ', data);
+    // console.log('tweets.js裡的 getUserFollowers 回傳值: ', data);
     return data;
 
   } catch (error) {
@@ -122,12 +122,36 @@ export const getUserFollowers = async (id) => {
 
 // 使用者能查看追蹤前10的使用者
 export const getTopTenUsers = async () => {
-    try {
-        const { data } = await axios.get(`${baseUrl}/api/users`);
-        console.log('tweets.js裡的 getTopTenUsers 回傳值: data', data);
-        return data;
-    } catch (error) {
-        console.error('[Get top ten users Failed]: ', error);
-        return error;
-    }
+  try {
+      const { data } = await axios.get(`${baseUrl}/api/users`);
+      // console.log('tweets.js裡的 getTopTenUsers 回傳值: data', data);
+      return data;
+  } catch (error) {
+      console.error('[Get top ten users Failed]: ', error);
+      return error;
+  }
+};
+
+// Like推文 //api/tweets/:id/like
+export const postLikeTweet = async (id) => {
+  try {
+    const { data } = await axios.post(`${baseUrl}/tweets/${id}/like`);
+    console.log('tweets.js裡的 postLikeTweet 回傳值: data', data);
+    return data;
+  } catch (error) {
+    console.error('[Post likeTweets Failed]: ', error);
+    return error;
+  }
+};
+
+// 取消 Like推文/api/tweets/:id/unlike
+export const postUnlikeTweet = async (id) => {
+  try {
+    const { data } = await axios.post(`${baseUrl}/tweets/${id}/unlike`);
+    console.log('tweets.js裡的 postUnlikeTweet 回傳值: data', data);
+    return data;
+  } catch (error) {
+    console.error('[Post unlikeTweets Failed]: ', error);
+    return error;
+  }
 };

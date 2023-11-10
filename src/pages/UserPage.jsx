@@ -25,6 +25,8 @@ import {
   getTopTenUsers,
   getUserReplies,
   getUserLikes,
+  postLikeTweet,
+  postUnlikeTweet,
 } from "../api/twitter.js";
 
 const TweetsCollection = ({ content, renderItem, userInfo }) => {
@@ -131,7 +133,10 @@ const UserPage = () => {
   const [followers, setFollowers] = useState([]);
   const [followings, setFollowings] = useState([]);
   const [topTenUsers, setTopTenUsers] = useState([]);
+  const [likeTweets, setlikeTweets] = useState([]);
+  const [unlikeTweets, setUnlikeTweets] = useState([]);
 
+  const [isUpdatedLike, setIsUpdatedLike] = useState(false);
   const handleChangeUserContent = (clickItems) => {
     setUserContent(clickItems);
   };
@@ -222,12 +227,39 @@ const UserPage = () => {
         console.error("error", error);
       }
     };
+
+    const postLikeTweetAsync = async () => {
+      try {
+        const likeTweets = await postLikeTweet(id);
+        console.log("likeTweets", likeTweets);
+
+        // if (likeTweets) {
+        //   setUnlikeTweets(likeTweets.map((likeTweet) => ({ ...likeTweet })));
+        //   console.log("likeTweets", likeTweets);
+        // } else {
+        //   setlikeTweets(null);
+        // }
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+
+    const postUnlikeTweetAsync = async () => {
+      const unlikeTweets = await postUnlikeTweet(id);
+        console.log("unlikeTweets", unlikeTweets);
+        console.log("unlikeTweets", unlikeTweets.data);
+      if (unlikeTweets) {setIsUpdatedLike(true);}
+      return unlikeTweets;
+    };
+
     getUserTweetsAsync();
     getUserRepliesAsync();
     getUserLikesAsync();
     getUserFollowingsAsync();
     getUserFollowersAsync();
     getTopTenUsersAsync();
+    postLikeTweetAsync()
+    postUnlikeTweetAsync()
   }, [id]);
 
   return (
