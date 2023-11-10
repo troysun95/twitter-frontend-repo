@@ -2,12 +2,7 @@ import { ReactComponent as FollowingBtnIcon } from "icons/followingBtn.svg";
 import { ReactComponent as NotFollowingBtnIcon } from "icons/notFollowingBtn.svg";
 import styles4 from "styles/TweetsCollection.module.scss";
 
-const userFollowerItem = ({
-  avatar,
-  name,
-  // bio,
-  isFollowed,
-}) => {
+const userFollowerItem = ({ avatar, name, introduction, isFollowed }) => {
   return (
     <div className={styles4.tweetItem}>
       <div className={styles4.avatar}>
@@ -25,7 +20,7 @@ const userFollowerItem = ({
         </div>
 
         <div className={styles4.bioContainer}>
-          <p>biobiobiobiobiobiobiobio</p>
+          <p>{introduction}</p>
         </div>
       </div>
     </div>
