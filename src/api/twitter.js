@@ -59,6 +59,7 @@ export const getTweets = async () => {
   }
 };
 
+
 // UserPage
 // 使用者點瀏覽使用者的推文
 export const getUserTweets = async (id) => {
@@ -131,3 +132,16 @@ export const getTopTenUsers = async () => {
         return error;
     }
 };
+
+
+export const UnlikeTweet = async (id) => {
+  try {
+    const res = await axios.post(`${baseUrl}/api/tweets/:id/unlike`);
+    return res.data;
+  } catch (error) {
+    console.error('[Unlike Tweet failed]: ', error);
+  }
+};
+
+
+
