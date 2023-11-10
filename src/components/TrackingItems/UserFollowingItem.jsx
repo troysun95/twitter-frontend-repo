@@ -1,32 +1,23 @@
 import { ReactComponent as FollowingBtnIcon } from "icons/followingBtn.svg";
 
-import styles4 from "styles/tweetsCollection.module.scss";
+import styles4 from "styles/TweetsCollection.module.scss";
 
-const userFollowingItem = ({
-  img,
-  account,
-  tagAccount,
-  afterTweetTime,
-  bio,
-  trackingStatus,
-}) => {
+const userFollowingItem = ({ avatar, name, introduction, isFollowed }) => {
   return (
     <div className={styles4.tweetItem}>
       <div className={styles4.avatar}>
-        <img src={img} aria-label={account} />
+        <img src={avatar} aria-label={name} />
       </div>
       <div>
         <div className={styles4.accountTrackingContainer}>
           <div className={styles4.accountTitle}>
-            <p className={styles4.accountName}>{account}</p>
-          </div>  
-          <div>
-            <FollowingBtnIcon />
+            <p className={styles4.accountName}>{name}</p>
           </div>
+          <button>{isFollowed && <FollowingBtnIcon />}</button>
         </div>
 
         <div className={styles4.bioContainer}>
-          <p>{bio}</p>
+          <p>{introduction}</p>
         </div>
       </div>
     </div>

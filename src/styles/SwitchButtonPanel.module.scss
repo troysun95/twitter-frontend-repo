@@ -3,6 +3,7 @@
     flex-flow:row wrap;
     flex-shrink: 0;
     width: 100%;
+    min-width: 639px;
     height: 52px;
     div, .button{
         display: flex;

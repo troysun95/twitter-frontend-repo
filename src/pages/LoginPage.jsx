@@ -1,13 +1,11 @@
-// import { useState } from "react";
-import { useState, useEffect } from "react";//add
-import {Login, checkPermission} from '../api/auth'
+import { useState } from "react";
 
 import styles from "styles/AdminPage.module.scss";
 import { ReactComponent as LoginBtn } from "icons/adminLoginBtn.svg";
 import { ReactComponent as Logo } from "icons/logo.svg";
-// import {Login} from '../api/auth'
-import Swal from 'sweetalert2';
-import { useNavigate } from "react-router-dom"; 
+import {Login} from '../api/auth'
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const AuthInput = ({ type, label, value, placeholder, onChange }) => {
   return (
@@ -15,8 +13,8 @@ const AuthInput = ({ type, label, value, placeholder, onChange }) => {
       <label>{label}</label>
       <input
         type={type || "text"}
-        value={value || ""} 
-        placeholder={placeholder || ""} 
+        value={value || ""}
+        placeholder={placeholder || ""}
         onChange={(event) => onChange?.(event.target.value)}
       />
     </div>
@@ -26,25 +24,27 @@ const AuthInput = ({ type, label, value, placeholder, onChange }) => {
 const LoginPage = () => {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate('')
+  const navigate = useNavigate('');
 
   //handler
   const handleClick = async () => {
     if (account.length === 0) {
-        return;
+      return;
     }
     if (password.length === 0) {
-        return;
+      return;
     }
     const data = await Login({
-    account,
-    password
+      account,
+      password,
     });
+
 
     if(data.success){
 
       localStorage.setItem("authToken", data.token);
       localStorage.setItem("user", JSON.stringify(data.user)) //try
+
 
       Swal.fire({
         position: "top",
@@ -53,39 +53,22 @@ const LoginPage = () => {
         icon: "success",
         showConfirmButton: false,
       });
-      // navigate('/main');
-      navigate("/user");
-    }else{
-        Swal.fire({
-            position: 'top',
-            title: '登入失敗！',
-            timer: 1000,
-            icon: 'error',
-            showConfirmButton: false,
-        });
-      }
-    };
+      navigate("/main");
+    } else {
+      Swal.fire({
+        position: "top",
+        title: "登入失敗！",
+        timer: 1000,
+        icon: "error",
+        showConfirmButton: false,
+      });
+    }
+  };
 
-  useEffect(() => {
-    //add
-    const checkTokenIsValid = async () => {
-      const authToken = localStorage.getItem("authToken");
-      if (!authToken) {
-        return;
-      }
-      const result = await checkPermission(authToken);
-
-      if (result) {
-        navigate('/user');
-      }
-    };
-    checkTokenIsValid();
-  }, [navigate]);
-  
   return (
     <div className={styles.adminLogInContainer}>
       <div className={styles.brandContainer}>
-        <Logo/>
+        <Logo />
       </div>
       <h3>登入 Alphitter</h3>
       <div>
@@ -103,7 +86,6 @@ const LoginPage = () => {
           placeholder={"請輸入密碼"}
           onChange={(passwordInputValue) => setPassword(passwordInputValue)}
         />
-
       </div>
       <button>
         <LoginBtn  onClick={handleClick}/>
@@ -113,7 +95,6 @@ const LoginPage = () => {
         <span className={styles.dot}>.</span>
         <div className={styles.linkText} onClick={()=>{navigate('/admin')}}>後台登入</div>
       </div>
-      
     </div>
   );
 };

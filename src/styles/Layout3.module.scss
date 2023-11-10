@@ -28,6 +28,7 @@ $border-style: 1px solid var(--grey-500);
     width: 639px;
     margin-right: 25px;
     overflow-y:scroll;
+    overflow-x:hidden; //移除 水平 scrollbar
     scroll-behavior: auto;
     border-left: $border-style; 
     border-right: $border-style; 

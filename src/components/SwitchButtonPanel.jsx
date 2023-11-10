@@ -2,7 +2,6 @@ import clsx from "clsx";
 import styles from "styles/SwitchButtonPanel.module.scss";
 function SwitchButton({
   title,
-  isActive,
   id,
   userContent,
   value,
@@ -10,14 +9,14 @@ function SwitchButton({
 }) {
   return (
     <div
-      value="123"
       className={clsx({
         [styles.button]: userContent !== value,
-        [styles.active]: userContent === value,
+        [styles.active]:
+          userContent === value || (userContent === "" && value === "tweets"),
       })}
       onClick={(e) => {
-        handleChangeUserContent(`${value}`);
-        console.log(`${value}`);
+        handleChangeUserContent(value);
+        console.log("handleChangeUserContent: ", `${value}`);
       }}
       id={id}
     >
