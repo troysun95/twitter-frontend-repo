@@ -18,7 +18,15 @@
         width: 937px;
         margin-left: 16px;
         border: 1px solid var(--grey-500);
-       
+        position: relative;
+        .saveBtn{
+            width: 88px;
+            height: 46px;
+            position: absolute;
+            //待確認
+            bottom: 30%;
+            right: 23px;
+        }
     }
     .headerContainer{
         width: 100%;
@@ -31,9 +39,7 @@
         }
         
     }
-    .saveBtn{
-        border: 1px solid #000;
-    }
+    
 }
 
 @media screen and (min-width: 1200px) {

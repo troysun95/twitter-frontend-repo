@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const baseUrl = 'https://warm-forest-67690-2e44d4cd1684.herokuapp.com';
 
-//每次發請求前，先到這邊取出token(全域？)
+//每次發請求前，先到這邊取出token
 const  token =localStorage.getItem('token')
 axios.defaults.headers['Authorization'] = `Bearer ${token}`
 
@@ -13,12 +13,11 @@ axios.interceptors.request.use(
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
       console.log('取得token')
-      console.log(config.headers)
     }
     return config;
   },
   (error) => {
-    console.log('no取得token')
+    console.error('未取得token')
     console.error(error);
   },
 );
@@ -60,6 +59,7 @@ export const getTweets = async () => {
 };
 
 
+export const UnlikeTweet = async () => {
 // UserPage
 // 使用者點瀏覽使用者的推文
 export const getUserTweets = async (id) => {
@@ -145,3 +145,36 @@ export const UnlikeTweet = async (id) => {
 
 
 
+export const DeleteTweet = async ({id}) => {
+  try {
+    const res = await axios.delete(`${baseUrl}/api/admin/tweets/${id}`, {id});
+    return res;
+  } catch (error) {
+    console.error('[Delete Tweet failed]: ', error);
+  }
+};
+
+
+//設定個人資料
+export const EditUser = async (id,{
+  account,
+  name,
+  email,
+  password,
+  checkPassword
+}) => {
+  try {
+    const res = await axios.put(`${baseUrl}/api/users/${id}`,{
+      account,
+      name,
+      email,
+      password,
+      checkPassword
+    });
+
+    return res;
+    
+  } catch (error) {
+    console.error('[Edit User failed]: ', error);
+  }
+};

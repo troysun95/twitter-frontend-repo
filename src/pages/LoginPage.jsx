@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";//add
 import {Login, checkPermission} from '../api/auth'
 
 import styles from "styles/AdminPage.module.scss";
-import { ReactComponent as AdminLogInBtn } from "icons/adminLoginBtn.svg";
+import { ReactComponent as LoginBtn } from "icons/adminLoginBtn.svg";
 import { ReactComponent as Logo } from "icons/logo.svg";
 // import {Login} from '../api/auth'
 import Swal from 'sweetalert2';
@@ -42,10 +42,8 @@ const LoginPage = () => {
     });
 
     if(data.success){
+
       localStorage.setItem("authToken", data.token);
-      //localStorage.setItem('Authorization', JSON.stringify(Authorization));
-      //將 userid儲存進去，以幫助跳轉使用者時使用
-      // localStorage.setItem('user', data.user)
       localStorage.setItem("user", JSON.stringify(data.user)) //try
 
       Swal.fire({
@@ -108,10 +106,14 @@ const LoginPage = () => {
 
       </div>
       <button>
-        <AdminLogInBtn  onClick={handleClick}/>
+        <LoginBtn  onClick={handleClick}/>
       </button>
-      <div className={styles.linkText} onClick={()=>{navigate('/register')}}>註冊</div>
-      <div className={styles.linkText} onClick={()=>{navigate('/admin')}}>後台登入</div>
+      <div className={styles.linkWrapper}>
+        <div className={styles.linkText} onClick={()=>{navigate('/register')}}>註冊</div>
+        <span className={styles.dot}>.</span>
+        <div className={styles.linkText} onClick={()=>{navigate('/admin')}}>後台登入</div>
+      </div>
+      
     </div>
   );
 };

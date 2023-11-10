@@ -6,80 +6,150 @@ import { ReactComponent as SettingActiveIcon } from "icons/settingActive.svg";
 import {ReactComponent as HomeIcon} from "icons/home.svg"
 import {ReactComponent as UserIcon} from "icons/user.svg";
 import {ReactComponent as SaveBtn} from "icons/saveBtn.svg";
-import { useState } from "react"
+import { useState ,useEffect} from "react"
 import { useNavigate } from "react-router-dom";
+import {EditUser} from "api/twitter"
 
-//假資料，a
-import {prevUser} from "data/user"
 
-const SettingPage = ()=>{
+
+const SettingPage = ()=> {
     const navigate = useNavigate();
-    const [user, setUser] = useState(prevUser);
-    console.log(prevUser);
-    const [passwordConfirm, setPasswordConfirm] = useState("");
+    //取出帳密
+    const user = JSON.parse(localStorage.getItem("user"))
+    
+    //onChange 紀錄Input 
+    const [account, setAccount]=useState(user.account);
+    const [name, setName]=useState(user.name);
+    const [email, setEmail]=useState(user.email);
+    const [password, setPassword]=useState('');
+    const [checkPassword, setChecPassword] = useState('');
+    const [nameError, setNameError ] = useState(false);
+    const [passwordeEror, setPassowrdError ] = useState(false);
 
 
+    //顯示錯誤文案用
+    useEffect(() => {
+        if(name.length > 50) {
+            setNameError(true);
+        } else {
+            setNameError(false);
+        }
+        if(password !== checkPassword){
+            setPassowrdError(true);
+        } else {
+            setPassowrdError(false);
+        }
+    }, [name, password, checkPassword]);
 
-    const handleChange = (e, key) => {
-        setUser({
-            ...user,
-            [key]: e.target.value
-        });
-        console.log(`更新後資料為${user}`)
-    };
-
-
-
+    // //登出按鈕
     const handleLogout = ()=>{
         localStorage.removeItem('authToken');
-        localStorage.removeItem('Authorization');
+        localStorage.removeItem('user')
         navigate('/login')
     }
 
-    const handlePassworConfirm = (e)=>{
-        setPasswordConfirm(e.target.value);
-        console.log(passwordConfirm);
-    }
 
-    const handleSave = ()=>{
-        if(passwordConfirm === user.password){
-            setUser(user)
-            console.log(user)
-            //預計回傳使用者 ， api: post api/users
-        }else{console.error('不成功')}
+    const CheckInputsAvalible = ()=>{
+        if(account.lengnth === 0){
+            return
+        }
+        if(name.lengnth === 0){
+            return
+        }
+        if(email.lengnth === 0){
+            return
+        }
+        if(password.lengnth === 0){
+            return
+        }
+        if(checkPassword !== password){
+            return
+        }
+        return true;
     }
+    
      
 
+    const handleSave = async()=>{
+        if(CheckInputsAvalible()){
+            //api 格式來源要求為 from data
+            const formData = {
+                account,
+                name,
+                email,
+                password,
+                checkPassword
+            }
+            const response = await EditUser(user.id, formData)
+            console.log(response)
+        }       
+    }
 
 
     return(
         <div className={styles.appContainer}>
             <div className={styles.navbarContainer}>
                 <MainNavbar handleLogout={handleLogout}>
-                    <NavItem title="首頁">
-                    <HomeIcon/>
-                    </NavItem>
-                    <NavItem title="個人資料">
-                    <UserIcon/>
-                    </NavItem>
-                    <NavItem title="設定">
-                    <SettingActiveIcon/>
-                    </NavItem>
+                    <div onClick={()=>{navigate('/main')}}>
+                        <NavItem title="首頁"  >
+                            <HomeIcon/>
+                        </NavItem>
+                    </div>
+                    <div onClick={()=>{navigate('/user')}}>
+                        <NavItem title="個人資料"  >
+                            <UserIcon/>
+                        </NavItem>
+                    </div>
+                    <div onClick={()=>{navigate('/setting')}}>
+                        <NavItem title="設定">
+                            <SettingActiveIcon/>
+                        </NavItem>
+                    </div>
                 </MainNavbar>
             </div>
             <div className={styles.content}>
                 <div className={styles.headerContainer}>
                     <h4>帳戶設定</h4>
                 </div>
-                    <SettingInput label="帳號"  placeholder= "" defaultValue={user.account} onChange={(e) => handleChange(e, 'account')}/>
-                    <SettingInput label="名稱"  placeholder= "" defaultValue={user.name} onChange={(e) => handleChange(e, 'name')}/>
-                    <SettingInput label="Email" defaultValue={user.email} onChange={(e) => handleChange(e, 'email')}/>
-                    <SettingInput label="密碼" placeholder="請設定密碼" defaultValue="" value={user.password}  onChange={(e) => handleChange(e, 'password')}/>
-                    <SettingInput label="密碼再確認" placeholder="請再次輸入密碼"  defaultValue="" value={passwordConfirm} onChange={handlePassworConfirm}/>          
+                    <SettingInput 
+                        label="帳號"  
+                        placeholder= "" 
+                        value={account}
+                        onChange={(accountInput)=>{setAccount(accountInput)}}
+                        errMassage=" "
+                    />
+                    <SettingInput 
+                        label="名稱"  
+                        placeholder= "" 
+                        value={name} 
+                        onChange={(nameInput)=>{setName(nameInput)}}
+                        errMassage={nameError ? "字數超過上限！" : " " }
+                    />
+                    <SettingInput
+                        label="Email" 
+                        value={email} 
+                        onChange={(emailInput)=>{setEmail(emailInput)}}
+                        errMassage=""
+                    />
+                    <SettingInput 
+                        label="密碼" 
+                        placeholder="請設定密碼" 
+                        value={password}  
+                        onChange={(passwordInput)=>{setPassword(passwordInput)}}
+                        errMassage=""
+                    />
+                    <SettingInput 
+                        label="密碼再確認" 
+                        placeholder="請再次輸入密碼"  
+                        value={checkPassword} 
+                        onChange={(checkPasswordInput)=>{setChecPassword(checkPasswordInput)}} 
+                        errMassage={passwordeEror ? "輸入密碼不相同" : '' }
+                    />    
+
+                <div className={styles.saveBtn} onClick={handleSave} ><SaveBtn /></div>
             </div>
-            <div className={styles.saveBtn} onClick={handleSave} ><SaveBtn /></div>
       </div>
     )
 }
 
-export default SettingPage
+export default SettingPage;
