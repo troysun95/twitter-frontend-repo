@@ -6,6 +6,7 @@ import { ReactComponent as LogOutIcon } from "icons/logout.svg";
 
 export default function MainNavbar({children, handleLogout}){
   
+
     return (
       <div className={styles.navbarContainer}>
         <div className={styles.navbar}>

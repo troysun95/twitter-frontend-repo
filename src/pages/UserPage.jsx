@@ -22,9 +22,9 @@ import {
   getUserTweets,
   getUserFollowings,
   getUserFollowers,
-  getTopTenUsers,
   getUserReplies,
   getUserLikes,
+  getTopTenUsers,
 } from "../api/twitter.js";
 
 const TweetsCollection = ({ content, renderItem, userInfo }) => {
@@ -127,7 +127,7 @@ const UserPage = () => {
   const [userContent, setUserContent] = useState("tweets");
   const [tweets, setTweets] = useState([]); //user發文
   const [replies, setReplies] = useState([]); //user回覆
-  const [likes, setLikes] = useState([]);
+   const [likes, setLikes] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [followings, setFollowings] = useState([]);
   const [topTenUsers, setTopTenUsers] = useState([]);
@@ -141,7 +141,6 @@ const UserPage = () => {
     const getUserTweetsAsync = async () => {
       try {
         const tweets = await getUserTweets(id);
-        // 確認是否有tweets
         if (tweets) {
           setTweets(tweets.map((tweet) => ({ ...tweet })));
           console.log("tweets", tweets);
@@ -156,10 +155,10 @@ const UserPage = () => {
     const getUserRepliesAsync = async () => {
       try {
         const replies = await getUserReplies(id);
-        // 確認是否有tweets
         if (replies) {
           setReplies(replies.map((reply) => ({ ...reply })));
           console.log("replies", replies);
+
         } else {
           setReplies(null);
         }
@@ -211,11 +210,12 @@ const UserPage = () => {
 
     const getTopTenUsersAsync = async () => {
       try {
-        const topTenUsers = await getTopTenUsers();
+        const topTenUsersData = await getTopTenUsers();
+        const topTenUsers = topTenUsersData.data; //data內
         if (topTenUsers) {
-          // setTopTenUsers(topTenUsers.map((topTenUser) => ({ ...topTenUser })));
-          console.log("topTenUsers", topTenUsers);
-        } else {
+          setTopTenUsers(topTenUsers.map((topTenUser) => ({ ...topTenUser })));
+        }
+        else {
           setTopTenUsers(null);
         }
       } catch (error) {

@@ -2,101 +2,131 @@ import styles from "styles/Layout3.module.scss";
 import MainNavbar  from "components/MainNavbar";
 import NavItem from "components/NavItem";
 import ToTweetPanel from "components/ToTweetPanel"
+import TweetModal from "components/TweetModal"
+import PopularList from "components/PopularList";
 import  {ReactComponent as HomeActiveIcon} from "icons/homeActive.svg"
 import  {ReactComponent as UserIcon} from "icons/user.svg"
 import  {ReactComponent as SettingIcon} from "icons/setting.svg"
-import PopularList from "components/PopularList";
-import TweetItem from "components/TweetItems/TweetItem";
+import TweetList from "components/TweetList";
 import { useNavigate } from "react-router-dom";
-import {getTweets} from "api/twitter"
+import {getTweets} from "api/twitter";
+import ReplyModal from "components/ReplyModal"
 
 //假資料
 import { useState,useEffect } from "react";
 
-
-
 const MainPage = ()=> {
   const [tweets, setTweets] = useState([]);
-  const [inputValue, setInputValue] = useState("");
-  const [isSubmit, setIsSubmit] = useState(false);
-  const navigate = useNavigate()
-  const user = localStorage.getItem("user")
-
-  //handler
-
-  const handleInputChange = (value) => {
-    setInputValue(value);
-  };
-
- 
- //發送推文
-  const handleSubmitTweet = ()=>{
-    if(inputValue.length !== 0 &&  inputValue.length < 150){
-       const newTweet = {
-       id: tweets.length + 1,
-       descrption: inputValue
-     }
-
-     //先取得所有推文，再新增推文
-     setTweets([...tweets, newTweet])
-     setInputValue("")
-
-     setIsSubmit(true)
-     setIsSubmit(false)
-    }
-  }   
+  // const [inputValue, setInputValue] = useState("");
+  // const [isSubmit, setIsSubmit] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"))
+  //拿取特定推文的User 資訊
+  const Replyeduser = localStorage.getItem("user")
 
   
+  //handler
+  // const handleInputChange = (value) => {
+  //   setInputValue(value);
+  // };
+
+  //頁面跳轉
+
+  const handleLogout =()=>{
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+    localStorage.removeItem('account');
+    localStorage.removeItem('password')
+    navigate('/login')
+  }
+
+
+
+ //發送推文
+  // const handleSubmitTweet = ()=>{
+  //   if(inputValue.length !== 0 &&  inputValue.length < 150){
+  //      const newTweet = {
+  //       id: tweets.length + 1,
+  //       descrption: inputValue,
+  //       createdAt: "剛剛",
+  //       updatedAt: "2023-11-05T12:50:12.000Z", //發文時間函式，Raect U44
+  //       User:{...user},
+  //       Replies: [
+  //             {
+  //             }
+  //         ],
+  //       LikedUsers: [],
+  //       repliesAmount: 0,
+  //       likesAmount: 0
+  //     }
+
+  //    //先取得所有推文，再新增推文
+  //    setTweets([...tweets, newTweet])
+  //    setInputValue("")
+  //    setIsSubmit(true)
+  //    setIsSubmit(false)
+  //   }
+  // }
+ 
+  
+  const handleOpen = () =>{
+    setIsOpen(true);
+  }
+  const handleClose = () =>{
+    setIsOpen(false);
+  }
+
   useEffect(() => {
     const getTweetsAsync = async () => {
     try {
     const tweets = await getTweets();
-    // let ids = []
-    // ids = tweets.map((tweet)=>ids.push(tweet.id))
-    // console.log(ids)
-    setTweets(tweets.map((tweet) => ({tweet})));
+    setTweets(tweets);
+   setTweets(tweets.map((tweet) => ({...tweet})));
+   console.log('推文取得修正中')
     } catch (error) {
     console.error (error);
     }
     };
     getTweetsAsync();
-    }, []);
-
-
+    }, []); 
 
   
   return(
     <div className={styles.appContainer}>
         <div className={styles.navbarContainer}>
-          <MainNavbar>
-              <NavItem title="首頁"  toRoute='/main'>
+          <MainNavbar handleLogout={handleLogout}>
+            <div onClick={()=>navigate('/main')}>
+              <NavItem title="首頁"  >
                 <HomeActiveIcon/>
               </NavItem>
-              <NavItem title="個人資料" toRoute='/user'>
+            </div>
+            <div onClick={()=>navigate('/user')}>
+              <NavItem title="個人資料">
                 <UserIcon/>
               </NavItem>
-              <NavItem title="設定"   toRoute='setting'>
+            </div>
+            <div onClick={()=>navigate('/setting')}>
+              <NavItem title="設定" >
                   <SettingIcon/>
-              </NavItem>
-            <button className={styles.tweetButton} onClick={()=>navigate('/main/tweet')}>推文</button>
+                </NavItem>
+            </div>
+            <button className={styles.tweetButton} onClick={handleOpen}>推文</button>
           </MainNavbar>
         </div>
         <div className={styles.content}>
           <div className={styles.headerContainer}>
-            <h4>首頁</h4>
+            <h4>{isOpen ? '推文' :'首頁'}</h4>
           </div>
-          
-          <ToTweetPanel user={user} handleSubmitTweet={handleSubmitTweet} handleInputChange={handleInputChange} isSubmit={isSubmit}/>
-           {tweets.map((tweet) => {
-              return (
-                <TweetItem  
-                />
-              );
-            })}
+          <ToTweetPanel/>
+          <TweetModal className={styles.tweetModal}  user={user} isOpen={isOpen}  onClick={handleClose}/>
+          <TweetList tweets={tweets} />
+          <ReplyModal className={styles.replyModal} Replyeduser={Replyeduser}  isOpen={isOpen}  onClick={handleClose} />
         </div>
         <div className={styles.popularList}>
             <PopularList/>
-        </div>
+        </div> 
+       
     </div>
   )
 }

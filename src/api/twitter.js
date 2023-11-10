@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const baseUrl = 'https://warm-forest-67690-2e44d4cd1684.herokuapp.com';
 
-//每次發請求前，先到這邊取出token(全域？)
+//每次發請求前，先到這邊取出token
 const  token =localStorage.getItem('token')
 axios.defaults.headers['Authorization'] = `Bearer ${token}`
 
@@ -13,12 +13,11 @@ axios.interceptors.request.use(
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
       console.log('取得token')
-      console.log(config.headers)
     }
     return config;
   },
   (error) => {
-    console.log('no取得token')
+    console.error('未取得token')
     console.error(error);
   },
 );
@@ -59,12 +58,14 @@ export const getTweets = async () => {
   }
 };
 
+
+export const UnlikeTweet = async () => {
 // UserPage
 // 使用者點瀏覽使用者的推文
 export const getUserTweets = async (id) => {
   try {
     // const res = await axios.get(`${baseUrl}/api/users/${id}/tweets`);
-    const {data} = await axios.get(`${baseUrl}/api/users/${id}/tweets`);
+    const {data} = await axios.get(`${baseUrl}/api/users/${id}/replied_tweets`);
 
     console.log('tweets.js裡的 getUserTweets 回傳值: ', data);
     // 這邊要注意回傳內容，只有一層 data
@@ -123,11 +124,57 @@ export const getUserFollowers = async (id) => {
 // 使用者能查看追蹤前10的使用者
 export const getTopTenUsers = async () => {
     try {
-        const { data } = await axios.get(`${baseUrl}/api/users`);
-        console.log('tweets.js裡的 getTopTenUsers 回傳值: data', data);
+        const { data } = await axios.get(`${baseUrl}/api/users/top10`);
+        // console.log('tweets.js裡的 getTopTenUsers 回傳值: data', data);
         return data;
     } catch (error) {
         console.error('[Get top ten users Failed]: ', error);
         return error;
     }
+};
+
+
+export const UnlikeTweet = async (id) => {
+  try {
+    const res = await axios.post(`${baseUrl}/api/tweets/:id/unlike`);
+    return res.data;
+  } catch (error) {
+    console.error('[Unlike Tweet failed]: ', error);
+  }
+};
+
+
+
+export const DeleteTweet = async ({id}) => {
+  try {
+    const res = await axios.delete(`${baseUrl}/api/admin/tweets/${id}`, {id});
+    return res;
+  } catch (error) {
+    console.error('[Delete Tweet failed]: ', error);
+  }
+};
+
+
+//設定個人資料
+export const EditUser = async (id,{
+  account,
+  name,
+  email,
+  password,
+  checkPassword
+}) => {
+  try {
+    const res = await axios.put(`${baseUrl}/api/users/${id}`,{
+      account,
+      name,
+      email,
+      password,
+      checkPassword
+    });
+
+    return res;
+    
+  } catch (error) {
+    console.error('[Edit User failed]: ', error);
+  }
 };

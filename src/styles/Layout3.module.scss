@@ -7,24 +7,22 @@ $border-style: 1px solid var(--grey-500);
     width: 960px;
     margin: 0 auto;
     display: flex;
+    position: relative;
+    .tweetModal{
+        position: absolute;
+        top:56px;
+        left:336px;
+        z-index: 100;
+    }
 }
 
-
-.appContainerModal{
-    height: 100vh;
-    max-width: 1199px;
-    min-width: 992px;
-    margin: 0 auto;
-    display: flex;
-    //預計加上一層灰底
-    //background-color: rgba($color: #eae5e5, $alpha: 1.0);
-}
 
 .navbarContainer {
     height: 100%;
     width: 178px;
     margin-right: 25px;
 }
+
 .content {
     height: 100%;
     width: 639px;
@@ -45,6 +43,7 @@ $border-style: 1px solid var(--grey-500);
     font-weight: 700;
     cursor:  pointer;
 }
+
 
 .headerContainer{
     width: 100%;
