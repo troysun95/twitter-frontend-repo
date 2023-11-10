@@ -55,6 +55,7 @@
       position: absolute;
       bottom: 0;
       height: 54px;
+      line-height: 54px;
       width: 356px;
       flex-shrink: 0;
       outline: none;
@@ -65,7 +66,9 @@
       font-weight: 400;
       font-size: var(--main-font-size);
       border-bottom: 2px solid #657786;
-      
+      &:focus{
+        border-bottom: 2px solid var(--blue);
+      }
     }
     input[type="text"],
     input[type="password"], 
@@ -97,5 +100,27 @@
       text-align: right;
       align-self: flex-end;
       cursor: pointer;
+    }
+
+    .linkWrapper{
+      width: 100%;
+      display: flex;
+      justify-content: end;
+      flex-flow: row nowrap;
+      .linkText {
+        margin: 6px;
+        color:  var(--primary);
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        text-decoration-line: underline;
+        text-align: right;
+        align-self: flex-end;
+        cursor: pointer;
+      }
+      .dot{
+        font-size: 20px;
+        font-weight: 700;
+      }
     }
   }

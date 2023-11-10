@@ -6,7 +6,7 @@ export default function TweetList({tweets}) {
     // console.log(tweets)
     const tweetsList =  tweets.map((data) => {
         return(
-            < TweetItem data={data} key={data.id}/>
+            < TweetItem data={data} key={data.id} id={data.id}/>
         )
     });
     return( 

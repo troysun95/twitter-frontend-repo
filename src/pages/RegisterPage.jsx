@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "styles/Layout1.module.scss";
+import styles from "styles/RegisterPage.module.scss";
 import { ReactComponent as Logo } from "icons/logo.svg";
 import { ReactComponent as RegistBtn} from "icons/registBtn.svg"
 import RegisterInput from "components/RegisterInput"
@@ -31,7 +31,7 @@ const RegisterPage = ()=>{
         if(response.data.status === "success"){
             console.log('註冊成功！')
             console.log(`註冊資料如下${response.data.user}`)
-            
+            navigate('/login')
         }else{
 
             console.log('註冊失敗！')
@@ -41,56 +41,53 @@ const RegisterPage = ()=>{
 
 
     return(
-        <div className={styles.adminLogInContainer}>
+        <div className={styles.appContainer}>
             <div className={styles.brandContainer}>
-            <Logo/>
+                <Logo/>
             </div>
             <h3>建立你的帳號</h3>
-            <div>
-            <RegisterInput
-                label={"帳號"}
-                value={account}
-                placeholder={"請輸入帳號"}
-                onChange={(accountInput) => setAccount(accountInput)}
-            />
-    
-            <RegisterInput
-                label={"名稱"}
-                value={name}
-                placeholder={"請輸入使用者名稱"}
-                onChange={(nameInput) => setName(nameInput)}
-            />
+            <div className={styles.content}>
+                <RegisterInput
+                    label={"帳號"}
+                    value={account}
+                    placeholder={"請輸入帳號"}
+                    onChange={(accountInput) => setAccount(accountInput)}
+                />
+        
+                <RegisterInput
+                    label={"名稱"}
+                    value={name}
+                    placeholder={"請輸入使用者名稱"}
+                    onChange={(nameInput) => setName(nameInput)}
+                />
 
-            <RegisterInput
-                type="password"
-                label={"Email"}
-                value={email}
-                placeholder={"請輸入 Email"}
-                onChange={(emailInput) => setEmail(emailInput)}
-            />
+                <RegisterInput
+                    type="password"
+                    label={"Email"}
+                    value={email}
+                    placeholder={"請輸入 Email"}
+                    onChange={(emailInput) => setEmail(emailInput)}
+                />
 
-            <RegisterInput
-                type="password"
-                label={"密碼"}
-                value={password}
-                placeholder={"請輸入密碼"}
-                onChange={(passwordInput) => setPassword(passwordInput)}
-            />
+                <RegisterInput
+                    type="password"
+                    label={"密碼"}
+                    value={password}
+                    placeholder={"請輸入密碼"}
+                    onChange={(passwordInput) => setPassword(passwordInput)}
+                />
 
-            <RegisterInput
-                type="password"
-                label={"密碼"}
-                value={checkPassword}
-                placeholder={"請再次輸入密碼"}
-                onChange={(checkPasswordInput) => setCheckPassword(checkPasswordInput)}
-            />
-    
+                <RegisterInput
+                    type="password"
+                    label={"密碼"}
+                    value={checkPassword}
+                    placeholder={"請再次輸入密碼"}
+                    onChange={(checkPasswordInput) => setCheckPassword(checkPasswordInput)}
+                />
             </div>
-            <button>
-            <RegistBtn  onClick={handleRegister}/>
-            </button>
-        <div className={styles.linkText} onClick={()=>{navigate('/login')}}>取消</div>
-      </div>
+            <button> <RegistBtn  onClick={handleRegister}/></button>
+            <div className={styles.linkText} onClick={()=>{navigate('/login')}}>取消</div>
+        </div>
     )
 }
 

@@ -6,9 +6,10 @@ import styles from "styles/AdminTweetList.module.scss"
 
 
 export default function AdminTweetList({tweets}) {
+    
     const tweetsList =  tweets.map((data) => {
     return(
-        < AdminTweetItem data={data} key={data.id}/>
+        < AdminTweetItem data={data} key={data.id} id={data.id}/>
     )
                
     });

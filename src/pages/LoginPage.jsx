@@ -44,9 +44,6 @@ const LoginPage = () => {
     if(data.success){
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
-        //存帳密在setting頁面使用
-        localStorage.setItem('account', account);
-        localStorage.setItem('password', password);
         Swal.fire({
             position: 'top',
             title: '登入成功！',
@@ -92,8 +89,12 @@ const LoginPage = () => {
       <button>
         <LoginBtn  onClick={handleClick}/>
       </button>
-      <div className={styles.linkText} onClick={()=>{navigate('/register')}}>註冊</div>
-      <div className={styles.linkText} onClick={()=>{navigate('/admin')}}>後台登入</div>
+      <div className={styles.linkWrapper}>
+        <div className={styles.linkText} onClick={()=>{navigate('/register')}}>註冊</div>
+        <span className={styles.dot}>.</span>
+        <div className={styles.linkText} onClick={()=>{navigate('/admin')}}>後台登入</div>
+      </div>
+      
     </div>
   );
 };

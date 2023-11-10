@@ -10,6 +10,7 @@ import  {ReactComponent as SettingIcon} from "icons/setting.svg"
 import TweetList from "components/TweetList";
 import { useNavigate } from "react-router-dom";
 import {getTweets} from "api/twitter";
+import ReplyModal from "components/ReplyModal"
 
 //假資料
 import { useState,useEffect } from "react";
@@ -21,6 +22,8 @@ const MainPage = ()=> {
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"))
+  //拿取特定推文的User 資訊
+  const Replyeduser = localStorage.getItem("user")
 
   
   //handler
@@ -78,9 +81,6 @@ const MainPage = ()=> {
     const getTweetsAsync = async () => {
     try {
     const tweets = await getTweets();
-    //排列 tweets
-    //  tweetsArranged.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt));
-    // setTweets(tweetsArranged);
     setTweets(tweets);
     setTweets(tweets.map((tweet) => ({...tweet})));
     } catch (error) {
@@ -120,7 +120,7 @@ const MainPage = ()=> {
           <ToTweetPanel/>
           <TweetModal className={styles.tweetModal}  user={user} isOpen={isOpen}  onClick={handleClose}/>
           <TweetList tweets={tweets} />
-          
+          <ReplyModal className={styles.replyModal} Replyeduser={Replyeduser}  isOpen={isOpen}  onClick={handleClose} />
         </div>
         <div className={styles.popularList}>
             <PopularList/>

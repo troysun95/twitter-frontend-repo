@@ -16,7 +16,7 @@ const AdminMainPage = ()=> {
   
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleLogout = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('Authorization');
     navigate('/admin');
@@ -41,7 +41,7 @@ const AdminMainPage = ()=> {
   return(
     <div className={styles.appContainer}>
       <div className={styles.navbarContainer}>
-        <MainNavbar handleClick={handleClick}>
+        <MainNavbar handleLogout={handleLogout}>
           <NavItem title="推文清單"  >
             <HomeActiveIcon/>
           </NavItem>

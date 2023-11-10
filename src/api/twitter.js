@@ -68,22 +68,38 @@ export const UnlikeTweet = async () => {
   }
 };
 
-export const DeleteTweet = async () => {
+
+
+export const DeleteTweet = async ({id}) => {
   try {
-    const res = await axios.post(`${baseUrl}/api/admin/tweets/:id`);
-    return res.data;
+    const res = await axios.delete(`${baseUrl}/api/admin/tweets/:id`, {id});
+    return res;
   } catch (error) {
     console.error('[Delete Tweet failed]: ', error);
   }
 };
 
 
-//編輯個人頁面、設定個人資料
-export const EditUser = async () => {
+//設定個人資料
+export const EditUser = async ({
+  account,
+  name,
+  email,
+  password,
+  checkPassword
+}) => {
   try {
-    const res = await axios.put(`${baseUrl}/api/users/:id`);
-    return res.data;
+    const res = await axios.put(`${baseUrl}/api/users/:id`,{
+      account,
+      name,
+      email,
+      password,
+      checkPassword
+    });
+
+    return res;
+    
   } catch (error) {
-    console.error('[Delete Tweet failed]: ', error);
+    console.error('[Edit User failed]: ', error);
   }
 };
