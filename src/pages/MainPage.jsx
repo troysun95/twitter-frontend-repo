@@ -9,9 +9,11 @@ import  {ReactComponent as UserIcon} from "icons/user.svg"
 import  {ReactComponent as SettingIcon} from "icons/setting.svg"
 import TweetList from "components/TweetList";
 import { useNavigate } from "react-router-dom";
-import {getTweets} from "api/twitter";
+import {getTweets} from "api/twitter"; 
+import {getTopTenUsers} from "api/twitter"
 import ReplyModal from "components/ReplyModal"
 import { useState,useEffect } from "react";
+
 
 const MainPage = ()=> {
   const [tweets, setTweets] = useState([]);
@@ -19,6 +21,7 @@ const MainPage = ()=> {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"))
   const Replyeduser = localStorage.getItem("user")
+  const [topTenUsers, setTopTenUsers] = useState([]);
 
   //頁面跳轉
 
@@ -77,7 +80,24 @@ const MainPage = ()=> {
     console.error (error);
     }
     };
+
+    const getTopTenUsersAsync = async () => {
+      try {
+        const topTenUsersData = await getTopTenUsers();
+        const topTenUsers = topTenUsersData.data; //data內
+        if (topTenUsers) {
+          setTopTenUsers(topTenUsers.map((topTenUser) => ({ ...topTenUser })));
+        }
+        else {
+          setTopTenUsers(null);
+        }
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+
     getTweetsAsync();
+    getTopTenUsersAsync()
     }, []); 
 
   
@@ -113,7 +133,7 @@ const MainPage = ()=> {
           <ReplyModal className={styles.replyModal} Replyeduser={Replyeduser}  isOpen={isOpen}  onClick={handleClose} />
         </div>
         <div className={styles.popularList}>
-            <PopularList/>
+            <PopularList topTenUsers={topTenUsers}/>
         </div> 
        
     </div>
