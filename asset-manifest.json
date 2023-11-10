@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/twitter-frontend-repo/static/css/main.7401227a.css",
-    "main.js": "/twitter-frontend-repo/static/js/main.8e0def56.js",
+    "main.js": "/twitter-frontend-repo/static/js/main.8d427ea7.js",
     "static/js/787.2f7e3544.chunk.js": "/twitter-frontend-repo/static/js/787.2f7e3544.chunk.js",
     "static/media/editProfileBtn.svg": "/twitter-frontend-repo/static/media/editProfileBtn.238cbb8242b79e5a0b74b742096837f2.svg",
     "static/media/followingBtn.svg": "/twitter-frontend-repo/static/media/followingBtn.5543ed338a39a61bef24c2c956bb1119.svg",
@@ -28,11 +28,11 @@
     "static/media/likeActie.svg": "/twitter-frontend-repo/static/media/likeActie.2a40884f9e319b99a68768cadcc4db69.svg",
     "static/media/likeActive.svg": "/twitter-frontend-repo/static/media/likeActive.5fbcc09a16cf4089a4ac11eda9ef9e21.svg",
     "main.7401227a.css.map": "/twitter-frontend-repo/static/css/main.7401227a.css.map",
-    "main.8e0def56.js.map": "/twitter-frontend-repo/static/js/main.8e0def56.js.map",
+    "main.8d427ea7.js.map": "/twitter-frontend-repo/static/js/main.8d427ea7.js.map",
     "787.2f7e3544.chunk.js.map": "/twitter-frontend-repo/static/js/787.2f7e3544.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7401227a.css",
-    "static/js/main.8e0def56.js"
+    "static/js/main.8d427ea7.js"
   ]
 }
