@@ -151,7 +151,7 @@ const UserPage = () => {
   const [userContent, setUserContent] = useState("replies");
   const [tweets, setTweets] = useState([]); //user發文
   const [replies, setReplies] = useState([]); //user回覆
-  // const [likes, setLikes] = useState([]);
+   const [likes, setLikes] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [followings, setFollowings] = useState([]);
   const [topTenUsers, setTopTenUsers] = useState([]);
@@ -191,19 +191,19 @@ const UserPage = () => {
       }
     };
 
-    // const getUserLikesAsync = async () => {
-    //   try {
-    //     const likes = await getUserLikes(id);
-    //     if (likes) {
-    //       setLikes(likes.map((like) => ({ ...like })));
-    //       console.log("likes", likes);
-    //     } else {
-    //       setLikes(null);
-    //     }
-    //   } catch (error) {
-    //     console.error("error", error);
-    //   }
-    // };
+    const getUserLikesAsync = async () => {
+      try {
+        const likes = await getUserLikes(id);
+        if (likes) {
+          setLikes(likes.map((like) => ({ ...like })));
+          console.log("likes", likes);
+        } else {
+          setLikes(null);
+        }
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
 
     const getUserFollowingsAsync = async () => {
       try {
@@ -246,11 +246,11 @@ const UserPage = () => {
         console.error("error", error);
       }
     };
-    // getUserTweetsAsync();
+    getUserTweetsAsync();
     getUserRepliesAsync();
-    // getUserLikesAsync();
-    // getUserFollowingsAsync();
-    // getUserFollowersAsync();
+    getUserLikesAsync();
+    getUserFollowingsAsync();
+    getUserFollowersAsync();
     getTopTenUsersAsync();
   }, [id]);
 

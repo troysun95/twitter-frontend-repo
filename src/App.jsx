@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import {
   MainPage,
-  MainReplyPage,
   MainTweetPage,
   UserPage,
   AdminPage,
