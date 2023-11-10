@@ -1,53 +1,44 @@
-import { ReactComponent as LikeIcon } from "icons/like.svg";
 import { ReactComponent as LikeActiveIcon } from "icons/likeActive.svg";
-
 import { ReactComponent as CommentIcon } from "icons/comment.svg";
 import styles4 from "styles/tweetsCollection.module.scss";
 
-const UserTweetItem = ({
-  userAvatar,userName,
-  userAccount,
+
+const UserLikeItem = ({
+  img,
   account,
-  createdAt,
-  description,
-  isLiked,
-  likedUsersCount,
-  repliesCount,
-  updatedAt,
+  tagAccount,
+  afterTweetTime,
+  message,
 }) => {
   return (
     <div className={styles4.tweetItem}>
       <div className={styles4.avatar}>
-        <img src={userAvatar} aria-label={account} />
+        <img src={img} aria-label={account} />
       </div>
       <div>
         {/* 帳號 */}
         <div className={styles4.accountTitle}>
-          <p className={styles4.accountName}>{userName}</p>
+          <p className={styles4.accountName}>{account}</p>
           <p className={styles4.subTitle}>
-            <span>@{userAccount}</span>
-            <span>・{createdAt}</span>
+            <span>{tagAccount}</span>
+            <span>・{afterTweetTime}</span>
           </p>
         </div>
-        <div className={styles4.descriptionContainer}>
-          <p>{description}</p>
+        <div className={styles4.messageContainer}>
+          <p>{message}</p>
         </div>
         <div className={styles4.interactionContainer}>
           <p className={styles4.leftIcon}>
             <span className={styles4.iconContainer}>
               <CommentIcon className={styles4.icon} />
             </span>
-            {repliesCount}
+            13
           </p>
           <p>
             <span className={styles4.iconContainer}>
-              {isLiked ? (
-                <LikeIcon className={styles4.icon} />
-              ) : (
-                <LikeActiveIcon className={styles4.icon} />
-              )}
+              <LikeActiveIcon className={styles4.icon} />
             </span>
-            {likedUsersCount}
+            13
           </p>
         </div>
       </div>
@@ -55,4 +46,4 @@ const UserTweetItem = ({
   );
 };
 
-export default UserTweetItem;
+export default UserLikeItem;

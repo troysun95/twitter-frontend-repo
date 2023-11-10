@@ -1,42 +1,40 @@
-// import {useState} from 'react'
+import { ReactComponent as FollowingBtnIcon } from "icons/followingBtn.svg";
+import { ReactComponent as NotFollowingBtnIcon } from "icons/notFollowingBtn.svg";
 import styles from "styles/PopularList.module.scss";
-import {popularListData} from "data/popularListData"
 
-const PopularAccountItem = ({ id, img, account, tagAccount}) => {
+const PopularAccountItem = ({ avatar, name, account, isFollowed }) => {
   return (
     <div className={styles.PopularAccountItem}>
       <div className={styles.avatar}>
-        <img src={img} aria-label={account}/>
+        <img src={avatar} aria-label={account} />
       </div>
       <div className={styles.accountTitle}>
-        <p className={styles.accountName}>{account}</p>
-        <p className={styles.tagAccountName}>{tagAccount}</p>
+        <p className={styles.accountName}>{name}</p>
+        <p className={styles.tagAccountName}>{account}</p>
       </div>
-      <button className={styles.followingBtn}>正在跟隨</button>
+      <button className={styles.followingBtn}>
+        {isFollowed ? <FollowingBtnIcon /> : <NotFollowingBtnIcon />}
+      </button>
     </div>
   );
 };
 
-const PopularList = () => {
-  // const [popularAccount, setPopularAccount] = useState(popularListData);
+const PopularList = ({ topTenUsers }) => {
   return (
-    <>
-      <div className={styles.popularList}>
-        <div className={styles.title}>
-          <h4>推薦帳號</h4>
-        </div>
-        {popularListData.map((accountItem) => {
-          return (
-            <PopularAccountItem
-              key={accountItem.id}
-              {...accountItem}
-              // onclick
-            />
-          );
-          
-        })}
+    <div className={styles.popularList}>
+      <div className={styles.title}>
+        <h4>推薦帳號</h4>
       </div>
-    </>
+      {topTenUsers.map((topTenUserItem) => {
+        return (
+          <PopularAccountItem
+            key={topTenUserItem.id}
+            {...topTenUserItem}
+            // onclick
+          />
+        ); 
+      })}
+    </div>
   );
 };
 export default PopularList;

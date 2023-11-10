@@ -1,10 +1,14 @@
 .popularList {
   margin-top: 16px;
-  height: 731px;
+  max-height: 731px;
   min-width: 273px;
+  max-width: 273px;
+  width: 273px;
   background-color: var(--grey-100);
   border-radius: 16px;
-  outline: 2px solid orange;
+  overflow-y:scroll;
+  overflow-x: hidden;
+  scroll-behavior: auto;
 
   .title {
     padding: 24px;
@@ -20,12 +24,14 @@
   .PopularAccountItem {
     padding: 16px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
 
     .avatar {
-      height: 50px;
-      width: 50px;
+      min-height: 50px;
+      max-height: 50px;
+      min-width: 50px;
+      max-width: 50px;
       margin-right: 8px;
       background-position: center center;
       img {
@@ -35,15 +41,12 @@
       }
     }
     .accountTitle {
-      // 若 btn 為 正在追隨 title的字會出現...
-      outline: 1px solid red;
       display: flex;
       flex-direction: column;
       height: 47px;
       min-width: 84px;
       max-width: 84px;
 
-      // <p> 不可換行
       .accountName {
         font-size: var(--main-font-size);
         font-weight: 700;
@@ -64,11 +67,7 @@
       }
     }
     .followingBtn {
-      width: 90px;
-      height: 40px;
-      padding: 8px 16px;
-      background-color: var(--orange);
-      color: var(--white);
+      cursor: pointer;
     }
   }
 }

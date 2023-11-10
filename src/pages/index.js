@@ -1,6 +1,8 @@
 
 import MainPage from './MainPage'
 import UserPage from './UserPage'
+import UserFollowerPage from './UserFollowerPage'
+import UserFollowingPage from './UserFollowingPage'
 import AdminPage from './AdminPage'
 import AdminUserPage from './AdminUserPage'
 import AdminMainPage from './AdminMainPage'
@@ -13,7 +15,9 @@ import RegisterPage from './RegisterPage'
 export  {
 MainPage,
 MainTweetPage,
-UserPage, 
+UserPage,
+UserFollowerPage,
+UserFollowingPage,
 AdminPage, 
 AdminUserPage, 
 AdminMainPage, 

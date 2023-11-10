@@ -45,3 +45,18 @@ export const Login = async ({ account, password }) => {
     return { success: false };
   }
 }
+
+// 驗證token是否有效
+export const checkPermission = async (authToken) => {
+  try {
+    const response = await axios.get(`${authURL}/test-token`, {
+      headers: {
+        Authorization: 'Bearer ' + authToken
+      }
+    })
+
+    return response.data.success
+  } catch (error) {
+    console.error('[Check Permission Failed]:', error)
+  }
+}
