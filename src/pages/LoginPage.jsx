@@ -55,8 +55,7 @@ const LoginPage = () => {
         icon: "success",
         showConfirmButton: false,
       });
-      // navigate('/main');
-      navigate("/user");
+      navigate('/main')
     }else{
         Swal.fire({
             position: 'top',
@@ -78,7 +77,7 @@ const LoginPage = () => {
       const result = await checkPermission(authToken);
 
       if (result) {
-        navigate('/user');
+        navigate('/main');
       }
     };
     checkTokenIsValid();
