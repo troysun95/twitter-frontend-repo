@@ -55,6 +55,35 @@ $border-style: 1px solid var(--grey-500);
     }
     
 }
+
+.headerContainer{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 75px;
+    padding-left: 24px;
+    border-bottom: 1px solid var(--grey-500);
+
+    .iconContainer {
+        margin-right: 16px;
+        height: 24px;
+        line-height: 24px;
+        text-align: center;
+        width: 24px;
+    }
+    .headerTitle {
+        h5 {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 26px;
+        }
+        p {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+    }
+}
 @media screen and (min-width: 1200px) {
     .appContainer {
         width: 1140px;
