@@ -1,11 +1,6 @@
 import styles from "styles/ReplyTweetItem.module.scss"
 
 const ReplyTweetItem = ({data}) => {
-    
-    //取出repliedTweetId ，傳入api
-
-    
-
 
     return (
         <div className={styles.tweetContainer}  >

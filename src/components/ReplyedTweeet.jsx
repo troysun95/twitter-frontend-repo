@@ -1,7 +1,7 @@
 import styles from "styles/ReplyedTweeet.module.scss"
 
 const ReplyedTweeet = ({replyedTweet})=> {
- 
+
     return (
         <div className={styles.tweetContainer}>
             <div className={styles.avatarWrapper}>

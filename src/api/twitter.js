@@ -211,7 +211,7 @@ export const AddTweet = async (description) => {
 }
 
 //使用者點擊推文查看特定推文 /api/tweets/:id
-export const GetOneTweet = async ({id}) => {
+export const GetOneTweet = async (id) => {
   try {
     const res = await axios.get(`${baseUrl}/api/tweets/${id}`,{id});
     return res;
@@ -223,7 +223,7 @@ export const GetOneTweet = async ({id}) => {
 
 
 //使用者點擊推文查看特定推文 /api/tweets/:id/replies
-export const GetOneTweetRreplies = async ({id}) => {
+export const getOneTweetReplies = async (id) => {
   try {
     const res = await axios.post(`${baseUrl}/api/tweets/${id}/replies`,{id});
     
@@ -245,5 +245,6 @@ export const ReplyTweet = async ({id, comment}) => {
     
   } catch (error) {
     console.error('[Get one Tweet Replies failed]: ', error);
+    
   }
 }

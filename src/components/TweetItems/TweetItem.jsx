@@ -20,7 +20,7 @@ export default function TweetItem({data, id}){
     const [isliked, setIsLiked] = useState(prevIsLiked);
     const [likesAmount, setlikesAmount] = useState(prelikesAmount)
     const repliesAmount = data.repliesAmount
-    //const [repliesAmount, setRepliesAmount] = useState(data.repliesAmount);
+    
    
     const handleLiked =() =>{
         if(isliked === true){
@@ -37,9 +37,9 @@ export default function TweetItem({data, id}){
         //
     }
 
-    const handleRplyTweet = ()=>{
+    const handleReplyTweet = ()=>{
         //儲存協助跳轉用
-        localStorage.setItem("ReplyedTweetId", data.id);
+        localStorage.setItem("tweet", JSON.stringify(data))
         navigate('/replylist')
     }
 
@@ -58,7 +58,7 @@ export default function TweetItem({data, id}){
                     </div>
                     
                 </div>
-                <div className={styles.tweetWrapper} onClick={()=>{handleRplyTweet() }}>
+                <div className={styles.tweetWrapper} onClick={()=>{handleReplyTweet() }}>
                     <p className={styles.tweet}>{data.description}</p>
      
                 </div>
