@@ -9,7 +9,7 @@ import  {ReactComponent as UserIcon} from "icons/user.svg"
 import  {ReactComponent as SettingIcon} from "icons/setting.svg"
 import TweetList from "components/TweetList";
 import { useNavigate } from "react-router-dom";
-import {getTweets} from "api/twitter"; 
+import {getTweets, AddTweet} from "api/twitter"; 
 import {getTopTenUsers} from "api/twitter"
 import ReplyModal from "components/ReplyModal"
 import { useState,useEffect } from "react";
@@ -28,40 +28,11 @@ const MainPage = ()=> {
   const handleLogout =()=>{
     localStorage.removeItem('authToken');
     localStorage.removeItem('user');
-    localStorage.removeItem('account');
-    localStorage.removeItem('password')
+    localStorage.removeItem('ReplyedTweetId');
     navigate('/login')
   }
 
-
-
- //發送推文
-  // const handleSubmitTweet = ()=>{
-  //   if(inputValue.length !== 0 &&  inputValue.length < 150){
-  //      const newTweet = {
-  //       id: tweets.length + 1,
-  //       descrption: inputValue,
-  //       createdAt: "剛剛",
-  //       updatedAt: "2023-11-05T12:50:12.000Z", //發文時間函式，Raect U44
-  //       User:{...user},
-  //       Replies: [
-  //             {
-  //             }
-  //         ],
-  //       LikedUsers: [],
-  //       repliesAmount: 0,
-  //       likesAmount: 0
-  //     }
-
-  //    //先取得所有推文，再新增推文
-  //    setTweets([...tweets, newTweet])
-  //    setInputValue("")
-  //    setIsSubmit(true)
-  //    setIsSubmit(false)
-  //   }
-  // }
- 
-  
+  //控制modal
   const handleOpen = () =>{
     setIsOpen(true);
   }
@@ -74,8 +45,7 @@ const MainPage = ()=> {
     try {
     const tweets = await getTweets();
     setTweets(tweets);
-   setTweets(tweets.map((tweet) => ({...tweet})));
-   console.log('推文取得修正中')
+    setTweets(tweets.map((tweet) => ({...tweet})));
     } catch (error) {
     console.error (error);
     }
@@ -95,7 +65,6 @@ const MainPage = ()=> {
         console.error("error", error);
       }
     };
-
     getTweetsAsync();
     getTopTenUsersAsync()
     }, []); 
@@ -135,7 +104,6 @@ const MainPage = ()=> {
         <div className={styles.popularList}>
             <PopularList topTenUsers={topTenUsers}/>
         </div> 
-       
     </div>
   )
 }

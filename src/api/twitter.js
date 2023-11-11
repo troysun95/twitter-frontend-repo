@@ -133,16 +133,6 @@ export const getTopTenUsers = async () => {
 };
 
 
-export const UnlikeTweet = async (id) => {
-  try {
-    const res = await axios.post(`${baseUrl}/api/tweets/:id/unlike`);
-    return res.data;
-  } catch (error) {
-    console.error('[Unlike Tweet failed]: ', error);
-  }
-};
-
-
 
 export const DeleteTweet = async ({id}) => {
   try {
@@ -177,3 +167,83 @@ export const EditUser = async (id,{
     console.error('[Edit User failed]: ', error);
   }
 };
+
+
+//編輯個人資料頁面 
+//cover 與  avatar 皆為檔案格式，待確認
+
+export const EditUserProfile = async (id,{
+  name,
+  introduction,
+  avatar,
+  password,
+  cover
+}) => {
+  try {
+    const res = await axios.put(`${baseUrl}/api/users/${id}`,{
+      name,
+      introduction,
+      avatar,
+      password,
+      cover
+    });
+    
+    return res;
+    
+  } catch (error) {
+    console.error('[Edit UserProfile failed]: ', error);
+  }
+};
+
+
+
+//使用者新增 推文 /api/tweets
+export const AddTweet = async (description) => {
+  try {
+    const res = await axios.post(`${baseUrl}/api/tweets`,{description});
+    
+
+    return res;
+    
+  } catch (error) {
+    console.error('[Add Tweet failed]: ', error);
+  }
+}
+
+//使用者點擊推文查看特定推文 /api/tweets/:id
+export const GetOneTweet = async ({id}) => {
+  try {
+    const res = await axios.get(`${baseUrl}/api/tweets/${id}`,{id});
+    return res;
+    
+  } catch (error) {
+    console.error('[Get one Tweet failed]: ', error);
+  }
+}
+
+
+//使用者點擊推文查看特定推文 /api/tweets/:id/replies
+export const GetOneTweetRreplies = async ({id}) => {
+  try {
+    const res = await axios.post(`${baseUrl}/api/tweets/${id}/replies`,{id});
+    
+    return res;
+    
+  } catch (error) {
+    console.error('[Get one Tweet Replies failed]: ', error);
+  }
+}
+
+
+
+//使用者回覆他人推文 /api/tweets/:id/replies
+export const ReplyTweet = async ({id, comment}) => {
+  try {
+    const res = await axios.post(`${baseUrl}/api/tweets/${id}/replies`,{id, comment});
+    
+    return res;
+    
+  } catch (error) {
+    console.error('[Get one Tweet Replies failed]: ', error);
+  }
+}
