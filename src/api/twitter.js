@@ -225,8 +225,7 @@ export const GetOneTweet = async (id) => {
 //使用者點擊推文查看特定推文 /api/tweets/:id/replies
 export const getOneTweetReplies = async (id) => {
   try {
-    const res = await axios.post(`${baseUrl}/api/tweets/${id}/replies`,{id});
-    
+    const res = await axios.get(`${baseUrl}/api/tweets/${id}/replies`,{id});
     return res;
     
   } catch (error) {
