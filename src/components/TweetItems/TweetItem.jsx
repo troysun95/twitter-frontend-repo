@@ -75,7 +75,9 @@ export default function TweetItem({data}){
             const res = await ReplyTweet({id, comment});
             if(res.data.status === "success"){
                 console.log(`回覆成功`);
-                setRepliesAmount(setRepliesAmount + 1);
+                setComment('')
+                setIsModalOpen(false)
+                setRepliesAmount(repliesAmount + 1);
             }
         }
     }
