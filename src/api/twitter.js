@@ -63,12 +63,8 @@ export const getTweets = async () => {
 // 使用者點瀏覽使用者的推文
 export const getUserTweets = async (id) => {
   try {
-    // const res = await axios.get(`${baseUrl}/api/users/${id}/tweets`);
     const {data} = await axios.get(`${baseUrl}/api/users/${id}/replied_tweets`);
-
     console.log('tweets.js裡的 getUserTweets 回傳值: ', data);
-    // 這邊要注意回傳內容，只有一層 data
-    // return res.data;
     return data;
   } catch (error) {
     console.error('[Get AllTweets failed]: ', error);
@@ -132,18 +128,6 @@ export const getTopTenUsers = async () => {
     }
 };
 
-
-export const UnlikeTweet = async (id) => {
-  try {
-    const res = await axios.post(`${baseUrl}/api/tweets/:id/unlike`);
-    return res.data;
-  } catch (error) {
-    console.error('[Unlike Tweet failed]: ', error);
-  }
-};
-
-
-
 export const DeleteTweet = async ({id}) => {
   try {
     const res = await axios.delete(`${baseUrl}/api/admin/tweets/${id}`, {id});
@@ -152,7 +136,6 @@ export const DeleteTweet = async ({id}) => {
     console.error('[Delete Tweet failed]: ', error);
   }
 };
-
 
 //設定個人資料
 export const EditUser = async (id,{
@@ -175,5 +158,58 @@ export const EditUser = async (id,{
     
   } catch (error) {
     console.error('[Edit User failed]: ', error);
+  }
+};
+
+export const postLikeTweet = async (id) => {
+  try {
+    const {data} = await axios.post(`${baseUrl}/api/tweets/${id}/like`);
+    console.log('tweets.js裡的 postLikeTweet 回傳值: ', data);
+    return data
+  } catch (error) {
+    console.error('[Post LikeTweet failed]: ', error);
+  }
+};
+
+export const postUnlikeTweet = async (id) => {
+  try {
+    const {data} = await axios.post(`${baseUrl}/api/tweets/${id}/unlike`);
+    console.log('tweets.js裡的 postUnlikeTweet 回傳值: ', data);
+    return data;
+  } catch (error) {
+    console.error('[Post UnlikeTweet failed]: ', error);
+  }
+};
+
+// 使用者可追蹤其他使用者   POST /api/followships
+export const postFollowAccount = async () => {
+  try {
+    const {data} = await axios.post(`${baseUrl}/api/followships`);
+    console.log('tweets.js裡的 postFollowAccount 回傳值: ', data);
+    return data;
+  } catch (error) {
+    console.error('[Post postFollowAccount failed]: ', error);
+  }
+};
+
+// 使用者取消追蹤其他使用者 DELETE /api/followships/:id
+export const deleteUnfollowAccount = async (id) => {
+  try {
+    const {data} = await axios.delete(`${baseUrl}/api/followships/${id}`);
+    console.log('tweets.js裡的 deleteUnfollowAccount 回傳值: ', data);
+    return data;
+  } catch (error) {
+    console.error('[Delete deleteUnfollowAccount failed]: ', error);
+  }
+};
+
+// 使用者點擊頭像時可以瀏覽使用者個人資料  GET /api/users/:id
+export const getCheckProfile = async (id) => {
+  try {
+    const {data} = await axios.get(`${baseUrl}/api/users/${id}`);
+    console.log('tweets.js裡的 getCheckProfile 回傳值: ', data);
+    return data;
+  } catch (error) {
+    console.error('[Get getCheckProfile failed]: ', error);
   }
 };

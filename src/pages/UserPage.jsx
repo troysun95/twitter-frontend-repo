@@ -23,17 +23,24 @@ import {
   getUserReplies,
   getUserLikes,
   getTopTenUsers,
+  postLikeTweet,
+  postUnlikeTweet,
+  postFollowAccount,
+  deleteUnfollowAccount,
+  getCheckProfile,
 } from "../api/twitter.js";
+
+// import {postLikeTweet, postUnlikeTweet} from "../api/like.js"
 
 const TweetsCollection = ({ content, renderItem, userInfo }) => {
   return (
     <div className={styles4.tweetsCollection}>
       {content.map((contentItem) => {
         return (
-          <Fragment key={contentItem.id} >
-            {renderItem({...contentItem, userInfo})}
+          <Fragment key={contentItem.id}>
+            {renderItem({ ...contentItem, userInfo })}
           </Fragment>
-        )
+        );
       })}
     </div>
   );
@@ -111,7 +118,7 @@ const UserContent = ({
         />
       )}
       {userContent === "likes" && (
-        <TweetsCollection content={likes} renderItem={UserLikeItem}/>
+        <TweetsCollection content={likes} renderItem={UserLikeItem} />
       )}
     </div>
   );
@@ -125,10 +132,13 @@ const UserPage = () => {
   const [userContent, setUserContent] = useState("tweets");
   const [tweets, setTweets] = useState([]); //user發文
   const [replies, setReplies] = useState([]); //user回覆
-   const [likes, setLikes] = useState([]);
+  const [likes, setLikes] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [followings, setFollowings] = useState([]);
   const [topTenUsers, setTopTenUsers] = useState([]);
+  // const [likeTweet, setLikeTweet] = useState([])
+  // const [UnlikeTweet, setUnlikeTweet] = useState([])
+  // const [followAccount, setFollowAccount] = useState([])
 
   const handleChangeUserContent = (clickItems) => {
     setUserContent(clickItems);
@@ -156,7 +166,6 @@ const UserPage = () => {
         if (replies) {
           setReplies(replies.map((reply) => ({ ...reply })));
           console.log("replies", replies);
-
         } else {
           setReplies(null);
         }
@@ -212,20 +221,76 @@ const UserPage = () => {
         const topTenUsers = topTenUsersData.data; //data內
         if (topTenUsers) {
           setTopTenUsers(topTenUsers.map((topTenUser) => ({ ...topTenUser })));
-        }
-        else {
+        } else {
           setTopTenUsers(null);
         }
       } catch (error) {
         console.error("error", error);
       }
     };
+
+    const postLikeTweetAsync = async () => {
+      try {
+        const postLikeData = await postLikeTweet(id);
+        console.log("postLikeData UUUUU", postLikeData);
+        if (postLikeData) {
+          console.log(postLikeData);
+        }
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+
+    const postUnlikeTweetAsync = async () => {
+      try {
+        const postUnlikeData = await postUnlikeTweet(id);
+        console.log("postUnlikeData UUUUUU", postUnlikeData);
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+
+    const postFollowAccountAsync = async () => {
+      try {
+        const postFollowAccountData = await postFollowAccount();
+        console.log("postFollowAccountData UUUUU", postFollowAccountData);
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+
+    const deleteUnfollowAccountAsync = async () => {
+      try {
+        const deleteUnfollowAccountData = await deleteUnfollowAccount(id);
+        console.log(
+          "deleteUnfollowAccountData UUUUUU",
+          deleteUnfollowAccountData
+        );
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+
+    const getCheckProfileAsync = async () => {
+      try {
+        const getCheckProfileData = await getCheckProfile(id);
+        console.log("getCheckProfileData UUUUUUUU", getCheckProfileData);
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+
     getUserTweetsAsync();
     getUserRepliesAsync();
     getUserLikesAsync();
     getUserFollowingsAsync();
     getUserFollowersAsync();
     getTopTenUsersAsync();
+    postLikeTweetAsync();
+    postUnlikeTweetAsync();
+    postFollowAccountAsync();
+    deleteUnfollowAccountAsync();
+    getCheckProfileAsync();
   }, [id]);
 
   return (
