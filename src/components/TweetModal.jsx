@@ -25,9 +25,9 @@ export default function TweetModal({user,onClick}){
             if(res.data.status === "success"){
             console.log('推文成功')
             //並更新 tweets
-            
             }
         }else{
+            console.log('推文字數超過限制')
             return
         }
         

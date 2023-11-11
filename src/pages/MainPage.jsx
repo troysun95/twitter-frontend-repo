@@ -11,7 +11,6 @@ import TweetList from "components/TweetList";
 import { useNavigate } from "react-router-dom";
 import {getTweets} from "api/twitter"; 
 import {getTopTenUsers} from "api/twitter"
-//import ReplyModal from "components/ReplyModal"
 import { useState,useEffect } from "react";
 
 
@@ -98,6 +97,7 @@ const MainPage = ()=> {
           <ToTweetPanel/>
           <TweetModal className={styles.tweetModal}  user={user} isOpen={isOpen}  onClick={handleClose}/>
           <TweetList tweets={tweets} />
+          
           
         </div>
         <div className={styles.popularList}>
