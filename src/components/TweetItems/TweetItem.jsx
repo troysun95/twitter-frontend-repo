@@ -5,12 +5,23 @@ import { ReactComponent as ChatIcon } from "icons/chat.svg"
 import {useState} from 'react'
 import { useNavigate } from "react-router-dom"
 
+
+
+
+
+
+
+
 export default function TweetItem({data, id}){
     const navigate = useNavigate();
     const prelikesAmount = data.likesAmount
+
     const prevIsLiked = data.isLiked
     const [isliked, setIsLiked] = useState(prevIsLiked);
     const [likesAmount, setlikesAmount] = useState(prelikesAmount)
+    const repliesAmount = data.repliesAmount
+    //const [repliesAmount, setRepliesAmount] = useState(data.repliesAmount);
+   
     const handleLiked =() =>{
         if(isliked === true){
             setlikesAmount(prelikesAmount => prelikesAmount - 1)
@@ -22,16 +33,16 @@ export default function TweetItem({data, id}){
        
     }
 
-    const  handleReplyModal =()=>{
-        
+    const handleReplyModal =()=>{
+        //
     }
-
 
     const handleRplyTweet = ()=>{
         //儲存協助跳轉用
-        localStorage.setItem("ReplyedTweetId", id);
+        localStorage.setItem("ReplyedTweetId", data.id);
         navigate('/replylist')
     }
+
     
     return(
         <div className={styles.tweetContainer}  >
@@ -57,7 +68,7 @@ export default function TweetItem({data, id}){
                             <ChatIcon/>
                         </i>
                         <div className={styles.NumberWrapper}>
-                            <span>{data.repliesAmount}</span>
+                            <span>{repliesAmount}</span>
                         </div>
                     </div>
                     <div className={styles.iconContainer}>
@@ -70,6 +81,7 @@ export default function TweetItem({data, id}){
                     </div>
                 </div>
             </div>
+            {/* <ReplyModal className={styles.replyModal} Replyeduser={Replyeduser}  isOpen={isOpen}  onClick={handleClose} /> */}
         </div>
     )
 }

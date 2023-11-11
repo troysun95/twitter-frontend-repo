@@ -37,7 +37,7 @@ const ReplyListPage = ()=> {
 
 
   useEffect(() => {
-        const getTopTenUsersAsync = async () => {
+    const getTopTenUsersAsync = async () => {
       try {
         const topTenUsersData = await getTopTenUsers();
         const topTenUsers = topTenUsersData.data; //data內
@@ -53,19 +53,17 @@ const ReplyListPage = ()=> {
     };
 
     const GetOneTweetAsync = async () => {
-        try{
-            const replyedTweetId = JSON.parse(localStorage.getItem("ReplyedTweetId"))
-            console.log(replyedTweetId)
+            const replyedTweetId = localStorage.getItem("ReplyedTweetId")
+            //console.log(`點擊推文id:${replyedTweetId}`);
 
-            const OneTweet = await GetOneTweet({replyedTweetId});
-            const replyedTweet = OneTweet
+            const replyedTweet = await GetOneTweet({replyedTweetId});
             if(replyedTweet){
                 // setReplyedTweet(replyedTweet)
-                console.log(replyedTweet)
+              console.log('取得推文成功')
+            }else{
+              console.log('no 取得貼文')
             }
-        }catch(error){
-            console.error("error", error);
-        }
+            
     };
     getTopTenUsersAsync()
     GetOneTweetAsync()

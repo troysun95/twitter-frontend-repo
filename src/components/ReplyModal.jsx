@@ -8,6 +8,7 @@ import {ReactComponent as ReplyBtn}  from "icons/tweetBtn.svg";
 export default function ReplyModal({Replyeduser,onClick}){
     const navigate=useNavigate();
     const [isError, setIsError] =  useState(false)
+
     function handleErrorCheck(e){
         const input = e.target.value
         if(input.length >140){

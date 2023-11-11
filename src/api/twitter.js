@@ -12,7 +12,7 @@ axios.interceptors.request.use(
     const token = localStorage.getItem('authToken');
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
-      console.log('取得token')
+
     }
     return config;
   },

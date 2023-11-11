@@ -9,9 +9,9 @@ import  {ReactComponent as UserIcon} from "icons/user.svg"
 import  {ReactComponent as SettingIcon} from "icons/setting.svg"
 import TweetList from "components/TweetList";
 import { useNavigate } from "react-router-dom";
-import {getTweets, AddTweet} from "api/twitter"; 
+import {getTweets} from "api/twitter"; 
 import {getTopTenUsers} from "api/twitter"
-import ReplyModal from "components/ReplyModal"
+//import ReplyModal from "components/ReplyModal"
 import { useState,useEffect } from "react";
 
 
@@ -20,7 +20,6 @@ const MainPage = ()=> {
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"))
-  const Replyeduser = localStorage.getItem("user")
   const [topTenUsers, setTopTenUsers] = useState([]);
 
   //頁面跳轉
@@ -67,7 +66,7 @@ const MainPage = ()=> {
     };
     getTweetsAsync();
     getTopTenUsersAsync()
-    }, []); 
+    }, [tweets]); 
 
   
   return(
@@ -99,7 +98,7 @@ const MainPage = ()=> {
           <ToTweetPanel/>
           <TweetModal className={styles.tweetModal}  user={user} isOpen={isOpen}  onClick={handleClose}/>
           <TweetList tweets={tweets} />
-          <ReplyModal className={styles.replyModal} Replyeduser={Replyeduser}  isOpen={isOpen}  onClick={handleClose} />
+          
         </div>
         <div className={styles.popularList}>
             <PopularList topTenUsers={topTenUsers}/>

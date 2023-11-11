@@ -3,7 +3,7 @@ import { ReactComponent as TweetBtn } from "icons/tweetBtn.svg"
 //import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ReactComponent as DeleteActive } from "icons/deleteActive.svg";
-import {AddTweet}
+import {AddTweet} from "api/twitter"
 
 
 export default function TweetModal({user,onClick}){
@@ -19,7 +19,17 @@ export default function TweetModal({user,onClick}){
         setDescription(input)
     }
 
-    const handleSave =() => {
+    const handleSave = async() => {
+        if(description.length <140){
+            const  res = await AddTweet(description);
+            if(res.data.status === "success"){
+            console.log('推文成功')
+            //並更新 tweets
+            
+            }
+        }else{
+            return
+        }
         
     }
 
