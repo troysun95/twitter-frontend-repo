@@ -79,7 +79,12 @@ export default function TweetItem({data, id}){
               setIsModalOpen(false)
         }else{
             setIsReplyError(false)
+<<<<<<< HEAD
         }
+=======
+            navigate('/main')
+            }
+>>>>>>> 82d3d1e (add error hint)
         setComment(comment)
     }
 
@@ -105,6 +110,13 @@ export default function TweetItem({data, id}){
            }else{
             console.log('no')
            }
+        }else{
+            setIsReplyError(false)
+            //navigate('/main')
+            setIsModalOpen(false)
+            console.alart('錯誤')
+            
+            //導流？
         }
     }
 

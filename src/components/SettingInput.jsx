@@ -6,6 +6,7 @@ const SettingInput =({
     placeholder, 
     errMassage, 
     onChange } )=> {
+    
 
     return(
         <div className={styles.inputContainer}>
@@ -13,7 +14,7 @@ const SettingInput =({
                 <label>{label}</label>
                 <input type="text" value={value} placeholder={placeholder}  onChange={(e) => onChange?.(e.target.value)} />
             </div>
-            <div className={styles.errMassage}>{errMassage}</div>
+            <div className={styles.errMassage}> {errMassage}</div>
         </div>
     )
 }

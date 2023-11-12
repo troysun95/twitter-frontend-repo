@@ -82,6 +82,10 @@
       line-height: 26px;
       font-size: var(--main-font-size);
       }
+      .errMassage{
+        border: 1px solid #000;
+        color: var(--error);
+      }
   }
   
     button {
@@ -128,6 +132,9 @@
   }
 
 
+<<<<<<< HEAD
   .errMsg{
     border: 2px solid red;
   }
+=======
+>>>>>>> 82d3d1e (add error hint)

@@ -4,6 +4,7 @@ import {ReactComponent as ReplyBtn}  from "icons/replyBtn.svg";
 import clsx from 'clsx';
 
 
+
 export default function ReplyModal({
     replyedTweet, 
     isModalOpen, 
@@ -12,11 +13,8 @@ export default function ReplyModal({
     handleModalClose,
     isReplyError,
     value}){
-   
     const userLogin = JSON.parse(localStorage.getItem("user"))
     
-   
-
     return(
         <div className={clsx(styles.modalContainer, { [styles.open]: isModalOpen })}>
             <div className={styles.header}>

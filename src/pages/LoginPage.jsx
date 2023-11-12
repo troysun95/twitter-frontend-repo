@@ -6,8 +6,13 @@ import { ReactComponent as Logo } from "icons/logo.svg";
 import {Login} from '../api/auth'
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import clsx from 'clsx'
 
+<<<<<<< HEAD
 const AuthInput = ({ type, label, value, placeholder, onChange, errMsg }) => {
+=======
+const AuthInput = ({ type, label, value, placeholder, onChange, errMassage }) => {
+>>>>>>> 82d3d1e (add error hint)
   return (
     <div className={styles.inputContainer}>
       <label>{label}</label>
@@ -17,7 +22,11 @@ const AuthInput = ({ type, label, value, placeholder, onChange, errMsg }) => {
         placeholder={placeholder || ""}
         onChange={(event) => onChange?.(event.target.value)}
       />
+<<<<<<< HEAD
       <div className={styles.errMsg}>{errMsg}</div>
+=======
+      <div className={styles.errMassage}>{errMassage}</div>
+>>>>>>> 82d3d1e (add error hint)
     </div>
   );
 };
@@ -25,7 +34,11 @@ const AuthInput = ({ type, label, value, placeholder, onChange, errMsg }) => {
 const LoginPage = () => {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
+<<<<<<< HEAD
   const [isAccEr, setIsAccer] = useState(false)
+=======
+  const [isAccountErr, setIsAccountErr] = useState(false)
+>>>>>>> 82d3d1e (add error hint)
   const navigate = useNavigate('');
 
   //handler
@@ -42,12 +55,16 @@ const LoginPage = () => {
     });
 
 
+
     if(data.success){
 
       localStorage.setItem("authToken", data.token);
       localStorage.setItem("user", JSON.stringify(data.user)) 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 82d3d1e (add error hint)
       Swal.fire({
         position: "top",
         title: "登入成功！",
@@ -60,12 +77,22 @@ const LoginPage = () => {
     } else {
       Swal.fire({
         position: "top",
+<<<<<<< HEAD
         title: "帳號不存在",
+=======
+        title: "帳號不存在！",
+>>>>>>> 82d3d1e (add error hint)
         timer: 1000,
         icon: "error",
         showConfirmButton: false,
       });
+<<<<<<< HEAD
       setIsAccer(true)
+=======
+      setIsAccountErr(true)      
+      //navigate('/login')
+      
+>>>>>>> 82d3d1e (add error hint)
     }
   };
 
@@ -81,7 +108,11 @@ const LoginPage = () => {
           value={account}
           placeholder={"請輸入帳號"}
           onChange={(nameInputValue) => setAccount(nameInputValue)}
+<<<<<<< HEAD
           errMsg={isAccEr ? '帳號不存在！' : ''}
+=======
+          errMassage={isAccountErr ? '帳號不存在！' : ''}
+>>>>>>> 82d3d1e (add error hint)
         />
 
         <AuthInput

@@ -31,7 +31,7 @@ export default function AdminTweetItem({data}) {
                     
                 </div>
                 <div className={styles.tweetWrapper}>
-                    <p className={styles.tweet}>{data.description}</p>
+                    <p className={styles.tweet} >{data.description}</p>
                 </div>
                 <div className={styles.iconWrapper} onClick={handleDeleteTweet}>
                     <DeleteIcon/>
