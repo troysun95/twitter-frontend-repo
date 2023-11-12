@@ -2,7 +2,10 @@ import { useState, useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as HomeIcon } from "icons/home.svg";
 import { ReactComponent as UserActiveIcon } from "icons/userActive.svg";
-import { ReactComponent as EditProfileBtnIcon } from "icons/editProfileBtn.svg";
+import { ReactComponent as MailIcon } from "icons/mailActive.svg";
+import { ReactComponent as NotiIcon } from "icons/noti.svg";
+import { ReactComponent as FollowingBtn } from "icons/followingBtn.svg";
+
 import MainNavbar from "components/MainNavbar";
 import NavItem from "components/NavItem";
 import SwitchButtonPanel from "components/SwitchButtonPanel";
@@ -11,8 +14,7 @@ import UserReplyItem from "components/TweetItems/UserReplyItem";
 import UserLikeItem from "components/TweetItems/UserLikeItem";
 import HeaderName from "components/HeaderName";
 import PopularList from "components/PopularList";
-
-import styles from "styles/UserSelfPage.module.scss";
+import styles from "styles/UserOtherPage.module.scss";
 import styles3 from "styles/Layout3.module.scss";
 import styles4 from "styles/TweetsCollection.module.scss";
 
@@ -23,24 +25,17 @@ import {
   getUserReplies,
   getUserLikes,
   getTopTenUsers,
-  postLikeTweet,
-  postUnlikeTweet,
-  postFollowAccount,
-  deleteUnfollowAccount,
-  getCheckProfile,
 } from "../api/twitter.js";
-
-// import {postLikeTweet, postUnlikeTweet} from "../api/like.js"
 
 const TweetsCollection = ({ content, renderItem, userInfo }) => {
   return (
     <div className={styles4.tweetsCollection}>
       {content.map((contentItem) => {
         return (
-          <Fragment key={contentItem.id}>
-            {renderItem({ ...contentItem, userInfo })}
+          <Fragment key={contentItem.id} >
+            {renderItem({...contentItem, userInfo})}
           </Fragment>
-        );
+        )
       })}
     </div>
   );
@@ -73,9 +68,11 @@ const UserProfile = ({ userInfo, followers, followings }) => {
           </div>
         </div>
       </div>
-      <button className={styles.editProfileBtn}>
-        <EditProfileBtnIcon />
-      </button>
+      <div className={styles.informPanel}>
+        <div className={styles.icon}><MailIcon/></div>
+        <div className={styles.icon}><NotiIcon/></div>
+        <div className={styles.followBtn}><FollowingBtn/></div>
+      </div>
     </div>
   );
 };
@@ -118,27 +115,25 @@ const UserContent = ({
         />
       )}
       {userContent === "likes" && (
-        <TweetsCollection content={likes} renderItem={UserLikeItem} />
+        <TweetsCollection content={likes} renderItem={UserLikeItem}/>
       )}
     </div>
   );
 };
-const UserPage = () => {
-  // const navigate = useNavigate();
-  const savedUserInfo = JSON.parse(localStorage.getItem("user"));
-  console.log("savedUserInfo", savedUserInfo);
-  const id = savedUserInfo.id;
+const UserOtherPage = () => {
+  //取出被點擊使用者資料
+  const userOther = JSON.parse(localStorage.getItem("UserClicked"))
+   
+  //const id = savedUserInfo.id;
+  const id = userOther.id
 
   const [userContent, setUserContent] = useState("tweets");
   const [tweets, setTweets] = useState([]); //user發文
   const [replies, setReplies] = useState([]); //user回覆
-  const [likes, setLikes] = useState([]);
+   const [likes, setLikes] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [followings, setFollowings] = useState([]);
   const [topTenUsers, setTopTenUsers] = useState([]);
-  // const [likeTweet, setLikeTweet] = useState([])
-  // const [UnlikeTweet, setUnlikeTweet] = useState([])
-  // const [followAccount, setFollowAccount] = useState([])
 
   const handleChangeUserContent = (clickItems) => {
     setUserContent(clickItems);
@@ -166,6 +161,7 @@ const UserPage = () => {
         if (replies) {
           setReplies(replies.map((reply) => ({ ...reply })));
           console.log("replies", replies);
+
         } else {
           setReplies(null);
         }
@@ -221,82 +217,26 @@ const UserPage = () => {
         const topTenUsers = topTenUsersData.data; //data內
         if (topTenUsers) {
           setTopTenUsers(topTenUsers.map((topTenUser) => ({ ...topTenUser })));
-        } else {
+        }
+        else {
           setTopTenUsers(null);
         }
       } catch (error) {
         console.error("error", error);
       }
     };
-
-    const postLikeTweetAsync = async () => {
-      try {
-        const postLikeData = await postLikeTweet(id);
-        console.log("postLikeData UUUUU", postLikeData);
-        if (postLikeData) {
-          console.log(postLikeData);
-        }
-      } catch (error) {
-        console.error("error", error);
-      }
-    };
-
-    const postUnlikeTweetAsync = async () => {
-      try {
-        const postUnlikeData = await postUnlikeTweet(id);
-        console.log("postUnlikeData UUUUUU", postUnlikeData);
-      } catch (error) {
-        console.error("error", error);
-      }
-    };
-
-    const postFollowAccountAsync = async () => {
-      try {
-        const postFollowAccountData = await postFollowAccount();
-        console.log("postFollowAccountData UUUUU", postFollowAccountData);
-      } catch (error) {
-        console.error("error", error);
-      }
-    };
-
-    const deleteUnfollowAccountAsync = async () => {
-      try {
-        const deleteUnfollowAccountData = await deleteUnfollowAccount(id);
-        console.log(
-          "deleteUnfollowAccountData UUUUUU",
-          deleteUnfollowAccountData
-        );
-      } catch (error) {
-        console.error("error", error);
-      }
-    };
-
-    const getCheckProfileAsync = async () => {
-      try {
-        const getCheckProfileData = await getCheckProfile(id);
-        console.log("getCheckProfileData UUUUUUUU", getCheckProfileData);
-      } catch (error) {
-        console.error("error", error);
-      }
-    };
-
     getUserTweetsAsync();
     getUserRepliesAsync();
     getUserLikesAsync();
     getUserFollowingsAsync();
     getUserFollowersAsync();
     getTopTenUsersAsync();
-    postLikeTweetAsync();
-    postUnlikeTweetAsync();
-    postFollowAccountAsync();
-    deleteUnfollowAccountAsync();
-    getCheckProfileAsync();
   }, [id]);
 
   return (
     <div className={styles3.appContainer}>
       <div className={styles3.navbarContainer}>
-        <MainNavbar >
+        <MainNavbar>
           <NavItem title="首頁">
             <HomeIcon />
           </NavItem>
@@ -306,13 +246,16 @@ const UserPage = () => {
           <NavItem title="設定">
             <UserActiveIcon />
           </NavItem>
+          <NavItem title="推文">
+            <UserActiveIcon />
+          </NavItem>
         </MainNavbar>
       </div>
       <UserContent
         userContent={userContent}
         followers={followers}
         followings={followings}
-        userInfo={savedUserInfo}
+        userInfo={userOther}
         tweets={tweets}
         replies={replies}
         likes={likes}
@@ -322,4 +265,4 @@ const UserPage = () => {
     </div>
   );
 };
-export default UserPage;
+export default UserOtherPage;

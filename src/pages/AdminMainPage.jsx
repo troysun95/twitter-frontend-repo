@@ -30,12 +30,15 @@ const AdminMainPage = () => {
       }
     };
     getAdminTweetsAsync();
+
   }, []);
+
 
   return (
     <div className={styles.appContainer}>
       <div className={styles.navbarContainer}>
         <MainNavbar handleLogout={handleLogout}>
+
           <Link to="/admin/main">
             <NavItem title="推文清單">
               <HomeActiveIcon />
@@ -46,6 +49,7 @@ const AdminMainPage = () => {
               <UserIcon />
             </NavItem>
           </Link>
+
         </MainNavbar>
       </div>
       <div className={styles.content}>

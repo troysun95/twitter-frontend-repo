@@ -1,0 +1,82 @@
+.tweetPanel{
+    width: 100%;
+    height: 335px;
+    margin-top: 16px;
+    padding-left: 16px;
+    padding-right: 21px;
+    border-bottom:1px solid #E6ECF0;
+    .userInfoContainer{
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+            img{
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+            .userInfo{
+                width: 51px;
+                height: 48px;
+                margin-left: 8px;
+                display: flex;
+                flex-direction: column;
+                font-size: var(--secondary-font-size);
+                .userName{
+                    line-height: 26px;
+                    font-weight: 700;
+                    font-size: var(--main-font-size);
+                }
+                .account{
+                    line-height: 22px;
+                    color: var(--secondary);
+                }
+            }
+    }
+    .tweetWrapper{
+        margin: 8px 0px 16px 0;
+        border-bottom: 1px solid #E6ECF0;
+        padding-bottom: 16px;
+        .description{
+            margin-bottom: 8px;
+            width: 100%;
+            font-size: 24px;
+            line-height: 36px;
+        }
+        .timeWrapper{
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 22px; 
+            color: var(--secondary);
+
+        }
+    }
+    .amountContainer{
+        display: flex;
+        flex-direction: row;
+        font-size: 19px;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom:1px solid #E6ECF0;
+
+        .itemAcount{
+            font-weight: 700;
+            color: #000;
+            margin-right: 24px;
+            padding-bottom: 8px;
+            .item{
+                margin-left: 2px;
+                color: var(--secondary);
+            }
+        }
+    }
+    .iconPanel{
+        width: 188px;
+        height: 30px;
+        display: flex;
+        .icon{
+            margin-right:128px ;
+        }
+    }
+}

@@ -4,73 +4,130 @@ import { ReactComponent as LikeActiveIcon }  from "icons/likeActie.svg"
 import { ReactComponent as ChatIcon } from "icons/chat.svg"
 import {useState} from 'react'
 import { useNavigate } from "react-router-dom"
-
-
-
-
+import ReplyModal from "components/ReplyModal"
+import {ReplyTweet} from "api/twitter"
 
 
 
 export default function TweetItem({data, id}){
-    const navigate = useNavigate;
-    const prelikesAmount = data.likesAmount
-    const prevIsLiked = data.isLiked
-    const [isliked, setIsLiked] = useState(prevIsLiked);
-    const [likesAmount, setlikesAmount] = useState(prelikesAmount)
-
+    const navigate = useNavigate();
+    const [likesAmount, setlikesAmount] = useState(data.likesAmount)
+    const [repliesAmount, setRepliesAmount] = useState(data.repliesAmount)
+    const [isLiked, setIsLiked] = useState(data.isLiked)
+    const [isModalOpen, setIsModalOpen]=useState(false)
+    const [isReplyError, setIsReplyError] = useState(false)
+    const [comment, setComment] = useState('')
+    
+    
+   //喜歡推文
     const handleLiked =() =>{
-        if(isliked === true){
-            setlikesAmount(prelikesAmount => prelikesAmount - 1)
-            setIsLiked(!isliked)
+        if(isLiked === true){
+            setlikesAmount(likesAmount => likesAmount - 1)
+            //將 資料 post 回 like
+            setIsLiked(!isLiked)
         }else{
-            setlikesAmount(prelikesAmount => prelikesAmount + 1)
-            setIsLiked(!isliked)
+            setlikesAmount(likesAmount => likesAmount + 1)
+            //將 資料 post 回 unlike
+            setIsLiked(!isLiked)
         }
        
-        //要回傳資料回到所有推文？
     }
 
-    const  handleReplyModal =()=>{
-        //modal 顯示
+    const handleOtherPage =()=>{
+        localStorage.setItem("UserClicked", JSON.stringify(data.User))
+        const userClicked =JSON.parse(localStorage.getItem("UserClicked"))
+        const userLogin =JSON.parse(localStorage.getItem("user"))
+        if(userClicked.id === userLogin.id){
+            navigate('/user')
+        }else{
+            navigate('/user/other')
+        }
+        
+    }
+   
+
+
+
+
+
+
+    //回覆相關
+    const handleReplyTweet = ()=>{
+        //儲存協助跳轉用
+        localStorage.setItem("tweet", JSON.stringify(data))
+        navigate('/replylist')
+    }
+
+
+    const handleModalClose =()=>{
+        setIsModalOpen(false)
+
+    }
+
+    const handleErrorCheck =(comment)=>{
+        if(comment.length > 140 || comment.trim().length < 1){
+            setIsReplyError(true)
+        }else{
+            setIsReplyError(false)
+            }
+        setComment(comment)
+    }
+
+    const handleToReply =() =>{
+        localStorage.setItem("tweetTest", JSON.stringify(data))
+        setIsModalOpen(true)
         
     }
 
 
-    const handleRplyTweet = ()=>{
-        //儲存協助跳轉用
-        localStorage.setItem("RelyedTweeId:", id);
-        navigate('/replylist')
+
+    const handleReply = async() => {
+        const response = JSON.parse(localStorage.getItem("tweetTest"))
+        if(response){
+            console.log(response.id)
+        }
+         handleErrorCheck(comment)
+        if(!isReplyError){
+            const  res = await ReplyTweet({id: response.id, comment: comment});
+           if(res){
+            console.log('ok')
+            setRepliesAmount(repliesAmount + 1)
+           }else{
+            console.log('no')
+           }
+        }
     }
-    
+
     return(
-        <div className={styles.tweetContainer} id={id} onClick={(id)=>{handleRplyTweet(id)}}>
-            <div className={styles.avatarWrapper}>
-                <img src={data.User.avatar} alt={data.name} />
+        <div className={styles.tweetContainer}  >
+            <div className={styles.avatarWrapper} >
+                <img src={data.User.avatar} alt={data.name} onClick={()=>{handleOtherPage() }} />
             </div>
             <div className={styles.tweetWrapper}>
                 <div className={styles.userInfo}>
                     <span className={styles.userName}>{data.User.name}</span>
                     <div className={styles.accountWrapper}>
                         <span>@{data.User.account}</span>
-                        <span> . {data.createdAt}</span>
+                        <span> ・ {data.createdAt}</span>
                     </div>
                     
                 </div>
-                <div className={styles.tweetWrapper}>
+                <div className={styles.tweetWrapper} onClick={()=>{handleReplyTweet()}}>
                     <p className={styles.tweet}>{data.description}</p>
+     
                 </div>
                 <div className={styles.iconPanel}>
                     <div className={styles.iconContainer} >
-                        <i className={styles.replyIcon} onClick={handleReplyModal}>
+                        <i className={styles.replyIcon} onClick={handleToReply}>
                             <ChatIcon/>
                         </i>
                         <div className={styles.NumberWrapper}>
-                            <span>{data.repliesAmount}</span>
+                            <span>{repliesAmount}</span>
                         </div>
                     </div>
                     <div className={styles.iconContainer}>
                         <i className={styles.likeIcon} onClick={handleLiked}>
-                        {isliked ? <LikeActiveIcon/> : <LikeIcon/> }
+                        {isLiked ? <LikeActiveIcon/> : <LikeIcon/> }
                         </i>
                         <div className={styles.NumberWrapper}>
                             <span>{likesAmount}</span>
@@ -78,8 +135,15 @@ export default function TweetItem({data, id}){
                     </div>
                 </div>
             </div>
+            <ReplyModal 
+            replyedTweet={data}  
+            isModalOpen={isModalOpen}  
+            value={comment}
+            onChange={(comment)=>{setComment(comment)}}
+            handleModalClose={handleModalClose}
+            handleReply={handleReply}
+            isReplyError={isReplyError}/>
         </div>
-
     )
 }
 

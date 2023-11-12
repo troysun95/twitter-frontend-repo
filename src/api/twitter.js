@@ -12,7 +12,7 @@ axios.interceptors.request.use(
     const token = localStorage.getItem('authToken');
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
-      console.log('取得token')
+
     }
     return config;
   },
@@ -63,12 +63,8 @@ export const getTweets = async () => {
 // 使用者點瀏覽使用者的推文
 export const getUserTweets = async (id) => {
   try {
-    // const res = await axios.get(`${baseUrl}/api/users/${id}/tweets`);
-    const {data} = await axios.get(`${baseUrl}/api/users/${id}/replied_tweets`);
-
+    const {data} = await axios.get(`${baseUrl}/api/users/${id}/tweets`);
     console.log('tweets.js裡的 getUserTweets 回傳值: ', data);
-    // 這邊要注意回傳內容，只有一層 data
-    // return res.data;
     return data;
   } catch (error) {
     console.error('[Get AllTweets failed]: ', error);
@@ -79,7 +75,6 @@ export const getUserTweets = async (id) => {
 export const getUserReplies = async (id) => {
   try {
     const {data} = await axios.get(`${baseUrl}/api/users/${id}/replied_tweets`);
-    console.log('tweets.js裡的 getUserReplies 回傳值: ', data);
     return data;
 
   } catch (error) {
@@ -91,7 +86,6 @@ export const getUserReplies = async (id) => {
 export const getUserLikes = async (id) => {
   try {
     const {data} = await axios.get(`${baseUrl}/api/users/${id}/likes`);
-    console.log('tweets.js裡的 getUserLikes 回傳值: ', data);
     return data;
 
   } catch (error) {
@@ -102,7 +96,6 @@ export const getUserLikes = async (id) => {
 export const getUserFollowings = async (id) => {
   try {
     const {data} = await axios.get(`${baseUrl}/api/users/${id}/followings`);
-    console.log('tweets.js裡的 getUserFollowings 回傳值: ', data);
     return data;
 
   } catch (error) {
@@ -112,7 +105,6 @@ export const getUserFollowings = async (id) => {
 export const getUserFollowers = async (id) => {
   try {
     const {data} = await axios.get(`${baseUrl}/api/users/${id}/followers`);
-    console.log('tweets.js裡的 getUserFollowers 回傳值: ', data);
     return data;
 
   } catch (error) {
@@ -124,25 +116,12 @@ export const getUserFollowers = async (id) => {
 export const getTopTenUsers = async () => {
     try {
         const { data } = await axios.get(`${baseUrl}/api/users/top10`);
-        // console.log('tweets.js裡的 getTopTenUsers 回傳值: data', data);
         return data;
     } catch (error) {
         console.error('[Get top ten users Failed]: ', error);
         return error;
     }
 };
-
-
-export const UnlikeTweet = async (id) => {
-  try {
-    const res = await axios.post(`${baseUrl}/api/tweets/:id/unlike`);
-    return res.data;
-  } catch (error) {
-    console.error('[Unlike Tweet failed]: ', error);
-  }
-};
-
-
 
 export const DeleteTweet = async ({id}) => {
   try {
@@ -152,7 +131,6 @@ export const DeleteTweet = async ({id}) => {
     console.error('[Delete Tweet failed]: ', error);
   }
 };
-
 
 //設定個人資料
 export const EditUser = async (id,{
@@ -177,3 +155,141 @@ export const EditUser = async (id,{
     console.error('[Edit User failed]: ', error);
   }
 };
+
+
+
+//編輯個人資料頁面 
+//cover 與  avatar 皆為檔案格式，待確認
+
+export const EditUserProfile = async (id,{
+  name,
+  introduction,
+  avatar,
+  password,
+  cover
+}) => {
+  try {
+    const res = await axios.put(`${baseUrl}/api/users/${id}`,{
+      name,
+      introduction,
+      avatar,
+      password,
+      cover
+    });
+    
+    return res;
+    
+  } catch (error) {
+    console.error('[Edit UserProfile failed]: ', error);
+  }
+};
+
+
+
+//使用者新增 推文 /api/tweets
+export const AddTweet = async (description) => {
+  try {
+    const res = await axios.post(`${baseUrl}/api/tweets`,{description});
+    
+
+    return res;
+    
+  } catch (error) {
+    console.error('[Add Tweet failed]: ', error);
+  }
+}
+
+//使用者點擊推文查看特定推文 /api/tweets/:id
+export const GetOneTweet = async (id) => {
+  try {
+    const res = await axios.get(`${baseUrl}/api/tweets/${id}`,{id});
+    return res;
+    
+  } catch (error) {
+    console.error('[Get one Tweet failed]: ', error);
+  }
+}
+
+
+//使用者點擊推文查看特定推文 /api/tweets/:id/replies
+export const getOneTweetReplies = async (id) => {
+  try {
+    const res = await axios.get(`${baseUrl}/api/tweets/${id}/replies`,{id});
+    return res;
+    
+  } catch (error) {
+    console.error('[Get one Tweet Replies failed]: ', error);
+  }
+}
+
+
+
+//使用者回覆他人推文 /api/tweets/:id/replies
+export const ReplyTweet = async ({id, comment}) => {
+  try {
+    const res = await axios.post(`${baseUrl}/api/tweets/${id}/replies`,{ comment});
+    
+    return res;
+    
+  } catch (error) {
+    console.error('[Get one Tweet Replies failed]: ', error);
+    }
+}
+
+// POST /api/tweets/:id/like
+export const postLikeTweet = async (id) => {
+  try {
+    const {data} = await axios.post(`${baseUrl}/api/tweets/${id}/like`);
+    console.log('tweets.js裡的 postLikeTweet 回傳值: ', data);
+    return data
+  } catch (error) {
+    console.error('[Post LikeTweet failed]: ', error);
+  }
+};
+
+// POST /api/tweets/:id/unlike
+export const postUnlikeTweet = async (id) => {
+  try {
+    const res = await axios.post(`${baseUrl}/api/tweets/${id}/unlike`);
+    console.log('tweets.js裡的 postUnlikeTweet 回傳值: ', res);
+    return res;
+  } catch (error) {
+    console.error('[Post UnlikeTweet failed]: ', error);
+  }
+};
+
+// 使用者可追蹤其他使用者   POST /api/followships
+export const postFollowAccount = async (authToken) => {
+  try {
+    const {data} = await axios.post(`${baseUrl}/api/followships`, { headers: { Authorization: "Bearer " + authToken } })
+
+    console.log('tweets.js裡的 postFollowAccount 回傳值: ', data);
+    return data;
+  } catch (error) {
+    console.error('[Post postFollowAccount failed]: ', error);
+  }
+};
+
+// 使用者取消追蹤其他使用者 DELETE /api/followships/:id
+export const deleteUnfollowAccount = async (authToken, id) => {
+  try {
+    const {data} = await axios.delete(`${baseUrl}/api/followships/${id}`, {
+      headers: { Authorization: "Bearer " + authToken },
+    });
+    console.log('tweets.js裡的 deleteUnfollowAccount 回傳值: ', data);
+    return data;
+  } catch (error) {
+    console.error('[Delete deleteUnfollowAccount failed]: ', error);
+  }
+};
+
+// 使用者點擊頭像時可以瀏覽使用者個人資料  GET /api/users/:id
+export const getCheckProfile = async (id) => {
+  try {
+    const {data} = await axios.get(`${baseUrl}/api/users/${id}`);
+    console.log('tweets.js裡的 getCheckProfile 回傳值: ', data);
+    return data;
+  } catch (error) {
+    console.error('[Get getCheckProfile failed]: ', error)
+  }
+}
