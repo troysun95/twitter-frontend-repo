@@ -1,16 +1,18 @@
 {
   "files": {
-    "main.css": "/twitter-frontend-repo/static/css/main.478cdc85.css",
-    "main.js": "/twitter-frontend-repo/static/js/main.7f168b8a.js",
+    "main.css": "/twitter-frontend-repo/static/css/main.254d670e.css",
+    "main.js": "/twitter-frontend-repo/static/js/main.8cc96114.js",
     "static/js/787.2f7e3544.chunk.js": "/twitter-frontend-repo/static/js/787.2f7e3544.chunk.js",
     "static/media/editProfileBtn.svg": "/twitter-frontend-repo/static/media/editProfileBtn.238cbb8242b79e5a0b74b742096837f2.svg",
     "static/media/followingBtn.svg": "/twitter-frontend-repo/static/media/followingBtn.5543ed338a39a61bef24c2c956bb1119.svg",
     "static/media/setting.svg": "/twitter-frontend-repo/static/media/setting.27096e8c3e60a8dbd2ac2f93de3d3af4.svg",
     "static/media/notFollowingBtn.svg": "/twitter-frontend-repo/static/media/notFollowingBtn.bd8eee8f8c1b76af00fd9c0e4032fe32.svg",
     "static/media/settingActive.svg": "/twitter-frontend-repo/static/media/settingActive.53670273838eeeda8dbecd8c276f620c.svg",
+    "static/media/replyBtn.svg": "/twitter-frontend-repo/static/media/replyBtn.b57f33e86c8880d464a31db1351e172c.svg",
     "static/media/saveBtn.svg": "/twitter-frontend-repo/static/media/saveBtn.951ae4c9353b784db4ded568123c72ce.svg",
     "static/media/tweetBtn.svg": "/twitter-frontend-repo/static/media/tweetBtn.0cc4be8d74167e058f22b1b5c4c1a02b.svg",
     "static/media/adminLoginBtn.svg": "/twitter-frontend-repo/static/media/adminLoginBtn.be5acec12a7c8adb626a778d62e4795f.svg",
+    "static/media/noti.svg": "/twitter-frontend-repo/static/media/noti.d568007dbe8bcdc629ad926f547a3386.svg",
     "static/media/logo.svg": "/twitter-frontend-repo/static/media/logo.c2e36cd5e2b0cceebd68552ab49d410a.svg",
     "static/media/logout.svg": "/twitter-frontend-repo/static/media/logout.83dbfa18fdefe5486e9015b156dbceec.svg",
     "static/media/user.svg": "/twitter-frontend-repo/static/media/user.ebca9623e7e3cf336d8bf539c9f2cd9f.svg",
@@ -25,15 +27,16 @@
     "static/media/userActive.svg": "/twitter-frontend-repo/static/media/userActive.fc9aa2f6bc2940d624e0c31b3a09248a.svg",
     "index.html": "/twitter-frontend-repo/index.html",
     "static/media/deleteActive.svg": "/twitter-frontend-repo/static/media/deleteActive.ec836a391a46da514f8de82535a3e495.svg",
+    "static/media/mailActive.svg": "/twitter-frontend-repo/static/media/mailActive.d6f252e12cc63b371ca8705fd8b4fb34.svg",
     "static/media/goBackBtn.svg": "/twitter-frontend-repo/static/media/goBackBtn.ef34efaef2c2b3b4b493a91cec7d0f23.svg",
     "static/media/likeActie.svg": "/twitter-frontend-repo/static/media/likeActie.2a40884f9e319b99a68768cadcc4db69.svg",
     "static/media/likeActive.svg": "/twitter-frontend-repo/static/media/likeActive.5fbcc09a16cf4089a4ac11eda9ef9e21.svg",
-    "main.478cdc85.css.map": "/twitter-frontend-repo/static/css/main.478cdc85.css.map",
-    "main.7f168b8a.js.map": "/twitter-frontend-repo/static/js/main.7f168b8a.js.map",
+    "main.254d670e.css.map": "/twitter-frontend-repo/static/css/main.254d670e.css.map",
+    "main.8cc96114.js.map": "/twitter-frontend-repo/static/js/main.8cc96114.js.map",
     "787.2f7e3544.chunk.js.map": "/twitter-frontend-repo/static/js/787.2f7e3544.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.478cdc85.css",
-    "static/js/main.7f168b8a.js"
+    "static/css/main.254d670e.css",
+    "static/js/main.8cc96114.js"
   ]
 }
