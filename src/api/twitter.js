@@ -12,7 +12,7 @@ axios.interceptors.request.use(
     const token = localStorage.getItem('authToken');
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
-      console.log('取得token')
+
     }
     return config;
   },
@@ -64,6 +64,7 @@ export const getTweets = async () => {
 export const getUserTweets = async (id) => {
   try {
     const {data} = await axios.get(`${baseUrl}/api/users/${id}/tweets`);
+    console.log('tweets.js裡的 getUserTweets 回傳值: ', data);
     return data;
   } catch (error) {
     console.error('[Get AllTweets failed]: ', error);
@@ -154,6 +155,87 @@ export const EditUser = async (id,{
     console.error('[Edit User failed]: ', error);
   }
 };
+
+
+
+//編輯個人資料頁面 
+//cover 與  avatar 皆為檔案格式，待確認
+
+export const EditUserProfile = async (id,{
+  name,
+  introduction,
+  avatar,
+  password,
+  cover
+}) => {
+  try {
+    const res = await axios.put(`${baseUrl}/api/users/${id}`,{
+      name,
+      introduction,
+      avatar,
+      password,
+      cover
+    });
+    
+    return res;
+    
+  } catch (error) {
+    console.error('[Edit UserProfile failed]: ', error);
+  }
+};
+
+
+
+//使用者新增 推文 /api/tweets
+export const AddTweet = async (description) => {
+  try {
+    const res = await axios.post(`${baseUrl}/api/tweets`,{description});
+    
+
+    return res;
+    
+  } catch (error) {
+    console.error('[Add Tweet failed]: ', error);
+  }
+}
+
+//使用者點擊推文查看特定推文 /api/tweets/:id
+export const GetOneTweet = async (id) => {
+  try {
+    const res = await axios.get(`${baseUrl}/api/tweets/${id}`,{id});
+    return res;
+    
+  } catch (error) {
+    console.error('[Get one Tweet failed]: ', error);
+  }
+}
+
+
+//使用者點擊推文查看特定推文 /api/tweets/:id/replies
+export const getOneTweetReplies = async (id) => {
+  try {
+    const res = await axios.get(`${baseUrl}/api/tweets/${id}/replies`,{id});
+    return res;
+    
+  } catch (error) {
+    console.error('[Get one Tweet Replies failed]: ', error);
+  }
+}
+
+
+
+//使用者回覆他人推文 /api/tweets/:id/replies
+export const ReplyTweet = async ({id, comment}) => {
+  try {
+    const res = await axios.post(`${baseUrl}/api/tweets/${id}/replies`,{ comment});
+    
+    return res;
+    
+  } catch (error) {
+    console.error('[Get one Tweet Replies failed]: ', error);
+    }
+}
+
 // POST /api/tweets/:id/like
 export const postLikeTweet = async (id) => {
   try {
@@ -208,6 +290,6 @@ export const getCheckProfile = async (id) => {
     console.log('tweets.js裡的 getCheckProfile 回傳值: ', data);
     return data;
   } catch (error) {
-    console.error('[Get getCheckProfile failed]: ', error);
+    console.error('[Get getCheckProfile failed]: ', error)
   }
 }
