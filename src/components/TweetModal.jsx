@@ -3,10 +3,11 @@ import { ReactComponent as TweetBtn } from "icons/tweetBtn.svg"
 //import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ReactComponent as DeleteActive } from "icons/deleteActive.svg";
+import clsx from 'clsx'
 import {AddTweet} from "api/twitter"
 
 
-export default function TweetModal({user,onClick}){
+export default function TweetModal({user,onClick, isOpen}){
     //const navigate=useNavigate();
     const [isError, setIsError] =  useState(false)
     const [description, setDescription] =useState("");
@@ -20,7 +21,7 @@ export default function TweetModal({user,onClick}){
     }
 
     const handleSave = async() => {
-        if(description.length <140){
+        if(description.length <140 && description.length > 0){
             const  res = await AddTweet(description);
             if(res.data.status === "success"){
             console.log('推文成功')
@@ -34,7 +35,7 @@ export default function TweetModal({user,onClick}){
     }
 
     return(
-        <div className={styles.modalContainer}>
+        <div className={clsx(styles.modalContainer, { [styles.open]: isOpen })}>
             <div className={styles.header}>
                  <div className={styles.iconWrapper} onClick={onClick}><DeleteActive/></div>
             </div>

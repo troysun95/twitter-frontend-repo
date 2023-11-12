@@ -1,19 +1,11 @@
-
-
 .modalContainer{
-    border: 1px solid #000;
-    margin-top:56px;
-    // width: 100%;
-    // height: 300px;
-    
-    padding: 0px 24px;
+    display: none;
+}
+.open{
+    display: block;
     position: fixed;
+    top: 56px;
 
-    border-radius: 14px;
-    z-index: 1;
-    //for test
-    width: 50px;
-    height: 50px;
     .header{
         height: 41px;
         margin-top: 15px;
@@ -23,9 +15,10 @@
             position: absolute;
             top:20.5px;
             left:19.5px;
+            cursor: pointer;
         }
     }
-    .replyedUser{
+    .replyedUserInfo{
         width: 100%;
         height: 50px;
         display: flex;
@@ -41,6 +34,38 @@
             border-radius: 50%;
             }
         }
+        .accountWrapper{
+            border: 1px solid blue;
+        }
+        .replyedTweeet{
+            border: 1px solid #000;
+
+        }
+
+    }
+
+    .replyTo{
+        border: 1px solid #000;
+        .replyedAccont{
+            color: var(--main);
+        }
+
+    }
+    .divider{
+        width: 2px;
+        height: 86px;
+        position: absolute;
+        top:139px;
+        left:48px;
+    }
+    .replyBtn{
+        position: absolute;
+        bottom:15px;
+        right: 24px;
+        cursor: pointer;
+    }
+    .replyWrapper{
+        border: 1px solid red;
         input{
             padding-left: 5px;
             width: 500px;
@@ -48,12 +73,6 @@
             border: none;
             word-break:break-all;
         }
-    }
-    .tweetBtn{
-        position: absolute;
-        bottom:15px;
-        right: 24px;
-        cursor: pointer;
     }
     .errorMessage{
         width:50%;
@@ -64,9 +83,4 @@
         color:var(--error);
         text-align: right;
     }
-}
-
-
-.modalContainerOpen{
-    border: 5px solid red;
 }

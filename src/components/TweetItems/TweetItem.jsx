@@ -62,9 +62,9 @@ export default function TweetItem({data}){
 
  
     const handleReply = async() =>{
-        if(comment.length > 140){
+        if(comment.length === 0 || comment.length  >140 ){
             setIsReplyError(true);
-            console.log(`回覆字數超出限制`);
+           return
         } else {
             setIsReplyError(false);
             const id = data.id;
@@ -96,7 +96,7 @@ export default function TweetItem({data}){
                     </div>
                     
                 </div>
-                <div className={styles.tweetWrapper} onClick={()=>{handleReplyTweet() }}>
+                <div className={styles.tweetWrapper} onClick={()=>{handleReplyTweet()}}>
                     <p className={styles.tweet}>{data.description}</p>
      
                 </div>
@@ -120,7 +120,7 @@ export default function TweetItem({data}){
                 </div>
             </div>
             <ReplyModal 
-            Replyeduser={data.User}  
+            replyedTweet={data}  
             isModalOpen={isModalOpen}  
             isReplyError={isReplyError} 
             value={comment}

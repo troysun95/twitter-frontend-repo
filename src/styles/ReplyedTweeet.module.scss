@@ -4,7 +4,7 @@
     margin-top: 16px;
     padding-left: 16px;
     padding-right: 21px;
-    border-bottom:1px solid var(--secondary);
+    border-bottom:1px solid #E6ECF0;
     .userInfoContainer{
         display: flex;
         flex-flow: row wrap;
@@ -57,11 +57,14 @@
         flex-direction: row;
         font-size: 19px;
         margin-bottom: 16px;
+        padding-bottom: 8px;
         border-bottom:1px solid #E6ECF0;
+
         .itemAcount{
             font-weight: 700;
             color: #000;
             margin-right: 24px;
+            padding-bottom: 8px;
             .item{
                 margin-left: 2px;
                 color: var(--secondary);
