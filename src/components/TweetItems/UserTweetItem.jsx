@@ -13,7 +13,6 @@ const UserTweetItem = ({
   likedUsersCount,
   repliesCount,
   createdAt,
-  description
 }) => {
 
   const { postLikeTweet, postUnlikeTweet, setChangedLikes } =
@@ -68,10 +67,6 @@ const UserTweetItem = ({
     setChangedLikes(false);
   }, [setChangedLikes]);
 
-<<<<<<< HEAD
-=======
-
->>>>>>> ecbe2417a201db5a1e7d652273d06e05d5f01f5a
   return (
     <div className={styles4.tweetItem}>
       <div className={styles4.avatar}>
