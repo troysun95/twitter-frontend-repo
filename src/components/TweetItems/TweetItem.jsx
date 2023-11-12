@@ -9,7 +9,7 @@ import {ReplyTweet} from "api/twitter"
 
 
 
-export default function TweetItem({data}){
+export default function TweetItem({data, id}){
     const navigate = useNavigate();
     const [likesAmount, setlikesAmount] = useState(data.likesAmount)
     const [repliesAmount, setRepliesAmount] = useState(data.repliesAmount)
@@ -17,6 +17,7 @@ export default function TweetItem({data}){
     const [isModalOpen, setIsModalOpen]=useState(false)
     const [isReplyError, setIsReplyError] = useState(false)
     const [comment, setComment] = useState('')
+    
     
    //喜歡推文
     const handleLiked =() =>{
@@ -48,6 +49,8 @@ export default function TweetItem({data}){
 
 
 
+
+
     //回覆相關
     const handleReplyTweet = ()=>{
         //儲存協助跳轉用
@@ -58,10 +61,11 @@ export default function TweetItem({data}){
 
     const handleModalClose =()=>{
         setIsModalOpen(false)
+
     }
 
     const handleErrorCheck =(comment)=>{
-        if(comment.length >140){
+        if(comment.length > 140 || comment.trim().length < 1){
             setIsReplyError(true)
         }else{
             setIsReplyError(false)
@@ -69,21 +73,29 @@ export default function TweetItem({data}){
         setComment(comment)
     }
 
-    const handleReply = async() => {
-        const id = data.id
-        handleErrorCheck()
-        if(comment.length < 140 && comment.trim().length > 0){
-            const  res = await ReplyTweet(id, comment);
-            if(res.data.status === "success"){
-                setComment('')
-                console.log('推文成功')
-                setRepliesAmount(repliesAmount + 1)
-            }
-        }else{
-            console.log('推文字數nono')
-            return
-        }
+    const handleToReply =() =>{
+        localStorage.setItem("tweetTest", JSON.stringify(data))
+        setIsModalOpen(true)
         
+    }
+
+
+
+    const handleReply = async() => {
+        const response = JSON.parse(localStorage.getItem("tweetTest"))
+        if(response){
+            console.log(response.id)
+        }
+         handleErrorCheck(comment)
+        if(!isReplyError){
+            const  res = await ReplyTweet({id: response.id, comment: comment});
+           if(res){
+            console.log('ok')
+            setRepliesAmount(repliesAmount + 1)
+           }else{
+            console.log('no')
+           }
+        }
     }
 
     return(
@@ -106,7 +118,7 @@ export default function TweetItem({data}){
                 </div>
                 <div className={styles.iconPanel}>
                     <div className={styles.iconContainer} >
-                        <i className={styles.replyIcon} onClick={()=>{setIsModalOpen(true)}}>
+                        <i className={styles.replyIcon} onClick={handleToReply}>
                             <ChatIcon/>
                         </i>
                         <div className={styles.NumberWrapper}>

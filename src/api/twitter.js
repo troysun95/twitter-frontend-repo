@@ -238,7 +238,7 @@ export const getOneTweetReplies = async (id) => {
 //使用者回覆他人推文 /api/tweets/:id/replies
 export const ReplyTweet = async ({id, comment}) => {
   try {
-    const res = await axios.post(`${baseUrl}/api/tweets/${id}/replies`,{id, comment});
+    const res = await axios.post(`${baseUrl}/api/tweets/${id}/replies`,{ comment});
     
     return res;
     
