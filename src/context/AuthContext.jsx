@@ -1,4 +1,4 @@
-import { login, adminLogin } from "api/auth.js";
+// import { login, adminLogin } from "api/auth.js";
 import { createContext, useState, useEffect } from "react";
 // import * as jwt from "jsonwebtoken";
 // import { useLocation } from "react-router-dom";
@@ -27,21 +27,8 @@ const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        changedLikes,
-        setChangedLikes,
-
-        logout: () => {
-          // localStorage.removeItem("authToken");
-          // localStorage.removeItem("userInfo");
-          // localStorage.removeItem("tweetId");
-          // localStorage.removeItem("otherUserId");
-          localStorage.removeItem("followContent");
-          // localStorage.removeItem("fromPage");
-          // localStorage.removeItem("userTweetAccount");
-          // setPayload(null);
-          // setIsAuthenticated(false);
-        },
-
+        changedLikes, setChangedLikes,
+      
         postLikeTweet: async (id) => {
           const response = await postLikeTweet(id);
           console.log("postLikeData from AuthContext.jsx response", response);
@@ -54,12 +41,12 @@ const AuthProvider = ({ children }) => {
           console.log("postUnlikeData UUUUUU from AuthContext.jsx", response);
           if (response.data) setChangedLikes(true);
           return response;
-        },
+        }
       }}
     >
       {children}
     </AuthContext.Provider>
-  );
+  )
 };
 
 export { AuthContext, AuthProvider };

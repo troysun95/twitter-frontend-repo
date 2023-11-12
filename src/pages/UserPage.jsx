@@ -22,24 +22,26 @@ import {
   getUserFollowers,
   getUserReplies,
   getUserLikes,
+  getTopTenUsers,
+  postLikeTweet,
+  postUnlikeTweet,
+  postFollowAccount,
+  deleteUnfollowAccount,
   getCheckProfile,
 } from "../api/twitter.js";
 
+// import {postLikeTweet, postUnlikeTweet} from "../api/like.js"
 
 const TweetsCollection = ({ content, renderItem, userInfo }) => {
   return (
     <div className={styles4.tweetsCollection}>
-      {content.length !== 0 ?
-        (content.map((contentItem) => {
-          return (
-            <Fragment key={contentItem.id}>
-              {renderItem({ ...contentItem, userInfo })}
-            </Fragment>
-          );
-        })) : (
-          <span>尚未有內容</span>
-        )
-      }
+      {content.map((contentItem) => {
+        return (
+          <Fragment key={contentItem.id}>
+            {renderItem({ ...contentItem, userInfo })}
+          </Fragment>
+        );
+      })}
     </div>
   );
 };
@@ -90,7 +92,7 @@ const UserContent = ({
 }) => {
   return (
     <div className={styles3.content}>
-      <HeaderName tweets={tweets}/>
+      <HeaderName />
 
       <UserProfile
         userInfo={userInfo}
@@ -124,7 +126,7 @@ const UserContent = ({
 const UserPage = () => {
   // const navigate = useNavigate();
   const savedUserInfo = JSON.parse(localStorage.getItem("user"));
-  // console.log("savedUserInfo", savedUserInfo);
+  console.log("savedUserInfo", savedUserInfo);
   const id = savedUserInfo.id;
 
   const [userContent, setUserContent] = useState("tweets");
@@ -133,21 +135,14 @@ const UserPage = () => {
   const [likes, setLikes] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [followings, setFollowings] = useState([]);
+  const [topTenUsers, setTopTenUsers] = useState([]);
   // const [likeTweet, setLikeTweet] = useState([])
   // const [UnlikeTweet, setUnlikeTweet] = useState([])
   // const [followAccount, setFollowAccount] = useState([])
 
-  // 設置 flag 讓 TopUserSectionOther 與 RightBanner 能彼此連動
-  const [flagForRendering, setFlagForRendering] = useState(false);
   const handleChangeUserContent = (clickItems) => {
     setUserContent(clickItems);
   };
-
-  // 將 UserOtherFollowPage 要用的瀏覽項目先存起來並跳轉頁面
-  // function handleFollowDetailClick(followContent) {
-  //   localStorage.setItem("followContent", followContent);
-  //   navigate("/user/follow");
-  // }
 
   useEffect(() => {
     // 瀏覽使用者的推文
@@ -170,6 +165,7 @@ const UserPage = () => {
         const replies = await getUserReplies(id);
         if (replies) {
           setReplies(replies.map((reply) => ({ ...reply })));
+          console.log("replies", replies);
         } else {
           setReplies(null);
         }
@@ -182,8 +178,8 @@ const UserPage = () => {
       try {
         const likes = await getUserLikes(id);
         if (likes) {
-          console.log("likes tweets from USERPAGE", likes);
           setLikes(likes.map((like) => ({ ...like })));
+          console.log("likes", likes);
         } else {
           setLikes(null);
         }
@@ -197,6 +193,7 @@ const UserPage = () => {
         const followings = await getUserFollowings(id);
         if (followings) {
           setFollowings(followings.map((following) => ({ ...following })));
+          console.log("followings", followings);
         } else {
           setFollowings(null);
         }
@@ -209,9 +206,66 @@ const UserPage = () => {
         const followers = await getUserFollowers(id);
         if (followers) {
           setFollowers(followers.map((follower) => ({ ...follower })));
+          console.log("followers", followers);
         } else {
           setFollowers(null);
         }
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+
+    const getTopTenUsersAsync = async () => {
+      try {
+        const topTenUsersData = await getTopTenUsers();
+        const topTenUsers = topTenUsersData.data; //data內
+        if (topTenUsers) {
+          setTopTenUsers(topTenUsers.map((topTenUser) => ({ ...topTenUser })));
+        } else {
+          setTopTenUsers(null);
+        }
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+
+    const postLikeTweetAsync = async () => {
+      try {
+        const postLikeData = await postLikeTweet(id);
+        console.log("postLikeData UUUUU", postLikeData);
+        if (postLikeData) {
+          console.log(postLikeData);
+        }
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+
+    const postUnlikeTweetAsync = async () => {
+      try {
+        const postUnlikeData = await postUnlikeTweet(id);
+        console.log("postUnlikeData UUUUUU", postUnlikeData);
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+
+    const postFollowAccountAsync = async () => {
+      try {
+        const postFollowAccountData = await postFollowAccount();
+        console.log("postFollowAccountData UUUUU", postFollowAccountData);
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+
+    const deleteUnfollowAccountAsync = async () => {
+      try {
+        const deleteUnfollowAccountData = await deleteUnfollowAccount(id);
+        console.log(
+          "deleteUnfollowAccountData UUUUUU",
+          deleteUnfollowAccountData
+        );
       } catch (error) {
         console.error("error", error);
       }
@@ -225,13 +279,19 @@ const UserPage = () => {
         console.error("error", error);
       }
     };
+
     getUserTweetsAsync();
     getUserRepliesAsync();
     getUserLikesAsync();
     getUserFollowingsAsync();
     getUserFollowersAsync();
+    getTopTenUsersAsync();
+    postLikeTweetAsync();
+    postUnlikeTweetAsync();
+    postFollowAccountAsync();
+    deleteUnfollowAccountAsync();
     getCheckProfileAsync();
-  }, [id, flagForRendering]);
+  }, [id]);
 
   return (
     <div className={styles3.appContainer}>
@@ -261,10 +321,7 @@ const UserPage = () => {
         likes={likes}
         handleChangeUserContent={handleChangeUserContent}
       />
-      <PopularList
-        flagForRendering={flagForRendering}
-        setFlagForRendering={setFlagForRendering}
-      />
+      <PopularList topTenUsers={topTenUsers} />
     </div>
   );
 };
