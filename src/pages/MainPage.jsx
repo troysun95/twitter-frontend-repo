@@ -92,10 +92,10 @@ const MainPage = ()=> {
         </div>
         <div className={styles.content}>
           <div className={styles.headerContainer}>
-            <h4>{isOpen ? '推文' :'首頁'}</h4>
+            <h4>首頁</h4>
           </div>
-          <ToTweetPanel/>
           <TweetModal className={styles.tweetModal}  user={user} isOpen={isOpen}  onClick={handleClose}/>
+          <ToTweetPanel onClick={handleOpen}/>
           <TweetList tweets={tweets} />
           
           

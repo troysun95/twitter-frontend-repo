@@ -7,11 +7,14 @@ import clsx from 'clsx';
 export default function ReplyModal({
     replyedTweet, 
     isModalOpen, 
-    onChange,
-    isReplyError, 
     handleReply,
+    onChange,
     handleModalClose,
+    isReplyError,
     value}){
+   
+    const userLogin = JSON.parse(localStorage.getItem("user"))
+    
    
 
     return(
@@ -25,23 +28,29 @@ export default function ReplyModal({
                         <img src={replyedTweet.User.avatar} alt="avatar"/>
                     </div>
                     <div className={styles.accountWrapper}>
-                        <span>@{replyedTweet.User.account}</span>
-                        <span> ・ {replyedTweet.createdAt}</span>
+                        <span className={styles.name}>{replyedTweet.User.name}</span>
+                        <div className={styles.accountAndTime}>
+                            <span className={styles.account}>@{replyedTweet.User.account}</span>
+                            <span> ・ {replyedTweet.createdAt}</span>
+                        </div>
                     </div>
-                    <div className={styles.replyedTweeet}>
-                        <p>{replyedTweet.description}</p>
-                    </div>
+                </div>
+                <div className={styles.replyedTweeet}>
+                    <p>{replyedTweet.description}</p>
                 </div>
             </div>
             <div className={styles.replyTo}>
                 <div>回覆給</div>
-                <div className={styles.replyedAccont}> @{replyedTweet.account}</div>
+                <div className={styles.replyedAccont}> @{replyedTweet.User.account}</div>
             </div>
             <div className={styles.divider}></div>
             <div className={styles.replyWrapper}>
-                <input type="textarea" placeholder="推你的回覆" value={value} onChange={(e) => onChange?.(e.target.value)}/>
-                <div className={styles.replyBtn} onClick={handleReply}><ReplyBtn/></div>
+                <div className={styles.userAvatar}>
+                    <img src={userLogin.avatar} alt="avatar"/>
+                </div>
+                <input type="textarea" placeholder="推你的回覆" value={value} onChange={(e)=>{onChange?.(e.target.value)}}/>
             </div>
+            <div className={styles.replyBtn} onClick={handleReply}><ReplyBtn/></div>
             <div className={styles.errorMessage}>{ isReplyError ?   '內容不可為空白' : ''}</div>
         </div>
     )

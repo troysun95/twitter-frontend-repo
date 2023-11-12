@@ -60,28 +60,32 @@ export default function TweetItem({data}){
         setIsModalOpen(false)
     }
 
- 
-    const handleReply = async() =>{
-        if(comment.length === 0 || comment.length  >140 ){
-            setIsReplyError(true);
-           return
-        } else {
-            setIsReplyError(false);
-            const id = data.id;
-            const res = await ReplyTweet({id, comment});
-            if(res.data.status === "success"){
-                console.log(`回覆成功`);
-                setComment('')
-                setIsModalOpen(false)
-                setRepliesAmount(repliesAmount + 1);
+    const handleErrorCheck =(comment)=>{
+        if(comment.length >140){
+            setIsReplyError(true)
+        }else{
+            setIsReplyError(false)
             }
-        }
+        setComment(comment)
     }
-    
 
-    
-    
-    
+    const handleReply = async() => {
+        const id = data.id
+        handleErrorCheck()
+        if(comment.length < 140 && comment.trim().length > 0){
+            const  res = await ReplyTweet(id, comment);
+            if(res.data.status === "success"){
+                setComment('')
+                console.log('推文成功')
+                setRepliesAmount(repliesAmount + 1)
+            }
+        }else{
+            console.log('推文字數nono')
+            return
+        }
+        
+    }
+
     return(
         <div className={styles.tweetContainer}  >
             <div className={styles.avatarWrapper} >
@@ -122,11 +126,11 @@ export default function TweetItem({data}){
             <ReplyModal 
             replyedTweet={data}  
             isModalOpen={isModalOpen}  
-            isReplyError={isReplyError} 
             value={comment}
             onChange={(comment)=>{setComment(comment)}}
             handleModalClose={handleModalClose}
-            handleReply={handleReply}/>
+            handleReply={handleReply}
+            isReplyError={isReplyError}/>
         </div>
     )
 }

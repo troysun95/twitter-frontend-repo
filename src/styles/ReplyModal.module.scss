@@ -5,7 +5,12 @@
     display: block;
     position: fixed;
     top: 56px;
-
+    width: 634px;
+    height: 500px;
+    background-color: #fff;
+    border-radius: 14px;
+    border: 1px solid #E6ECF0;
+    z-index:1;
     .header{
         height: 41px;
         margin-top: 15px;
@@ -23,6 +28,7 @@
         height: 50px;
         display: flex;
         flex-flow: row wrap;
+        padding-left: 24px;
         .avatar{
             margin-left: 5px;
             height: 50px;
@@ -35,19 +41,44 @@
             }
         }
         .accountWrapper{
-            border: 1px solid blue;
+            margin-left: 8px;
+            display: flex;
+            flex-flow: row wrap;
+            align-items: flex-start;
+            .name{
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 26px
+            }
+            .accountAndTime{
+                margin-top: 2px;
+                margin-left: 8px;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 22px;
+            }
         }
-        .replyedTweeet{
-            border: 1px solid #000;
-
-        }
-
+    }
+    .replyedTweeet{
+            width: 528px;
+            padding-left: 82px;
+            margin: 8px 0 16px 0 ;
+            //height: 78px;
     }
 
     .replyTo{
-        border: 1px solid #000;
+        padding-left: 82px;
+        color: #6C757D;
+        display: flex;
+        flex-flow: row wrap;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 22px;
         .replyedAccont{
-            color: var(--main);
+            color:#FF6600;
         }
 
     }
@@ -58,22 +89,45 @@
         top:139px;
         left:48px;
     }
+
+
+    .replyWrapper{
+        border: 1px solid red;
+        margin-top: 23px;
+        padding-left: 24px;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        .userAvatar{
+            margin-left: 5px;
+            height: 50px;
+            width: 50px;
+            img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            }
+        }
+        input{
+            padding-left: 8px;
+            font-size: 16px;
+            width: 528px;
+            border:none;
+            outline:none;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 26px; 
+            word-break: break-all;
+        }
+    }
     .replyBtn{
         position: absolute;
         bottom:15px;
         right: 24px;
         cursor: pointer;
     }
-    .replyWrapper{
-        border: 1px solid red;
-        input{
-            padding-left: 5px;
-            width: 500px;
-            height: 26px;
-            border: none;
-            word-break:break-all;
-        }
-    }
+
     .errorMessage{
         width:50%;
         height: 15px;

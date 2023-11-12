@@ -15,7 +15,7 @@ const ReplyedTweeet = ({replyedTweet})=> {
             </div>                
             <div className={styles.tweetWrapper}>
                 <p className={styles.description}>{replyedTweet.description}</p>
-                <div classname={styles.timeWrapper} >
+                <div className={styles.timeWrapper} >
                     <span>{replyedTweet.createdAtTime} ・ {replyedTweet.createdAtDate}</span>
                 </div>
             </div>
