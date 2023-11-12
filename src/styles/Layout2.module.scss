@@ -1,4 +1,4 @@
-.appContainer{    
+.appContainer{
     height: 100vh;
     max-width: 1199px;
     min-width: 992px;
@@ -41,7 +41,10 @@
     }
     
 }
-
+a {
+    text-decoration: none;
+    color: #44444F;
+}
 @media screen and (min-width: 1200px) {
     .appContainer {
         width: 1140px;
