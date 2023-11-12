@@ -1,5 +1,5 @@
 import styles from "styles/AdminTweetItem.module.scss"
-import {ReactComponent as DeletIcon} from "icons/delete.svg"
+import {ReactComponent as DeleteIcon} from "icons/delete.svg"
 import {DeleteTweet} from 'api/twitter'
 //import Swal from "sweetalert2"
 
@@ -34,7 +34,7 @@ export default function AdminTweetItem({data}) {
                     <p className={styles.tweet}>{data.description}</p>
                 </div>
                 <div className={styles.iconWrapper} onClick={handleDeleteTweet}>
-                    <DeletIcon/>
+                    <DeleteIcon/>
                 </div>
             </div>
         </div>

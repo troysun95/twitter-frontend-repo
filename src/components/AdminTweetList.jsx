@@ -9,7 +9,7 @@ export default function AdminTweetList({tweets}) {
     
     const tweetsList =  tweets.map((data) => {
     return(
-        < AdminTweetItem data={data} key={data.id} id={data.id}/>
+        < AdminTweetItem data={data} key={data.id}/>
     )
                
     });

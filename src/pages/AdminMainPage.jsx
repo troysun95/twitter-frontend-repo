@@ -35,19 +35,23 @@ const AdminMainPage = ()=> {
     }
     };
     getAdminTweetsAsync();
-    }, []);
+    }, [tweets]);
 
 
   return(
     <div className={styles.appContainer}>
       <div className={styles.navbarContainer}>
         <MainNavbar handleLogout={handleLogout}>
-          <NavItem title="推文清單"  >
-            <HomeActiveIcon/>
-          </NavItem>
-          <NavItem title="使用者列表" >
-            <UserIcon/>
-          </NavItem>
+          <div onClick={()=>{navigate('/admin/main')}}>
+            <NavItem title="推文清單">
+              <HomeActiveIcon/>
+            </NavItem>
+          </div>
+          <div onClick={()=>{navigate('/admin/users')}}>
+            <NavItem title="使用者列表" >
+              <UserIcon/>
+            </NavItem>
+          </div>
         </MainNavbar>
       </div>
       <div className={styles.content}>

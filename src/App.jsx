@@ -15,6 +15,7 @@ import {
   RegisterPage,
   UserFollowerPage,
   UserFollowingPage,
+  UserOtherPage,
 } from "pages";
 
 import './styles/reset.scss'
@@ -26,6 +27,7 @@ function App() {
   return (
     <div className="app">
       <BrowserRouter basename={basename}>
+
         <AuthProvider>
           <Routes>
             <Route path="admin" element={<AdminPage />} />

@@ -1,0 +1,140 @@
+.modalContainer{
+    display: none;
+}
+.open{
+    display: block;
+    position: fixed;
+    top: 56px;
+    width: 634px;
+    height: 500px;
+    background-color: #fff;
+    border-radius: 14px;
+    border: 1px solid #E6ECF0;
+    z-index:1;
+    .header{
+        height: 41px;
+        margin-top: 15px;
+        margin-bottom: 12px;
+        border-bottom: 1px solid var(--grey-500);
+        .iconWrapper{
+            position: absolute;
+            top:20.5px;
+            left:19.5px;
+            cursor: pointer;
+        }
+    }
+    .replyedUserInfo{
+        width: 100%;
+        height: 50px;
+        display: flex;
+        flex-flow: row wrap;
+        padding-left: 24px;
+        .avatar{
+            margin-left: 5px;
+            height: 50px;
+            width: 50px;
+            img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            }
+        }
+        .accountWrapper{
+            margin-left: 8px;
+            display: flex;
+            flex-flow: row wrap;
+            align-items: flex-start;
+            .name{
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 26px
+            }
+            .accountAndTime{
+                margin-top: 2px;
+                margin-left: 8px;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 22px;
+            }
+        }
+    }
+    .replyedTweeet{
+            width: 528px;
+            padding-left: 82px;
+            margin: 8px 0 16px 0 ;
+            //height: 78px;
+    }
+
+    .replyTo{
+        padding-left: 82px;
+        color: #6C757D;
+        display: flex;
+        flex-flow: row wrap;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 22px;
+        .replyedAccont{
+            color:#FF6600;
+        }
+
+    }
+    .divider{
+        width: 2px;
+        height: 86px;
+        position: absolute;
+        top:139px;
+        left:48px;
+    }
+
+
+    .replyWrapper{
+        border: 1px solid red;
+        margin-top: 23px;
+        padding-left: 24px;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        .userAvatar{
+            margin-left: 5px;
+            height: 50px;
+            width: 50px;
+            img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            }
+        }
+        input{
+            padding-left: 8px;
+            font-size: 16px;
+            width: 528px;
+            border:none;
+            outline:none;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 26px; 
+            word-break: break-all;
+        }
+    }
+    .replyBtn{
+        position: absolute;
+        bottom:15px;
+        right: 24px;
+        cursor: pointer;
+    }
+
+    .errorMessage{
+        width:50%;
+        height: 15px;
+        position: absolute;
+        bottom:28px;
+        right:101px;
+        color:var(--error);
+        text-align: right;
+    }
+}

@@ -13,6 +13,7 @@ const UserTweetItem = ({
   likedUsersCount,
   repliesCount,
   createdAt,
+  description
 }) => {
 
   const { postLikeTweet, postUnlikeTweet, setChangedLikes } =
@@ -21,6 +22,8 @@ const UserTweetItem = ({
   const userAvatar = userInfo.avatar;
   const userName = userInfo.name;
   const userAccount = userInfo.account;
+
+
   const [likeState, setLikeState] = useState(isLiked); //user 有無按愛心
   const [likedNum, setLikedNum] = useState(likedUsersCount); //愛心數量
 
@@ -66,6 +69,7 @@ const UserTweetItem = ({
   useEffect(() => {
     setChangedLikes(false);
   }, [setChangedLikes]);
+
 
   return (
     <div className={styles4.tweetItem}>

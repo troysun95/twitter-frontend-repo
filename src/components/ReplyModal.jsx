@@ -1,46 +1,57 @@
-import styles from "styles/TweetModal.module.scss"
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import styles from "styles/ReplyModal.module.scss"
 import { ReactComponent as DeleteActive } from "icons/deleteActive.svg";
-import {ReactComponent as ReplyBtn}  from "icons/tweetBtn.svg";
+import {ReactComponent as ReplyBtn}  from "icons/replyBtn.svg";
+import clsx from 'clsx';
 
 
-export default function ReplyModal({Replyeduser,onClick}){
-    const navigate=useNavigate();
-    const [isError, setIsError] =  useState(false)
-    function handleErrorCheck(e){
-        const input = e.target.value
-        if(input.length >140){
-            setIsError(true)
-        }else{setIsError(false)}
-        console.log(isError)
-    }
-
-
-    const handleReply = ()=>{
-        //發送回覆 api
-
-        //若成功發送，則回到主頁面
-        navigate('/main')
-    }
+export default function ReplyModal({
+    replyedTweet, 
+    isModalOpen, 
+    handleReply,
+    onChange,
+    handleModalClose,
+    isReplyError,
+    value}){
+   
+    const userLogin = JSON.parse(localStorage.getItem("user"))
+    
+   
 
     return(
-        <div className={styles.modalContainer}>
-            <div className={styles.replyedUser}>
-                <div className={styles.avatar}>
-                    <img src={Replyeduser.avatar} alt="avatar"/>
+        <div className={clsx(styles.modalContainer, { [styles.open]: isModalOpen })}>
+            <div className={styles.header}>
+                 <div className={styles.iconWrapper} onClick={handleModalClose}><DeleteActive/></div>
+            </div>
+            <div className={styles.replyedTweeetContainer}>
+                <div className={styles.replyedUserInfo}>
+                    <div className={styles.avatar}>
+                        <img src={replyedTweet.User.avatar} alt="avatar"/>
+                    </div>
+                    <div className={styles.accountWrapper}>
+                        <span className={styles.name}>{replyedTweet.User.name}</span>
+                        <div className={styles.accountAndTime}>
+                            <span className={styles.account}>@{replyedTweet.User.account}</span>
+                            <span> ・ {replyedTweet.createdAt}</span>
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.replyedTweeet}>
+                    <p>{replyedTweet.description}</p>
                 </div>
             </div>
-            <div className={styles.header}>
-                 <div className={styles.iconWrapper} onClick={onClick}><DeleteActive/></div>
+            <div className={styles.replyTo}>
+                <div>回覆給</div>
+                <div className={styles.replyedAccont}> @{replyedTweet.User.account}</div>
             </div>
-            <div className={styles.toTweetWrapper}>
-                
-                
-                <input type="textarea" placeholder="有什麼新鮮事？"  onChange={handleErrorCheck}/>
-                <div className={styles.tweetBtn} onClick={handleReply}><ReplyBtn/></div>
+            <div className={styles.divider}></div>
+            <div className={styles.replyWrapper}>
+                <div className={styles.userAvatar}>
+                    <img src={userLogin.avatar} alt="avatar"/>
+                </div>
+                <input type="textarea" placeholder="推你的回覆" value={value} onChange={(e)=>{onChange?.(e.target.value)}}/>
             </div>
-            <div className={styles.errorMessage}>{ isError ?   '字數不可超過 140 字' : ''}</div>
+            <div className={styles.replyBtn} onClick={handleReply}><ReplyBtn/></div>
+            <div className={styles.errorMessage}>{ isReplyError ?   '內容不可為空白' : ''}</div>
         </div>
     )
 }
