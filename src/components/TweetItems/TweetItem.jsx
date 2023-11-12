@@ -32,15 +32,23 @@ export default function TweetItem({data}){
        
     }
 
-    
+    const handleOtherPage =()=>{
+        localStorage.setItem("UserClicked", JSON.stringify(data.User))
+        const userClicked =JSON.parse(localStorage.getItem("UserClicked"))
+        const userLogin =JSON.parse(localStorage.getItem("user"))
+        if(userClicked.id === userLogin.id){
+            navigate('/user')
+        }else{
+            navigate('/user/other')
+        }
+        
+    }
+   
 
-    // if(comment > 140 ){
-    //     setIsReplyError(true)
-    // }else{
-    //     setIsReplyError(false)
-    // }
 
 
+
+    //回覆相關
     const handleReplyTweet = ()=>{
         //儲存協助跳轉用
         localStorage.setItem("tweet", JSON.stringify(data))
@@ -52,19 +60,7 @@ export default function TweetItem({data}){
         setIsModalOpen(false)
     }
 
-    // const handleReply = async() =>{
-    //     if(!isReplyError){
-    //         const id = data.id
-    //         const res = await ReplyTweet({id, comment})
-    //         if(res.data.status === "success"){
-    //             console.log(`回覆成功`)
-    //             setRepliesAmount(setRepliesAmount + 1)
-    //         }
-    //     }else{
-    //         console.log(`回覆字數超出限制`)
-    //     }
-    // }
-
+ 
     const handleReply = async() =>{
         if(comment.length > 140){
             setIsReplyError(true);
@@ -85,10 +81,11 @@ export default function TweetItem({data}){
 
     
     
+    
     return(
         <div className={styles.tweetContainer}  >
-            <div className={styles.avatarWrapper}>
-                <img src={data.User.avatar} alt={data.name} />
+            <div className={styles.avatarWrapper} >
+                <img src={data.User.avatar} alt={data.name} onClick={()=>{handleOtherPage() }} />
             </div>
             <div className={styles.tweetWrapper}>
                 <div className={styles.userInfo}>

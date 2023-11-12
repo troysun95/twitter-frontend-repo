@@ -113,14 +113,18 @@ const ReplyListPage = ()=> {
         </div>
         <div className={styles.content}>
           <div className={styles.headerContainer}>
-            <GoBackBtnIcon onClick={()=>handleGoBack}/>
-            <h4>推文</h4>
+            <div className={styles.headerWrapper}>
+              <div className={styles.goBack}>
+                <GoBackBtnIcon onClick={handleGoBack}/>
+              </div>
+              <h4>推文</h4>
+            </div>
           </div>
           < ReplyedTweeet replyedTweet={replyedTweet}/>
           < ReplyTweetList tweeetReplies={tweetReplies} /> 
         </div>
         <div className={styles.popularList}>
-            <PopularList topTenUsers={topTenUsers}/>
+            <PopularList topTenUsers={topTenUsers} />
         </div> 
     </div>
   )

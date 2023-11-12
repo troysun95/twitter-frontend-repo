@@ -231,7 +231,7 @@ const UserPage = () => {
   return (
     <div className={styles3.appContainer}>
       <div className={styles3.navbarContainer}>
-        <MainNavbar>
+        <MainNavbar >
           <NavItem title="首頁">
             <HomeIcon />
           </NavItem>
@@ -239,9 +239,6 @@ const UserPage = () => {
             <UserActiveIcon />
           </NavItem>
           <NavItem title="設定">
-            <UserActiveIcon />
-          </NavItem>
-          <NavItem title="推文">
             <UserActiveIcon />
           </NavItem>
         </MainNavbar>

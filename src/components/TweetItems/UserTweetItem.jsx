@@ -10,11 +10,12 @@ const UserTweetItem = ({
   isLiked,
   likedUsersCount,
   createdAt,
+  description
 }) => {
   const userAvatar = userInfo.avatar;
   const userName = userInfo.name;
   const userAccount = userInfo.account;
-  const description = Tweet.description;
+  // const description = Tweet.description;
   return (
     <div className={styles4.tweetItem}>
       <div className={styles4.avatar}>

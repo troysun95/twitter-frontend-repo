@@ -63,8 +63,8 @@ export const getTweets = async () => {
 // 使用者點瀏覽使用者的推文
 export const getUserTweets = async (id) => {
   try {
-    // const res = await axios.get(`${baseUrl}/api/users/${id}/tweets`);
-    const {data} = await axios.get(`${baseUrl}/api/users/${id}/replied_tweets`);
+    const {data} = await axios.get(`${baseUrl}/api/users/${id}/tweets`);
+    // const {data} = await axios.get(`${baseUrl}/api/users/${id}/replied_tweets`);
 
     console.log('tweets.js裡的 getUserTweets 回傳值: ', data);
     // 這邊要注意回傳內容，只有一層 data

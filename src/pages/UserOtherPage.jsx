@@ -2,7 +2,10 @@ import { useState, useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as HomeIcon } from "icons/home.svg";
 import { ReactComponent as UserActiveIcon } from "icons/userActive.svg";
-import { ReactComponent as EditProfileBtnIcon } from "icons/editProfileBtn.svg";
+import { ReactComponent as MailIcon } from "icons/mailActive.svg";
+import { ReactComponent as NotiIcon } from "icons/noti.svg";
+import { ReactComponent as FollowingBtn } from "icons/followingBtn.svg";
+
 import MainNavbar from "components/MainNavbar";
 import NavItem from "components/NavItem";
 import SwitchButtonPanel from "components/SwitchButtonPanel";
@@ -11,8 +14,7 @@ import UserReplyItem from "components/TweetItems/UserReplyItem";
 import UserLikeItem from "components/TweetItems/UserLikeItem";
 import HeaderName from "components/HeaderName";
 import PopularList from "components/PopularList";
-
-import styles from "styles/UserSelfPage.module.scss";
+import styles from "styles/UserOtherPage.module.scss";
 import styles3 from "styles/Layout3.module.scss";
 import styles4 from "styles/TweetsCollection.module.scss";
 
@@ -66,9 +68,11 @@ const UserProfile = ({ userInfo, followers, followings }) => {
           </div>
         </div>
       </div>
-      <button className={styles.editProfileBtn}>
-        <EditProfileBtnIcon />
-      </button>
+      <div className={styles.informPanel}>
+        <div className={styles.icon}><MailIcon/></div>
+        <div className={styles.icon}><NotiIcon/></div>
+        <div className={styles.followBtn}><FollowingBtn/></div>
+      </div>
     </div>
   );
 };
@@ -116,11 +120,12 @@ const UserContent = ({
     </div>
   );
 };
-const UserPage = () => {
-  // const navigate = useNavigate();
-  const savedUserInfo = JSON.parse(localStorage.getItem("user"));
-  console.log("savedUserInfo", savedUserInfo);
-  const id = savedUserInfo.id;
+const UserOtherPage = () => {
+  //取出被點擊使用者資料
+  const userOther = JSON.parse(localStorage.getItem("UserClicked"))
+   
+  //const id = savedUserInfo.id;
+  const id = userOther.id
 
   const [userContent, setUserContent] = useState("tweets");
   const [tweets, setTweets] = useState([]); //user發文
@@ -250,7 +255,7 @@ const UserPage = () => {
         userContent={userContent}
         followers={followers}
         followings={followings}
-        userInfo={savedUserInfo}
+        userInfo={userOther}
         tweets={tweets}
         replies={replies}
         likes={likes}
@@ -260,4 +265,4 @@ const UserPage = () => {
     </div>
   );
 };
-export default UserPage;
+export default UserOtherPage;

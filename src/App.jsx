@@ -13,6 +13,7 @@ import {
   RegisterPage,
   UserFollowerPage,
   UserFollowingPage,
+  UserOtherPage,
 } from "pages";
 
 import './styles/reset.scss'
@@ -36,6 +37,7 @@ function App() {
           <Route path="login" element={<LoginPage />} />
           <Route path="replylist" element={<ReplyListPage />} />
           <Route path="register" element={<RegisterPage />} />
+          <Route path="user/other" element={<UserOtherPage />} />
           <Route path="*" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
