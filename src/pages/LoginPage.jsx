@@ -7,7 +7,7 @@ import {Login} from '../api/auth'
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-const AuthInput = ({ type, label, value, placeholder, onChange }) => {
+const AuthInput = ({ type, label, value, placeholder, onChange, errMsg }) => {
   return (
     <div className={styles.inputContainer}>
       <label>{label}</label>
@@ -17,6 +17,7 @@ const AuthInput = ({ type, label, value, placeholder, onChange }) => {
         placeholder={placeholder || ""}
         onChange={(event) => onChange?.(event.target.value)}
       />
+      <div className={styles.errMsg}>{errMsg}</div>
     </div>
   );
 };
@@ -24,6 +25,7 @@ const AuthInput = ({ type, label, value, placeholder, onChange }) => {
 const LoginPage = () => {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
+  const [isAccEr, setIsAccer] = useState(false)
   const navigate = useNavigate('');
 
   //handler
@@ -43,7 +45,7 @@ const LoginPage = () => {
     if(data.success){
 
       localStorage.setItem("authToken", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user)) //try
+      localStorage.setItem("user", JSON.stringify(data.user)) 
 
 
       Swal.fire({
@@ -53,15 +55,17 @@ const LoginPage = () => {
         icon: "success",
         showConfirmButton: false,
       });
+      setIsAccer(false)
       navigate("/main");
     } else {
       Swal.fire({
         position: "top",
-        title: "登入失敗！",
+        title: "帳號不存在",
         timer: 1000,
         icon: "error",
         showConfirmButton: false,
       });
+      setIsAccer(true)
     }
   };
 
@@ -77,6 +81,7 @@ const LoginPage = () => {
           value={account}
           placeholder={"請輸入帳號"}
           onChange={(nameInputValue) => setAccount(nameInputValue)}
+          errMsg={isAccEr ? '帳號不存在！' : ''}
         />
 
         <AuthInput

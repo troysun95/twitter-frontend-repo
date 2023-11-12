@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ReactComponent as DeleteActive } from "icons/deleteActive.svg";
 import clsx from 'clsx'
 import {AddTweet} from "api/twitter"
-
+import Swal from "sweetalert2";
 
 export default function TweetModal({user,onClick, isOpen}){
     //const navigate=useNavigate();
@@ -25,9 +25,17 @@ export default function TweetModal({user,onClick, isOpen}){
             if(res.data.status === "success"){
                 setDescription('')
                 console.log('推文成功')
+                setDescription('')
             }
         }else{
-            console.log('推文字數超過限制')
+            console.log('推文字數nono')
+            Swal.fire({
+                position: "top",
+                title: "內容不可為空白",
+                timer: 1000,
+                icon: "error",
+                showConfirmButton: false,
+              });
             return
         }
         

@@ -6,6 +6,7 @@ import {useState} from 'react'
 import { useNavigate } from "react-router-dom"
 import ReplyModal from "components/ReplyModal"
 import {ReplyTweet} from "api/twitter"
+import Swal from "sweetalert2"
 
 
 
@@ -65,11 +66,20 @@ export default function TweetItem({data, id}){
     }
 
     const handleErrorCheck =(comment)=>{
-        if(comment.length > 140 || comment.trim().length < 1){
+        if(comment.length > 140 ){
             setIsReplyError(true)
+        }else if(comment.trim().length  < 1){
+            Swal.fire({
+                position: "top",
+                title: "內容不可為空白",
+                timer: 1000,
+                icon: "error",
+                showConfirmButton: false,
+              });
+              setIsModalOpen(false)
         }else{
             setIsReplyError(false)
-            }
+        }
         setComment(comment)
     }
 

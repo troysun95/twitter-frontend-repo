@@ -5,7 +5,7 @@ import { ReactComponent as RegistBtn} from "icons/registBtn.svg"
 import RegisterInput from "components/RegisterInput"
 import {Register} from "api/auth"
 import { useNavigate } from "react-router-dom"; 
-
+import Swal from "sweetalert2";
 
 
 const RegisterPage = ()=>{
@@ -17,9 +17,81 @@ const RegisterPage = ()=>{
     const navigate = useNavigate("")
     
     
-    const handleRegister = async()=>{   
-        //   判斷 ：1. 驗證資料正確，state: isAvalabe 
-        
+    const handleRegister = async()=>{  
+        //判斷錯誤文案，不可空白
+        if(account.trim().length === 0){
+            Swal.fire({
+                position: "top",
+                title: "每個欄位皆為必填",
+                timer: 1000,
+                icon: "error",
+                showConfirmButton: false,
+              });
+              return
+        }
+        if(name.trim().length === 0){
+            Swal.fire({
+                position: "top",
+                title: "每個欄位皆為必填",
+                timer: 1000,
+                icon: "error",
+                showConfirmButton: false,
+              });
+              return
+        }
+        if(email.trim().length === 0){
+            Swal.fire({
+                position: "top",
+                title: "每個欄位皆為必填",
+                timer: 1000,
+                icon: "error",
+                showConfirmButton: false,
+              });
+              return
+        }
+        if(password.trim().length === 0){
+            Swal.fire({
+                position: "top",
+                title: "每個欄位皆為必填",
+                timer: 1000,
+                icon: "error",
+                showConfirmButton: false,
+              });
+              return
+        }
+        if(checkPassword.trim().length === 0){
+            Swal.fire({
+                position: "top",
+                title: "每個欄位皆為必填",
+                timer: 1000,
+                icon: "error",
+                showConfirmButton: false,
+              });
+              return
+        }
+        //字數超過
+        if(name.trim().length > 50 ){
+            Swal.fire({
+                position: "top",
+                title: "字數超過上限！",
+                timer: 1000,
+                icon: "error",
+                showConfirmButton: false,
+                });
+                return
+        }
+        //密碼不一致
+        if(password !== checkPassword ){
+            Swal.fire({
+                position: "top",
+                title: "password跟checkedpassword需一致",
+                timer: 1000,
+                icon: "error",
+                showConfirmButton: false,
+              });
+              return
+        }
+
         const response = await Register({
             name,
             account,
@@ -27,15 +99,24 @@ const RegisterPage = ()=>{
             password,
             checkPassword
         });
-        console.log(response)
-        if(response.data.status === "success"){
-            console.log('註冊成功！')
-            console.log(`註冊資料如下${response.data.user}`)
-            navigate('/login')
-        }else{
 
-            console.log('註冊失敗！')
+        if(!response){
+            Swal.fire({
+                position: "top",
+                title: "此account/email已經註冊過",
+                timer: 1000,
+                icon: "error",
+                showConfirmButton: false,
+              });
+        }else{
+            if(response.data.status === "success"){
+                navigate('/login')
+            }
         }
+        
+
+            
+        
     }
 
 
