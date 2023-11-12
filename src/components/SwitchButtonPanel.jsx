@@ -16,7 +16,6 @@ function SwitchButton({
       })}
       onClick={(e) => {
         handleChangeUserContent(value);
-        console.log("handleChangeUserContent: ", `${value}`);
       }}
       id={id}
     >

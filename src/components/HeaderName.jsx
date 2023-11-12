@@ -1,24 +1,21 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-
 import styles3 from "styles/Layout3.module.scss";
 import { ReactComponent as GoBackBtnIcon } from "icons/goBackBtn.svg";
 import { getUserTweets } from "../api/twitter.js";
 
 const HeaderName = () => {
   const savedUserInfo = JSON.parse(localStorage.getItem("user"));
-  // console.log("savedUserInfo", savedUserInfo);
   const id = savedUserInfo.id;
   const [tweets, setTweets] = useState([]); //user發文
 
-  
   useEffect(() => {
     const getUserTweetsAsync = async () => {
       try {
         const tweets = await getUserTweets(id);
         // 確認是否有tweets
         if (tweets) {
-          setTweets(tweets.map((tweet) => ({ ...tweet })))
+          setTweets(tweets.map((tweet) => ({ ...tweet })));
         }
         // else {
         //   setTweets(null);
@@ -27,8 +24,9 @@ const HeaderName = () => {
         console.error("error", error);
       }
     };
-      getUserTweetsAsync();
+    getUserTweetsAsync();
   }, [id]);
+
 
   return (
     <div className={styles3.headerContainer}>
@@ -44,5 +42,5 @@ const HeaderName = () => {
       </div>
     </div>
   );
-}
+};
 export default HeaderName
