@@ -52,8 +52,6 @@ const UserContent = ({ followings, flagForRendering, setFlagForRendering }) => {
         flagForRendering={flagForRendering}
         setFlagForRendering={setFlagForRendering}
       />
-      {/* <UserFollowingItem /> */}
-      {/* </TrackingCollection> */}
     </div>
   );
 };
@@ -62,7 +60,6 @@ const UserFollowingPage = () => {
   // 先從 localStorage 拿使用者在 UserOtherPage 存的 userContent 當作初始值
   // const savedFollowContent = localStorage.getItem("followContent");
   const savedUserInfo = JSON.parse(localStorage.getItem("user"));
-  console.log("savedUserInfo", savedUserInfo);
   const savedUserId = savedUserInfo.id;
   const role = savedUserInfo.role;
   const [followings, setFollowings] = useState([]); //followings資料
@@ -88,12 +85,6 @@ const UserFollowingPage = () => {
     const getCheckProfileAsync = async () => {
       try {
         const response = await getCheckProfile(savedUserId);
-        console.log("getCheckProfileAsync response", response);
-        console.log("getCheckProfileAsync response.data", response.data);
-        console.log(
-          "getCheckProfileAsync response.data.tweetCount",
-          response.data.tweetCount
-        );
         setTweetCount(response.data.tweetCount);
       } catch (error) {
         console.error(error);

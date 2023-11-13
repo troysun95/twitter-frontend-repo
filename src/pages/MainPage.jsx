@@ -12,30 +12,27 @@ import { useNavigate } from "react-router-dom";
 import {getTweets} from "api/twitter"; 
 import {getTopTenUsers} from "api/twitter"
 import ReplyModal from "components/ReplyModal"
-import { useState,useEffect } from "react";
-
+import { useState, useEffect } from "react";
+// import { AuthContext } from "context/AuthContext.jsx";
 
 const MainPage = ()=> {
   const [tweets, setTweets] = useState([]);
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"))
-  const Replyeduser = localStorage.getItem("user")
+  const user = JSON.parse(localStorage.getItem("user"));
+  const Replyeduser = localStorage.getItem("user");
   const [topTenUsers, setTopTenUsers] = useState([]);
+  // const { postLikeTweet, postUnlikeTweet } = useContext(AuthContext);
 
-  //頁面跳轉
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+    localStorage.removeItem("account");
+    localStorage.removeItem("password");
+    navigate("/login");
+  };
 
-  const handleLogout =()=>{
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('user');
-    localStorage.removeItem('account');
-    localStorage.removeItem('password')
-    navigate('/login')
-  }
-
-
-
- //發送推文
+  //發送推文
   // const handleSubmitTweet = ()=>{
   //   if(inputValue.length !== 0 &&  inputValue.length < 150){
   //      const newTweet = {
@@ -60,25 +57,23 @@ const MainPage = ()=> {
   //    setIsSubmit(false)
   //   }
   // }
- 
-  
-  const handleOpen = () =>{
+
+  const handleOpen = () => {
     setIsOpen(true);
-  }
-  const handleClose = () =>{
+  };
+  const handleClose = () => {
     setIsOpen(false);
-  }
+  };
 
   useEffect(() => {
     const getTweetsAsync = async () => {
-    try {
-    const tweets = await getTweets();
-    setTweets(tweets);
-   setTweets(tweets.map((tweet) => ({...tweet})));
-   console.log('推文取得修正中')
-    } catch (error) {
-    console.error (error);
-    }
+      try {
+        const tweets = await getTweets();
+        setTweets(tweets);
+        setTweets(tweets.map((tweet) => ({ ...tweet })));
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     const getTopTenUsersAsync = async () => {
@@ -87,8 +82,7 @@ const MainPage = ()=> {
         const topTenUsers = topTenUsersData.data; //data內
         if (topTenUsers) {
           setTopTenUsers(topTenUsers.map((topTenUser) => ({ ...topTenUser })));
-        }
-        else {
+        } else {
           setTopTenUsers(null);
         }
       } catch (error) {
@@ -97,47 +91,57 @@ const MainPage = ()=> {
     };
 
     getTweetsAsync();
-    getTopTenUsersAsync()
-    }, []); 
+    getTopTenUsersAsync();
+  }, []);
 
-  
-  return(
+  return (
     <div className={styles.appContainer}>
-        <div className={styles.navbarContainer}>
-          <MainNavbar handleLogout={handleLogout}>
-            <div onClick={()=>navigate('/main')}>
-              <NavItem title="首頁"  >
-                <HomeActiveIcon/>
-              </NavItem>
-            </div>
-            <div onClick={()=>navigate('/user')}>
-              <NavItem title="個人資料">
-                <UserIcon/>
-              </NavItem>
-            </div>
-            <div onClick={()=>navigate('/setting')}>
-              <NavItem title="設定" >
-                  <SettingIcon/>
-                </NavItem>
-            </div>
-            <button className={styles.tweetButton} onClick={handleOpen}>推文</button>
-          </MainNavbar>
-        </div>
-        <div className={styles.content}>
-          <div className={styles.headerContainer}>
-            <h4>{isOpen ? '推文' :'首頁'}</h4>
+      <div className={styles.navbarContainer}>
+        <MainNavbar handleLogout={handleLogout}>
+          <div onClick={() => navigate("/main")}>
+            <NavItem title="首頁">
+              <HomeActiveIcon />
+            </NavItem>
           </div>
-          <ToTweetPanel/>
-          <TweetModal className={styles.tweetModal}  user={user} isOpen={isOpen}  onClick={handleClose}/>
-          <TweetList tweets={tweets} />
-          <ReplyModal className={styles.replyModal} Replyeduser={Replyeduser}  isOpen={isOpen}  onClick={handleClose} />
+          <div onClick={() => navigate("/user")}>
+            <NavItem title="個人資料">
+              <UserIcon />
+            </NavItem>
+          </div>
+          <div onClick={() => navigate("/setting")}>
+            <NavItem title="設定">
+              <SettingIcon />
+            </NavItem>
+          </div>
+          <button className={styles.tweetButton} onClick={handleOpen}>
+            推文
+          </button>
+        </MainNavbar>
+      </div>
+      <div className={styles.content}>
+        <div className={styles.headerContainer}>
+          <h4>{isOpen ? "推文" : "首頁"}</h4>
         </div>
-        <div className={styles.popularList}>
-            <PopularList topTenUsers={topTenUsers}/>
-        </div> 
-       
+        <ToTweetPanel />
+        <TweetModal
+          className={styles.tweetModal}
+          user={user}
+          isOpen={isOpen}
+          onClick={handleClose}
+        />
+        <TweetList tweets={tweets} />
+        <ReplyModal
+          className={styles.replyModal}
+          Replyeduser={Replyeduser}
+          isOpen={isOpen}
+          onClick={handleClose}
+        />
+      </div>
+      <div className={styles.popularList}>
+        <PopularList topTenUsers={topTenUsers} />
+      </div>
     </div>
-  )
+  );
 }
 
 

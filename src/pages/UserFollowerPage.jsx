@@ -63,7 +63,6 @@ const UserFollowerPage = () => {
   // 先從 localStorage 拿使用者在 UserOtherPage 存的 userContent 當作初始值
   const savedFollowContent = localStorage.getItem("followContent");
   const savedUserInfo = JSON.parse(localStorage.getItem("user"));
-  console.log("savedUserInfo", savedUserInfo);
   const savedUserId = savedUserInfo.id;
   const role = savedUserInfo.role;
   const [followers, setFollowers] = useState([]); //followers資料
