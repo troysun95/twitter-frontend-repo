@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import MainNavbar from "components/MainNavbar";
 import NavItem from "components/NavItem";
 import UserFollowingItem from "components/TrackingItems/UserFollowingItem";
@@ -13,36 +12,19 @@ import { ReactComponent as UserActiveIcon } from "icons/userActive.svg";
 import styles3 from "styles/Layout3.module.scss";
 import styles from "styles/UserSelfPage.module.scss";
 import styles4 from "styles/TweetsCollection.module.scss";
+import { getUserFollowings } from "../api/twitter.js";
 
-import { getUserFollowings, getCheckProfile } from "../api/twitter.js";
-
-const TrackingCollection = ({
-  followings, 
-  flagForRendering,
-  setFlagForRendering,
-}) => {
+const TrackingCollection = ({ followings }) => {
   return (
-    // 處理沒有followings (null)的情況
     <div className={styles4.tweetsCollection}>
-      {followings.length !== 0 ? (
-        followings.map((followingItem) => {
-          return (
-            <UserFollowingItem
-              key={followingItem.id}
-              {...followingItem}
-              flagForRendering={flagForRendering}
-              setFlagForRendering={setFlagForRendering}
-            />
-          );
-        })
-      ) : (
-        <span>目前沒有追隨任何帳號</span>
-      )}
+      {followings.map((followingItem) => {
+        return <UserFollowingItem key={followingItem.id} {...followingItem} />;
+      })}
     </div>
   );
 };
 
-const UserContent = ({ followings, flagForRendering, setFlagForRendering }) => {
+const UserContent = ({ followings }) => {
   return (
     <div className={styles.content}>
       <HeaderName />
@@ -52,29 +34,27 @@ const UserContent = ({ followings, flagForRendering, setFlagForRendering }) => {
         flagForRendering={flagForRendering}
         setFlagForRendering={setFlagForRendering}
       />
+
     </div>
   );
 };
-const UserFollowingPage = () => {
-  const navigate = useNavigate();
-  // 先從 localStorage 拿使用者在 UserOtherPage 存的 userContent 當作初始值
-  // const savedFollowContent = localStorage.getItem("followContent");
+const UserFollowerPage = () => {
   const savedUserInfo = JSON.parse(localStorage.getItem("user"));
+
   const savedUserId = savedUserInfo.id;
   const role = savedUserInfo.role;
   const [followings, setFollowings] = useState([]); //followings資料
 
-  // 使用者點擊瀏覽項目最新狀態
-  // const [userContent, setUserContent] = useState(savedFollowContent);
-  const [tweetCount, setTweetCount] = useState(null); //tweet數量
-  const [flagForRendering, setFlagForRendering] = useState(false);
+
+  const [followings, setFollowings] = useState([]);
 
   useEffect(() => {
     const getUserFollowingsAsync = async () => {
       try {
-        const followings = await getUserFollowings(savedUserId);
+        const followings = await getUserFollowings(id);
         if (followings) {
           setFollowings(followings.map((following) => ({ ...following })));
+          console.log("followers", followings);
         } else {
           setFollowings(null);
         }
@@ -82,6 +62,7 @@ const UserFollowingPage = () => {
         console.error("error", error);
       }
     };
+
     const getCheckProfileAsync = async () => {
       try {
         const response = await getCheckProfile(savedUserId);
@@ -105,6 +86,7 @@ const UserFollowingPage = () => {
     // }
   }, [flagForRendering, savedUserId, navigate, role]);
 
+
   return (
     <div className={styles3.appContainer}>
       <div className={styles3.navbarContainer}>
@@ -124,14 +106,9 @@ const UserFollowingPage = () => {
           </NavItem>
         </MainNavbar>
       </div>
-      <UserContent
-        followings={followings}
-        flagForRendering={flagForRendering}
-        setFlagForRendering={setFlagForRendering}
-        tweetCount={tweetCount}
-      />
+      <UserContent followings={followings} />
       <PopularList />
     </div>
   );
 };
-export default UserFollowingPage;
+export default UserFollowerPage;

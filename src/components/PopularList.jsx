@@ -51,8 +51,11 @@ const PopularAccountItem = ({
   //   setIsClicked(isFollowed);
   // }, [isDataUpdate, isFollowed]);
 
+
+const PopularAccountItem = ({ avatar, name, account, isFollowed }) => {
   return (
     <div className={styles.PopularAccountItem}>
+
       <Link to={`/users/${id}`}>
         <div className={styles.avatar}>
           <img src={avatar} aria-label={account} />
@@ -80,24 +83,22 @@ const PopularAccountItem = ({
   );
 };
 
-const TopTenUsersCollection = ({
-  topTenUsers,
-  handleFollowClick,
-  savedUserId,
-}) => {
+const PopularList = ({ topTenUsers }) => {
   return (
-    <>
+    <div className={styles.popularList}>
+      <div className={styles.title}>
+        <h4>推薦帳號</h4>
+      </div>
       {topTenUsers.map((topTenUserItem) => {
-        // const { id, name, account, avatar, isFollowed } = topTenUserItem
         return (
           <PopularAccountItem
             key={topTenUserItem.id}
             userId={topTenUserItem.id}
+
             {...topTenUserItem}
-            handleFollowClick={handleFollowClick}
-            savedUserId={savedUserId}
+            // onclick
           />
-        );
+        ); 
       })}
     </>
   );
@@ -171,6 +172,7 @@ const PopularList = ({ flagForRendering, setFlagForRendering }) => {
         handleFollowClick={handleFollowClick}
         savedUserId={savedUserId}
       />
+
     </div>
   );
 };

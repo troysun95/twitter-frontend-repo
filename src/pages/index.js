@@ -10,6 +10,7 @@ import SettingPage from './SettingPage'
 import LoginPage from './LoginPage'
 import ReplyListPage from './ReplyListPage'
 import RegisterPage from './RegisterPage'
+import UserOtherPage from './UserOtherPage'
 
 export  {
 MainPage,
@@ -22,4 +23,5 @@ AdminMainPage,
 SettingPage,
 LoginPage, 
 ReplyListPage,
-RegisterPage}  
+RegisterPage,
+UserOtherPage}  

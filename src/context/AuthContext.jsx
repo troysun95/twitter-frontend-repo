@@ -1,4 +1,4 @@
-import { login, adminLogin } from "api/auth.js";
+// import { login, adminLogin } from "api/auth.js";
 import { createContext, useState, useEffect } from "react";
 import {
   postLikeTweet,
@@ -18,13 +18,6 @@ const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        changedLikes,
-        setChangedLikes,
-
-        logout: () => {
-          localStorage.removeItem("followContent");
-        },
-
         postLikeTweet: async (id) => {
           const response = await postLikeTweet(id);
           if (response.data) setChangedLikes(true);
@@ -35,12 +28,12 @@ const AuthProvider = ({ children }) => {
           const response = await postUnlikeTweet(id);
           if (response.data) setChangedLikes(true);
           return response;
-        },
+        }
       }}
     >
       {children}
     </AuthContext.Provider>
-  );
+  )
 };
 
 export { AuthContext, AuthProvider };

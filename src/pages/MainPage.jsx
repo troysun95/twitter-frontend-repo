@@ -13,7 +13,7 @@ import {getTweets} from "api/twitter";
 import {getTopTenUsers} from "api/twitter"
 import ReplyModal from "components/ReplyModal"
 import { useState, useEffect } from "react";
-// import { AuthContext } from "context/AuthContext.jsx";
+
 
 const MainPage = ()=> {
   const [tweets, setTweets] = useState([]);
@@ -58,7 +58,14 @@ const MainPage = ()=> {
   //   }
   // }
 
-  const handleOpen = () => {
+  const handleLogout =()=>{
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+    localStorage.removeItem('ReplyedTweetId');
+    navigate('/login')
+  }
+
+  const handleOpen = () =>{
     setIsOpen(true);
   };
   const handleClose = () => {
@@ -74,6 +81,7 @@ const MainPage = ()=> {
       } catch (error) {
         console.error(error);
       }
+
     };
 
     const getTopTenUsersAsync = async () => {
@@ -89,10 +97,10 @@ const MainPage = ()=> {
         console.error("error", error);
       }
     };
-
     getTweetsAsync();
     getTopTenUsersAsync();
   }, []);
+
 
   return (
     <div className={styles.appContainer}>
