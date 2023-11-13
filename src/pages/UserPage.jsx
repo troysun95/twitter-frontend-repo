@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ReactComponent as HomeIcon } from "icons/home.svg";
 import { ReactComponent as UserActiveIcon } from "icons/userActive.svg";
 import { ReactComponent as EditProfileBtnIcon } from "icons/editProfileBtn.svg";
+import { ReactComponent as SettingIcon } from "icons/setting.svg"
 import MainNavbar from "components/MainNavbar";
 import NavItem from "components/NavItem";
 import SwitchButtonPanel from "components/SwitchButtonPanel";
@@ -11,10 +12,10 @@ import UserReplyItem from "components/TweetItems/UserReplyItem";
 import UserLikeItem from "components/TweetItems/UserLikeItem";
 import HeaderName from "components/HeaderName";
 import PopularList from "components/PopularList";
-
 import styles from "styles/UserSelfPage.module.scss";
 import styles3 from "styles/Layout3.module.scss";
 import styles4 from "styles/TweetsCollection.module.scss";
+import EditUserProfileModal from "components/EditUserProfileModal.jsx";
 
 import {
   getUserTweets,
@@ -46,6 +47,12 @@ const TweetsCollection = ({ content, renderItem, userInfo }) => {
   );
 };
 const UserProfile = ({ userInfo, followers, followings }) => {
+  const user = JSON.parse(localStorage.getItem("user"))
+  const[isOpen, setIsopen] = useState(false)
+  const handleModalClose =() =>{
+    setIsopen(false)
+  }
+
   return (
     <div className={styles.userProfileContainer}>
       <div className={styles.userProfileBg}>
@@ -73,9 +80,10 @@ const UserProfile = ({ userInfo, followers, followings }) => {
           </div>
         </div>
       </div>
-      <button className={styles.editProfileBtn}>
+      <button className={styles.editProfileBtn} onClick={()=>{setIsopen(true)}}>
         <EditProfileBtnIcon />
       </button>
+      <EditUserProfileModal isOpen={isOpen} user={user} handleModalClose={handleModalClose}/>
     </div>
   );
 };
@@ -146,6 +154,13 @@ const UserPage = () => {
 
   useEffect(() => {
     // 瀏覽使用者的推文
+
+    //取得使用者最新個人資料
+    
+
+
+
+
     const getUserTweetsAsync = async () => {
       try {
         const tweets = await getUserTweets(id);
@@ -304,7 +319,7 @@ const UserPage = () => {
             <UserActiveIcon />
           </NavItem>
           <NavItem title="設定">
-            <UserActiveIcon />
+            <SettingIcon />
           </NavItem>
         </MainNavbar>
       </div>

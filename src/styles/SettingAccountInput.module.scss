@@ -1,0 +1,63 @@
+.inputContainer{
+    width: 100%;
+    height: 78px;
+    padding: 0px 23px;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    .inputWrapper{
+        width: 100%;
+        padding: 0px 17.75px ;
+        background-color: #F5F8FA;
+        margin-bottom: 0;
+        display: flex;
+        flex-flow: row wrap;
+        label{
+            color: #696974;
+            width: 100%;
+            height: 22px;
+            border: 1px solid #000;
+        }
+        .aWrapper{
+            border: 1px solid #000;
+            display: flex;
+            flex-flow: row wrap;
+            div{
+                width: 10px;
+                height:  10px;
+                border: 1px solid #000;
+                border-bottom: 3px solid #657786;
+            }
+            input{
+                width: 100%;
+                font-size: var(--main-font-size);
+                border: none;
+                background-color: #F5F8FA;
+                line-height: 26px;
+                border-bottom: 3px solid #657786;
+                &:focus{
+                    outline: none;
+                    border-bottom: 3px solid #50B5FF;
+                }
+                //新增error 樣式
+                // &:error{
+                //     border-bottom: 3px solid var(--error);
+                // }
+            }
+        }
+        
+        
+
+    }
+    .errMassage{
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 24px;
+        color:red;
+    }
+}
+
+
+
+

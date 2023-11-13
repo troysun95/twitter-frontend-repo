@@ -10,6 +10,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import {EditUser} from "api/twitter"
 import Swal from "sweetalert2";
+//import SettingAccountInput from "components/SettingAccountInput"
 
 
 const SettingPage = ()=> {
@@ -23,24 +24,7 @@ const SettingPage = ()=> {
     const [email, setEmail]=useState(user.email);
     const [password, setPassword]=useState('');
     const [checkPassword, setChecPassword] = useState('');
-    //const [nameError, setNameError ] = useState(false);
-    //const [passwordeEror, setPassowrdError ] = useState(false);
-
-
-    //顯示錯誤文案用
-    // useEffect(() => {
-    //     if(name.length > 50) {
-    //         setNameError(true);
-    //     } else {
-    //         setNameError(false);
-    //     }
-    //     if(password !== checkPassword){
-    //         setPassowrdError(true);
-    //     } else {
-    //         setPassowrdError(false);
-    //     }
-    // }, [account , name, email, password, checkPassword ]);
-
+    
     // //登出按鈕
     const handleLogout = ()=>{
         localStorage.removeItem('authToken');
@@ -60,6 +44,9 @@ const SettingPage = ()=> {
             return
         }
         if(password.lengnth === 0){
+            return
+        }
+        if(checkPassword.length === 0){
             return
         }
         if(checkPassword !== password){
@@ -89,9 +76,9 @@ const SettingPage = ()=> {
                     icon: "error",
                     showConfirmButton: false,
                   });
-
             }else{
                 console.log(response)
+                navigate('/main')
             }
             
         }       

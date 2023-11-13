@@ -6,9 +6,9 @@
     margin-bottom: 8px;
     display: flex;
     flex-direction: column;
-    .inputContainer{
+    .inputWrapper{
         width: 100%;
-        padding: 0px 17.75px ;
+        //padding: 0px 17.75px ;
         background-color: #F5F8FA;
         margin-bottom: 0;
         label{
@@ -16,17 +16,19 @@
             height: 22px;
         }
         input{
+            width: 100%;
             font-size: var(--main-font-size);
             border: none;
             background-color: #F5F8FA;
             line-height: 26px;
-            border-top: 3px solid #657786;
+            border-bottom: 3px solid #657786;
             &:focus{
                 outline: none;
+                border-bottom: 3px solid #50B5FF;
             }
             //新增error 樣式
             &:error{
-                border-top: 3px solid var(--error);
+                border-bottom: 3px solid var(--error);
             }
         }
     }

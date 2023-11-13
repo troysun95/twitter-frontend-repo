@@ -185,6 +185,15 @@ export const EditUserProfile = async (id,{
 };
 
 
+export const getUserData =async (id)=>{
+  try{
+    const res = await axios.get(`${baseUrl}/api/users/${id}`,{id})
+    return res
+  }catch(error){
+    console.error('[Get User Data Failed]' ,error)
+  }
+}
+
 
 //使用者新增 推文 /api/tweets
 export const AddTweet = async (description) => {
