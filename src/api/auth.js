@@ -66,7 +66,8 @@ export const Register = async ({
     return response;
   }catch (error) {
     console.error('[Register Failed]:', error);
-    return { success: false };
+
+    return false;
   }
 }
 

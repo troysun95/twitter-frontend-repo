@@ -6,10 +6,11 @@ import { ReactComponent as SettingActiveIcon } from "icons/settingActive.svg";
 import {ReactComponent as HomeIcon} from "icons/home.svg"
 import {ReactComponent as UserIcon} from "icons/user.svg";
 import {ReactComponent as SaveBtn} from "icons/saveBtn.svg";
-import { useState ,useEffect} from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import {EditUser} from "api/twitter"
-
+import Swal from "sweetalert2";
+//import SettingAccountInput from "components/SettingAccountInput"
 
 
 const SettingPage = ()=> {
@@ -23,24 +24,7 @@ const SettingPage = ()=> {
     const [email, setEmail]=useState(user.email);
     const [password, setPassword]=useState('');
     const [checkPassword, setChecPassword] = useState('');
-    const [nameError, setNameError ] = useState(false);
-    const [passwordeEror, setPassowrdError ] = useState(false);
-
-
-    //顯示錯誤文案用
-    useEffect(() => {
-        if(name.length > 50) {
-            setNameError(true);
-        } else {
-            setNameError(false);
-        }
-        if(password !== checkPassword){
-            setPassowrdError(true);
-        } else {
-            setPassowrdError(false);
-        }
-    }, [name, password, checkPassword]);
-
+    
     // //登出按鈕
     const handleLogout = ()=>{
         localStorage.removeItem('authToken');
@@ -62,6 +46,9 @@ const SettingPage = ()=> {
         if(password.lengnth === 0){
             return
         }
+        if(checkPassword.length === 0){
+            return
+        }
         if(checkPassword !== password){
             return
         }
@@ -81,7 +68,19 @@ const SettingPage = ()=> {
                 checkPassword
             }
             const response = await EditUser(user.id, formData)
-            console.log(response)
+            if(!response){
+                Swal.fire({
+                    position: "top",
+                    title: "此account/email已經註冊過",
+                    timer: 1000,
+                    icon: "error",
+                    showConfirmButton: false,
+                  });
+            }else{
+                console.log(response)
+                navigate('/main')
+            }
+            
         }       
     }
 
@@ -116,34 +115,34 @@ const SettingPage = ()=> {
                         placeholder= "" 
                         value={account}
                         onChange={(accountInput)=>{setAccount(accountInput)}}
-                        errMassage=" "
+                        // errMassage=" "
                     />
                     <SettingInput 
                         label="名稱"  
                         placeholder= "" 
                         value={name} 
                         onChange={(nameInput)=>{setName(nameInput)}}
-                        errMassage={nameError ? "字數超過上限！" : " " }
+                        // errMassage={nameError ? "字數超過上限！" : " " }
                     />
                     <SettingInput
                         label="Email" 
                         value={email} 
                         onChange={(emailInput)=>{setEmail(emailInput)}}
-                        errMassage=""
+                        // errMassage=""
                     />
                     <SettingInput 
                         label="密碼" 
                         placeholder="請設定密碼" 
                         value={password}  
                         onChange={(passwordInput)=>{setPassword(passwordInput)}}
-                        errMassage=""
+                        // errMassage=""
                     />
                     <SettingInput 
                         label="密碼再確認" 
                         placeholder="請再次輸入密碼"  
                         value={checkPassword} 
                         onChange={(checkPasswordInput)=>{setChecPassword(checkPasswordInput)}} 
-                        errMassage={passwordeEror ? "輸入密碼不相同" : '' }
+                        // errMassage={passwordeEror ? "輸入密碼不相同" : '' }
                     />    
 
                 <div className={styles.saveBtn} onClick={handleSave} ><SaveBtn /></div>

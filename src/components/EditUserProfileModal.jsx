@@ -1,4 +1,4 @@
-import styles from "styles/TweetModal.module.scss"
+import styles from "styles/EditUserProfileModal.module.scss"
 import { ReactComponent as SaveBtn } from "icons/saveBtn.svg"
 import { useState } from "react";
 import { ReactComponent as DeleteActive } from "icons/deleteActive.svg";
@@ -6,15 +6,16 @@ import clsx from 'clsx'
 import {EditUserProfile} from "api/twitter"
 
 
-export default function EditUserProfileModal({user, onClick, isOpen}){
-    const [name, setName] =useState("");
-    const [introduction, setIntroductio]= useState("")
+export default function EditUserProfileModal({user, handleModalClose, isOpen}){
+    const [name, setName] =useState(user.name);
+    const [introduction, setIntroductio]= useState(user.introduction)
     const[isError, setIsError] = useState(false)
-    const [avatar, setAvatar]= useState(user.avatar)
-    const [cover, setCover] = useState(user.cover)
+    // const [avatar, setAvatar]= useState(user.avatar)
+    // const [cover, setCover] = useState(user.cover)
     //更新檔案後...
-    setAvatar(avatar)
-    setCover(cover)
+    // setAvatar(avatar)
+    // setCover(cover)
+    console.log(user.name)
 
     function handleNameCheck(e){
         const input = e.target.value
@@ -43,8 +44,8 @@ export default function EditUserProfileModal({user, onClick, isOpen}){
         if(!isError){
             const  res = await EditUserProfile(user.id, {
                 name,
-                cover,
-                avatar,
+                // cover,
+                // avatar,
                 introduction,
             });
             if(res.data.status === "success"){
@@ -60,26 +61,33 @@ export default function EditUserProfileModal({user, onClick, isOpen}){
     return(
         <div className={clsx(styles.userProfileContainer, { [styles.open]: isOpen })}>
             <div className={styles.header}>
-                 <div className={styles.userProfile} onClick={onClick}><DeleteActive/></div>
+                 <div className={styles.userProfile} onClick={handleModalClose}><DeleteActive/></div>
             </div>
             <div className={styles.userProfileWrapper}>
-                <div className={styles.cover} >
+                <div className={styles.coverWrapper} >
                     {/* <UpdateIcon onClick={handleUpdateCover}/>
                     <DeleteIcon onClick={handleDelteCover}/> */}
                     <div className={styles.updateCover}>
-                        <img src={cover} alt="cover" />  
+                        <img src={user.cover} alt="cover" />  
                     </div>
                 </div>
-                <div className={styles.avatar}>
+                <div className={styles.avatarWrapper}>
                     {/* <UpdateIcon onClick={handleUpdateAvatar}/> */}
-                    <div className={styles.avatar}>
-                        <img src={avatar} alt="avatar"/>
+                    <div className={styles.updateavatar}>
+                        <img src={user.avatar} alt="avatar"/>
                     </div>
                 </div>
-                <input type="textarea"  value={name}  onChange={handleNameCheck}/>
-                <div className={styles.nameCount}>{name.length}/50</div>
-                <input type="textarea"  value={introduction}  onChange={handleIntroductionCheck}/>
-                <div className={styles.introductionCount}>{introduction.length}/160</div>
+                <div className={styles.nameWrapper}>
+                    <label>名稱</label>
+                    <input type="text" className={styles.name} value={name}  onChange={handleNameCheck}/>
+                    <div className={styles.nameCount}>{name.length}/50</div>
+                </div>
+                <div className={styles.introductionWrapper}>
+                    <label>自我介紹</label>
+                    <span>{user.name}</span>
+                    <input type="textarea"  className={styles.introduction} value={introduction}  onChange={handleIntroductionCheck}/>
+                    <div className={styles.introductionCount}>{introduction.length}/160</div>
+                </div>
                 <div className={styles.tweetBtn} onClick={handleSave}><SaveBtn/></div>
             </div>
         </div>

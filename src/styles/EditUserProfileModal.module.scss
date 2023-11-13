@@ -1,49 +1,68 @@
-.modalContainer{
+.userProfileContainer{
     display: none;
 }
 .open{
-    border: 1px solid #000;
-    margin-top:56px;
-    width: 100%;
-    height: 300px;
+    display: block;
+    border: 2px solid #000;
+    width: 634px;
+    height: 610px;
     padding: 0px 24px;
     position: fixed;
+    top:56px;
     border-radius: 14px;
+    background-color: #fff;
     z-index: 1;
-    
     .header{
         height: 41px;
         margin-top: 15px;
         margin-bottom: 12px;
         border-bottom: 1px solid var(--grey-500);
-        .iconWrapper{
-            position: absolute;
-            top:20.5px;
-            left:19.5px;
-        }
-    }
-    .toTweetWrapper{
+        border: 1px solid #000;
+    } 
+    .userProfileWrapper{
         width: 100%;
-        height: 50px;
-        display: flex;
-        flex-flow: row wrap;
-        .avatar{
+        height: 553px;
+        .avatarWrapper{
             margin-left: 5px;
             height: 50px;
             width: 50px;
-            img{
-              height: 100%;
-              width: 100%;
-              object-fit: cover;
-              border-radius: 50%;
+            .updateavatar{
+                height: 50px;
+                width: 50px;
+                img{
+                    height: 50px;
+                    width: 50px;
+                    border-radius: 50%;
+                  }
             }
+            
           }
-        input{
+        .coverWrapper{
+            width: 100%;
+            height: 200px;
+            .updateCover{
+                width: 100%;
+                img{
+                    width: 100%;
+                }
+            }
+
+        }
+        .name{
             padding-left: 5px;
             width: 500px;
             height: 26px;
             border: none;
             word-break:break-all;
+            border: 1px solid grey;
+        }
+        .introduction{
+            padding-left: 5px;
+            width: 500px;
+            height: 26px;
+            border: none;
+            word-break:break-all;
+            border: 1px solid grey;
         }
     }
     .tweetBtn{
@@ -52,13 +71,5 @@
         right: 24px;
         cursor: pointer;
     }
-    .errorMessage{
-        width:50%;
-        height: 15px;
-        position: absolute;
-        bottom:28px;
-        right:101px;
-        color:var(--error);
-        text-align: right;
-    }
+
 }
