@@ -29,16 +29,22 @@ const UserContent = ({ followings }) => {
     <div className={styles.content}>
       <HeaderName />
       <TrackingSwitchPanel />
-      <TrackingCollection followings={followings}>
-        <UserFollowingItem />
-      </TrackingCollection>
+      <TrackingCollection
+        followings={followings}
+        flagForRendering={flagForRendering}
+        setFlagForRendering={setFlagForRendering}
+      />
+
     </div>
   );
 };
 const UserFollowerPage = () => {
   const savedUserInfo = JSON.parse(localStorage.getItem("user"));
-  console.log("savedUserInfo", savedUserInfo);
-  const id = savedUserInfo.id;
+
+  const savedUserId = savedUserInfo.id;
+  const role = savedUserInfo.role;
+  const [followings, setFollowings] = useState([]); //followings資料
+
 
   const [followings, setFollowings] = useState([]);
 
@@ -56,8 +62,30 @@ const UserFollowerPage = () => {
         console.error("error", error);
       }
     };
-    getUserFollowingsAsync();
-  }, [id]);
+
+    const getCheckProfileAsync = async () => {
+      try {
+        const response = await getCheckProfile(savedUserId);
+        setTweetCount(response.data.tweetCount);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    // if (savedUserId && userContent && role === "user") {
+      getUserFollowingsAsync();
+    //   getCheckProfileAsync();
+    //   // 還沒點想看的內容就直接到這頁就要請使用者回到自己的頁面
+    // } else if (savedUserId && role === "user") {
+    //   navigate("/user");
+    // } else if (savedUserId && role === "admin") {
+    //   navigate("/admins");
+    //   // 剩下的請先登入
+    // } else {
+    //   navigate("/login");
+    // }
+  }, [flagForRendering, savedUserId, navigate, role]);
+
 
   return (
     <div className={styles3.appContainer}>

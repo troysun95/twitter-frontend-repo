@@ -134,7 +134,6 @@ const UserContent = ({
 const UserPage = () => {
   // const navigate = useNavigate();
   const savedUserInfo = JSON.parse(localStorage.getItem("user"));
-  console.log("savedUserInfo", savedUserInfo);
   const id = savedUserInfo.id;
 
   const [userContent, setUserContent] = useState("tweets");
@@ -147,6 +146,8 @@ const UserPage = () => {
   // const [likeTweet, setLikeTweet] = useState([])
   // const [UnlikeTweet, setUnlikeTweet] = useState([])
   // const [followAccount, setFollowAccount] = useState([])
+  // 設置 flag 讓 TopUserSectionOther 與 toptenuser連動
+  const [flagForRendering, setFlagForRendering] = useState(false);
 
   const handleChangeUserContent = (clickItems) => {
     setUserContent(clickItems);
@@ -166,7 +167,6 @@ const UserPage = () => {
         const tweets = await getUserTweets(id);
         if (tweets) {
           setTweets(tweets.map((tweet) => ({ ...tweet })));
-          console.log("tweets", tweets);
         } else {
           setTweets(null);
         }
@@ -289,7 +289,6 @@ const UserPage = () => {
     const getCheckProfileAsync = async () => {
       try {
         const getCheckProfileData = await getCheckProfile(id);
-        console.log("getCheckProfileData UUUUUUUU", getCheckProfileData);
       } catch (error) {
         console.error("error", error);
       }

@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import {Toast} from 'utility/helper.js'
 const baseUrl = 'https://warm-forest-67690-2e44d4cd1684.herokuapp.com';
 
 //每次發請求前，先到這邊取出token
@@ -148,9 +148,7 @@ export const EditUser = async (id,{
       password,
       checkPassword
     });
-
     return res;
-    
   } catch (error) {
     console.error('[Edit User failed]: ', error);
   }
@@ -249,7 +247,6 @@ export const ReplyTweet = async ({id, comment}) => {
 export const postLikeTweet = async (id) => {
   try {
     const {data} = await axios.post(`${baseUrl}/api/tweets/${id}/like`);
-    console.log('tweets.js裡的 postLikeTweet 回傳值: ', data);
     return data
   } catch (error) {
     console.error('[Post LikeTweet failed]: ', error);
@@ -260,7 +257,6 @@ export const postLikeTweet = async (id) => {
 export const postUnlikeTweet = async (id) => {
   try {
     const res = await axios.post(`${baseUrl}/api/tweets/${id}/unlike`);
-    console.log('tweets.js裡的 postUnlikeTweet 回傳值: ', res);
     return res;
   } catch (error) {
     console.error('[Post UnlikeTweet failed]: ', error);
@@ -271,13 +267,13 @@ export const postUnlikeTweet = async (id) => {
 export const postFollowAccount = async (authToken) => {
   try {
     const {data} = await axios.post(`${baseUrl}/api/followships`, { headers: { Authorization: "Bearer " + authToken } })
-
-    console.log('tweets.js裡的 postFollowAccount 回傳值: ', data);
     return data;
   } catch (error) {
     console.error('[Post postFollowAccount failed]: ', error);
+    return error
   }
 };
+
 
 // 使用者取消追蹤其他使用者 DELETE /api/followships/:id
 export const deleteUnfollowAccount = async (authToken, id) => {
@@ -285,10 +281,14 @@ export const deleteUnfollowAccount = async (authToken, id) => {
     const {data} = await axios.delete(`${baseUrl}/api/followships/${id}`, {
       headers: { Authorization: "Bearer " + authToken },
     });
-    console.log('tweets.js裡的 deleteUnfollowAccount 回傳值: ', data);
     return data;
   } catch (error) {
-    console.error('[Delete deleteUnfollowAccount failed]: ', error);
+    console.error('[Delete deleteUnfollowAccount failed]: ', error)
+    Toast.fire({
+      title: error.response.data.message,
+      icon: "error",
+    });
+    return error
   }
 };
 
@@ -296,7 +296,6 @@ export const deleteUnfollowAccount = async (authToken, id) => {
 export const getCheckProfile = async (id) => {
   try {
     const {data} = await axios.get(`${baseUrl}/api/users/${id}`);
-    console.log('tweets.js裡的 getCheckProfile 回傳值: ', data);
     return data;
   } catch (error) {
     console.error('[Get getCheckProfile failed]: ', error)

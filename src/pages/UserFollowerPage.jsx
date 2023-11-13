@@ -38,10 +38,17 @@ const UserContent = ({ followers }) => {
 };
 const UserFollowerPage = () => {
   const savedUserInfo = JSON.parse(localStorage.getItem("user"));
-  console.log("savedUserInfo", savedUserInfo);
-  const id = savedUserInfo.id;
-  
-  const [followers, setFollowers] = useState([]);
+  const savedUserId = savedUserInfo.id;
+  const role = savedUserInfo.role;
+  const [followers, setFollowers] = useState([]); //followers資料
+  const [followings, setFollowings] = useState([]); //followers資料
+
+  // 使用者點擊瀏覽項目最新狀態
+  const [userContent, setUserContent] = useState(savedFollowContent);
+  const [tweetCount, setTweetCount] = useState(null); //tweet數量
+  // 負責觸發 UserSelfFollowPage 與 RightBanner 重新渲染
+  const [flagForRendering, setFlagForRendering] = useState(false);
+
 
   useEffect(() => {
     const getUserFollowersAsync = async () => {
